@@ -10,3 +10,10 @@ stacktrace.log
 /test/reports
 
 *.war
+
+/ZTB-dokumentacja/*.aux
+/ZTB-dokumentacja/*.log
+/ZTB-dokumentacja/*.out
+/ZTB-dokumentacja/*.pdf
+/ZTB-dokumentacja/*.synctex.gz
+/ZTB-dokumentacja/*.toc

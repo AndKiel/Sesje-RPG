@@ -4,21 +4,72 @@
 \section{Sformułowanie zadania projektowego}
 \label{sec:sforzadproj}
 
-Lorem ipsum.
+Temat niniejszego projektu poświęcony jest zagadnieniu prowadzenia sesji role-playing games zwanych także grami wyobraźni. Naszym celem jest projekt oraz implementacja serwisu internetowego skupiającego miłośników tego typu rozrywki w jednym miejscu. Miałby on m.in. pośredniczyć w organizowaniu sesji zarówno w formie spotkań on-line jak i off-line, pomagać graczom w tworzeniu kart postaci czy też pozwalać przechowywać scenariusze oraz inne dane dotyczące sesji. Dodatkowo miałby on do pewnego stopnia charakter portalu społecznościowego - pozwalałby użytkownikom dzielić się scenariuszami, postaciami, oceniać osoby prowadzące sesje oraz biorące w nich udział itp.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Analiza stanu wyjściowego}
 \label{sec:stanwyjsciowy}
 
-Lorem ipsum.
+Poszukiwania przeprowadzone w Internecie nie dały prawie żadnych rezultatów. Nie istnieje żaden serwis, który obejmowałby tematykę sesji RPG w tak szerokim zakresie. Istnieją jednak pewne rozwiązania cząstkowe. Odnaleźliśmy fora dyskusyjne, gdzie ludzie starają się prowadzić sesje, pisząc posty w wyznaczonej kolejności bądź też przykłady oprogramowania typu stand-alone, które pozwala tworzyć karty postaci i dedykowane jest pojedynczym systemom, np. Dungeons \& Dragons. Ponadto pewną ciekawostką jest istnienie interaktywnych dokumentów PDF z kartami postaci.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Analiza wymagań użytkownika}
 \label{sec:wymagania}
 
-Lorem ipsum.
+Poniżej znajduje się wstępny zakres funkcjonalności, przy czym priorytet każdego punktu został określony wg metody MoSCoW.
+
+\renewcommand{\labelitemi}{$\bullet$}
+\renewcommand{\labelitemii}{$\circ$}
+
+\begin{itemize}
+\item rejestracja użytkowników (M)
+	\begin{itemize}
+	\item aktywacja konta po kliknięciu w link z powiadomienia na mailu (C)
+	\item ręczna aktywacja konta przez administrację (C)
+	\end{itemize}
+\item logowanie użytkowników (M)
+\item resetowanie haseł użytkowników (wiadomość z wygenerowanym losowym hasłem na mail) (M)
+\item banowanie użytkowników przez administrację (S)
+\item wspomaganie organizowania sesji RPG (M)
+	\begin{itemize}
+	\item tworzenie / edycja / usuwanie / odpowiadanie na ogłoszenia (M)
+		\begin{itemize}
+		\item „poszukuję graczy” (M)
+		\item „poszukuję mistrza gry” (M)
+		\end{itemize}
+	\item lista ogłoszeń (M)
+	\item filtrowanie listy ogłoszeń (M)
+	\end{itemize}
+\item sesje RPG jako spotkania on-line (M)
+	\begin{itemize}
+	\item czat (M)
+		\begin{itemize}
+		\item okno sesji (M)
+			\begin{itemize}
+			\item lista uczestników (M)
+			\item informacje o sesji (M)
+			\item informacje o uczestnikach (M)
+			\item rzuty kostkami wielościennymi (M)
+			\end{itemize}
+		\item możliwość rysowania w trakcie sesji (C)
+		\end{itemize}
+	\end{itemize}
+\item tworzenie kart postaci dla wybranego systemu(-ów) (S)
+\item charakter społecznościowy (S)
+	\begin{itemize}
+	\item przesyłanie prywatnych wiadomości pomiędzy użytkownikami (S)
+	\item ocenianie mistrzów gry (S)
+	\item ocenianie graczy (S)
+	\item ustawienia prywatności / opcje udostępniania (S)
+	\end{itemize}
+\item baza systemów RPG (C)
+\item eksport kart postaci oraz innych danych do wybranego formatu, np. pdf (C)
+\item wersja mobilna serwisu (C)
+\item generatory imion (C)
+\item moduł sklepu pozwalający na zakup podręczników oraz innych akcesoriów związanych z sesjami RPG (W)
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

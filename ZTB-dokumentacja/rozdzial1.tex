@@ -83,77 +83,37 @@ Poniżej znajduje się wstępny zakres funkcjonalności, przy czym priorytet ka�
 \begin{enumerate}
 \item Gość
 	\begin{enumerate}
-	\item Wyszukiwanie gier
-		\begin{enumerate}
-		\item Pełna lista ogłoszeń
-		\item Filtrowanie listy
-		\end{enumerate}
 	\item Rejestracja konta
-		\begin{enumerate}
-		\item Propozycja loginu
-		\item Ustalenie hasła
-		\item Podanie adresu email
-		\item Dodatkowe dane
-		\end{enumerate}
+	\item Logowanie
+	\item Przeglądanie ogłoszeń
 	\item Przeglądanie profili użytkowników
-		\begin{enumerate}
-		\item Przykładowe scenariusze
-		\item Opinie użytkowników / ocena
-		\item Ilość rozegranych gier
-		\end{enumerate}
+	\item Przeglądanie systemów RPG
+	\item Resetowanie hasła
 	\end{enumerate}
 \item Użytkownik
 	\begin{enumerate}
 	\item Zarządzanie kontem
-		\begin{enumerate}
-		\item Resetowanie hasła
-		\item Zmiana hasła
-		\item Zmiana adresu email
-		\item Zmiana pozostałych danych
-		\end{enumerate}
-	\item Tworzenie ogłoszeń
-		\begin{enumerate}
-		\item Poszukiwanie graczy (jako Mistrz Gry)
-		\item Poszukiwanie Mistrza Gry (jako gracz)
-		\end{enumerate}
-	\item Edycja ogłoszeń
-		\begin{enumerate}
-		\item Modyfikacja treści
-		\item Akceptowanie zgłoszeń graczy / MG
-		\end{enumerate}
-	\item Usuwanie ogłoszeń
+	\item Tworzenie / Edycja / Usuwanie ogłoszeń
+	\item Akceptowanie zgłoszeń graczy / MG
 	\item Odpowiadanie na ogłoszenia
-		\begin{enumerate}
-		\item Aplikowanie na pozycję MG
-		\item Aplikowanie jako zwykły gracz
-		\end{enumerate}
+	\item Uczestniczenie w sesji on-line
+	\item Tworzenie / Edycja / Usuwanie scenariuszy
+	\item Tworzenie / Edycja / Usuwanie kart postaci
 	\item Ocenianie użytkowników
-		\begin{enumerate}
-		\item Wystawianie oceny (punktowej)
-		\item Wystawianie komentarza
-		\end{enumerate}
-	\item Sesje on-line
-		\begin{enumerate}
-		\item Zapraszanie graczy
-		\item Wyrzucanie graczy
-		\item Dołączanie do gry
-		\end{enumerate}
-	\item Tworzenie kart postaci
-		\begin{enumerate}
-		\item Wybór systemu
-		\item Wypełnienie formularza
-		\end{enumerate}
+	\item Przesyłanie prywatnych wiadomości
 	\end{enumerate}
-
+\item Moderator
+	\begin{enumerate}
+	\item Edycja / Usuwanie ocen i komentarzy
+	\item Dodawanie / Edycja / Usuwanie systemów RPG
+	\end{enumerate}
 \item Administrator
 	\begin{enumerate}
 	\item Zarządzanie użytkownikami
 		\begin{enumerate}
 		\item Ręczna aktywacja konta użytkownika
-		\item Usuwanie / banowanie kont
-		\item Usuwanie komentarzy kont
+		\item Banowanie kont
 		\end{enumerate}
-	\item Usuwanie ogłoszeń
 	\end{enumerate}
 \end{enumerate}
 
@@ -163,17 +123,67 @@ Poniżej znajduje się wstępny zakres funkcjonalności, przy czym priorytet ka�
 \section{Identyfikacja funkcji}
 \label{sec:idfun}
 
-Lorem ipsum.
+Główną funkcją realizowaną przez bazę danych jest przechowywanie informacji o:
+	\begin{itemize}
+	\item kontach użytkowników wraz z dodatkowymi informacjami (ustawieniami, ocenami, wiadomościami prywatnymi),
+	\item ogłoszeniach dotyczących sesji wraz z powiązaniami do kont,
+	\item postaciach graczy wraz z powiązaniami do kont,
+	\item scenariuszach wraz z powiązaniami do kont,
+	\item systemach RPG.
+	\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{FHD - diagramy hierarchii funkcji}
+\clearpage
+
+\section{FHD - diagram hierarchii funkcji}
 \label{sec:FHD}
 
-Lorem ipsum.
+\dirtree{%
+.1 Sesje RPG.
+	.2 Konta użytkowników.
+		.3 Utworzenie konta.
+			.4 Rejestracja.
+			.4 Aktywacja.
+		.3 Logowanie.
+		.3 Ustawienia konta.
+			.4 Ustawienia prywatności.
+			.4 Ustawienia powiadomień.
+			.4 Ustawienia danych w profilu.
+			.4 Zmiana hasła.
+		.3 Resetowanie hasła.
+	.2 Ogłoszenia. 
+		.3 Tworzenie ogłoszeń.
+		.3 Przeglądanie ogłoszeń.
+			.4 Filtrowanie ogłoszeń.
+			.4 Aplikowanie do sesji.
+		.3 Zarządzanie ogłoszeniami.
+			.4 Edycja / Usuwanie ogłoszeń.
+			.4 Akceptacja graczy.
+			.4 Udział w sesji.
+	.2 Scenariusze.
+		.3 Tworzenie / Edycja / Usuwanie scenariuszy.
+	.2 Karty postaci.
+		.3 Tworzenie / Edycja / Usuwanie kart postaci.
+	.2 Społeczność. 
+		.3 Ocenianie użytkowników.
+			.4 Wystawianie / Edycja oceny z komentarzem.
+		.3 Przesyłanie prywatnych wiadomości.
+	.2 Systemy RPG.
+		.3 Przeglądanie bazy systemów RPG.
+	.2 Administracja.
+		.3 Zarządzanie użytkownikami.
+			.4 Ręczna aktywacja kont.
+			.4 Banowanie kont.
+		.3 Zarządzanie systemami RPG.
+			.4 Dodawanie / Edycja / Usuwanie systemów.
+		.3 Moderacja.
+			.4 Edycja / Usuwanie ocen i komentarzy.
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\clearpage 
 \section{DFD - diagramy przepływu danych}
 \label{sec:DFD}
 
@@ -184,7 +194,47 @@ Lorem ipsum.
 \section{Encje i atrybuty}
 \label{sec:encje}
 
-Lorem ipsum.
+\begin{enumerate}
+\item Użytkownik
+	\begin{itemize}
+	\item login
+	\item hash MD5 hasła
+	\item e-mail
+	\item status konta
+	\item poziom uprawnień
+	\item ...
+	\end{itemize}
+\item Ogłoszenie
+	\begin{itemize}
+	\item twórca
+	\item system
+	\item data
+	\item typ
+	\item miejsce
+	\item uczestnicy
+	\end{itemize}
+\item System RPG
+	\begin{itemize}
+	\item nazwa
+	\item opis
+	\item ...
+	\end{itemize}
+\item Karta postaci
+	\begin{itemize}
+	\item autor
+	\item system
+	\item ...
+	\end{itemize}
+\item Scenariusz
+	\begin{itemize}
+	\item autor
+	\item system
+	\item typ
+	\item sugerowana ilość graczy
+	\item treść
+	\item ...
+	\end{itemize}
+\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -13,7 +13,8 @@ stacktrace.log
 
 *.war
 
-/ZTB-dokumentacja/*
+/ZTB-dokumentacja/ZTB-dokumentacja.tex
+/ZTB-dokumentacja/rozdzial1.tex
 /ZTB-dokumentacja/*.aux
 /ZTB-dokumentacja/*.log
 /ZTB-dokumentacja/*.out

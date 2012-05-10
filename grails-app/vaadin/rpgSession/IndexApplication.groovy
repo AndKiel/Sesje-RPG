@@ -10,12 +10,6 @@ class IndexApplication extends Application {
         setMainWindow window
         Button button = new Button("Click Meee")
         window.addComponent(button)
-		
-	Button button2 = new Button("Click Meee")
-	window.addComponent(button2)
-		
-	Button button3 = new Button("Click Meee")
-	window.addComponent(button3)
     }
 }
 

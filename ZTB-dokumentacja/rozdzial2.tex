@@ -11,7 +11,94 @@
 \section{Słownik danych}
 \label{sec:slownik}
 
-Lorem ipsum.
+\begin{itemize}
+\item users - tabela zawierająca użytkowników serwisu
+	\begin{itemize}
+	\item login - nazwa, za pomocą której użytkownik loguje się do serwisu, jego adres e-mail
+	\item pass\_md5 - hash MD5 hasła użytkownika
+	\item state - stan konta: aktywne, nieaktywne, zbanowane
+	\item level - poziom uprawnień konta: użytkownik, moderator, administrator
+	\end{itemize}
+\item users\_data - tabela z danymi użytkowników
+	\begin{itemize}
+	\item login - relacja do tabeli users
+	\item nickname - pseudonim, pod jakim użytkownik jest widziany przez innych
+	\item location - miejsce pochodzenia użytkownika
+	\item birthday - data urodzin użytkownika
+	\item homepage - strona domowa użytkownika
+	\end{itemize}
+\item users\_settings - tabela z ustawieniami użytkowników
+	\begin{itemize}
+	\item login - relacja do tabeli users
+	\item show\_chars - flaga określająca, czy użytkownik chce udostępniać innym swoje karty postaci
+	\item show\_scenarios - flaga określająca, czy użytkownik chce udostępniać innym swoje scenariusze
+	\item comment\_notify - flaga określająca, czy użytkownik chce otrzymywać drogą mailową powiadomienia o nowych komentarzach
+	\item session\_notify - flaga określająca, czy użytkownik chce otrzymywać drogą mailową powiadomienia o osobach chcących dołączyć do jego sesji
+	\item message\_notify - flaga określająca, czy użytkownik chce otrzymywać drogą mailową powiadomienia o otrzymanych nowych prywatnych wiadomościach
+	\end{itemize}
+\item messages - tabela z prywatnymi wiadomościami użytkowników
+	\begin{itemize}
+	\item id - identyfikator wiadomości
+	\item addressee - adresat wiadomości
+	\item sender - nadawca wiadomości
+	\item time\_stamp - czas wysłania wiadomości
+	\item topic - temat wiadomości
+	\item content - treść wiadomości
+	\item was\_read - flaga określająca, czy odbiorca przeczytał wiadomość
+	\end{itemize}
+\item comments - tabela z ocenami użytkowników
+	\begin{itemize}
+	\item id - identyfikator komentarza
+	\item commentator - osoba komentująca
+	\item commentee - osoba komentowana
+	\item grade - ocena
+	\item comment - komentarz
+	\item time\_stamp - czas wystawienia komentarza
+	\end{itemize}
+\item rpg\_systems - tabela z systemami RPG
+	\begin{itemize}
+	\item id - identyfikator systemu
+	\item name - nazwa systemu
+	\item description - opis systemu
+	\item genre - gatunek
+	\item designer - projektant
+	\item publisher - wydawca
+	\item year - rok wydania
+	\item char\_sheet\_dtd - szablon karty postaci dla systemu
+	\end{itemize}
+\item scenarios - tabela ze scenariuszami sesji RPG
+	\begin{itemize}
+	\item id - identyfikator scenariusza
+	\item owner - twórca scenariusza
+	\item system - system, dla którego przeznaczony jest scenariusz
+	\item type - rodzaj scenariusza: kampania, część kampanii, one-shot
+	\item players\_count - sugerowana ilość graczy mających brać udział w sesji
+	\item content - treść scenariusza
+	\end{itemize}
+\item char\_sheets - tabela z kartami postaci
+	\begin{itemize}
+	\item id - identyfikator karty postaci
+	\item owner - twórca karty postaci
+	\item system - system, w ramach którego powstała karta postaci
+	\item xml\_data - treść karty postaci
+	\end{itemize}
+\item sessions - tabela z ogłoszeniami dotyczącymi sesji RPG
+	\begin{itemize}
+	\item id - identyfikator ogłoszenia
+	\item system - system, w ramach którego użytkownik chce zagrać
+	\item owner - twórca ogłoszenia
+	\item time\_stamp - data i czas, kiedy użytkownik chce rozegrać sesję
+	\item type - rodzaj sesji: on-line, offline
+	\item location - miejsce, w którym użytkownik chce rozegrać sesję
+	\end{itemize}
+\item participants - tabela z osobami biorącymi udział w sesji
+	\begin{itemize}
+	\item session - relacja do tabeli session
+	\item login - relacja do tabeli users
+	\item role - rola użytkownika: Mistrz Gry, Gracz
+	\item state - stan: oczekujący, zaakceptowany
+	\end{itemize}
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

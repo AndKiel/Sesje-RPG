@@ -1,14 +1,14 @@
 BEGIN;
 
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS user_data CASCADE;
-DROP TABLE IF EXISTS user_settings CASCADE;
-DROP TABLE IF EXISTS message CASCADE;
-DROP TABLE IF EXISTS comment CASCADE;
-DROP TABLE IF EXISTS rpg_system CASCADE;
-DROP TABLE IF EXISTS scenario CASCADE;
-DROP TABLE IF EXISTS char_sheet CASCADE;
-DROP TABLE IF EXISTS session CASCADE;
+DROP TABLE IF EXISTS users_data CASCADE;
+DROP TABLE IF EXISTS users_settings CASCADE;
+DROP TABLE IF EXISTS messages CASCADE;
+DROP TABLE IF EXISTS comments CASCADE;
+DROP TABLE IF EXISTS rpg_systems CASCADE;
+DROP TABLE IF EXISTS scenarios CASCADE;
+DROP TABLE IF EXISTS char_sheets CASCADE;
+DROP TABLE IF EXISTS sessions CASCADE;
 DROP TABLE IF EXISTS participants CASCADE;
 
 CREATE TABLE users (
@@ -18,7 +18,7 @@ CREATE TABLE users (
   level     VARCHAR(1)    DEFAULT '0'
 );
 
-CREATE TABLE user_data (
+CREATE TABLE users_data (
   login       VARCHAR(20)   REFERENCES users(login),
   nickname    VARCHAR(30)   UNIQUE NOT NULL,
   location    VARCHAR(20),
@@ -27,7 +27,7 @@ CREATE TABLE user_data (
   PRIMARY KEY (login)
 );
 
-CREATE TABLE user_settings (
+CREATE TABLE users_settings (
   login             VARCHAR(20)    REFERENCES users(login),
   show_chars        BOOLEAN        DEFAULT false,
   show_scenarios    BOOLEAN        DEFAULT false,
@@ -37,7 +37,7 @@ CREATE TABLE user_settings (
   PRIMARY KEY (login)
 );
 
-CREATE TABLE message (
+CREATE TABLE messages (
   id              SERIAL          PRIMARY KEY,
   addressee       VARCHAR(20)     NOT NULL REFERENCES users(login),
   sender          VARCHAR(20)     NOT NULL REFERENCES users(login),
@@ -47,7 +47,7 @@ CREATE TABLE message (
   was_read        BOOLEAN         DEFAULT false
 );
 
-CREATE TABLE comment (
+CREATE TABLE comments (
   id              SERIAL         PRIMARY KEY,
   commentator     VARCHAR(20)    NOT NULL REFERENCES users(login),
   commentee       VARCHAR(20)    NOT NULL REFERENCES users(login),
@@ -56,7 +56,7 @@ CREATE TABLE comment (
   time_stamp      TIMESTAMP      DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE rpg_system (
+CREATE TABLE rpg_systems (
   id                SERIAL          PRIMARY KEY,
   name              VARCHAR(20)     UNIQUE NOT NULL,
   description       TEXT,
@@ -67,7 +67,7 @@ CREATE TABLE rpg_system (
   char_sheet_dtd    TEXT
 );
 
-CREATE TABLE scenario (
+CREATE TABLE scenarios (
   id                SERIAL         PRIMARY KEY,
   owner             VARCHAR(20)    NOT NULL REFERENCES users(login),
   system            INTEGER        NOT NULL REFERENCES rpg_system(id),
@@ -76,14 +76,14 @@ CREATE TABLE scenario (
   content           TEXT           NOT NULL
 );
 
-CREATE TABLE char_sheet (
+CREATE TABLE char_sheets (
   id        SERIAL         PRIMARY KEY,
   owner     VARCHAR(20)    NOT NULL REFERENCES users(login),
   system    INTEGER        NOT NULL REFERENCES rpg_system(id),
   xml_data  XML            NOT NULL
 );
 
-CREATE TABLE session (
+CREATE TABLE sessions (
   id            SERIAL        PRIMARY KEY,
   system        INTEGER       NOT NULL REFERENCES rpg_system(id),
   owner         VARCHAR(20)   NOT NULL REFERENCES users(login),

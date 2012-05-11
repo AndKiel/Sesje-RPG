@@ -7,7 +7,7 @@ class UrlMappings {
 			}
 		}
 
-                // commented for vaadin to work properly
+        // commented for vaadin to work properly
 		// "/"(view:"/index")
 		"500"(view:'/error')
 	}

@@ -9,7 +9,7 @@ class IndexApplication extends Application {
         def window = new Window("Hello Vaadin!")
         setMainWindow window
         Button button = new Button("Click Meee")
-        window.addComponent button
+        window.addComponent(button)
     }
 }
 

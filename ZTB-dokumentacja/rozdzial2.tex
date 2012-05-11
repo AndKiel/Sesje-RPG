@@ -12,24 +12,16 @@
 \label{sec:slownik}
 
 \begin{itemize}
-\item users - tabela zawierająca użytkowników serwisu
+\item users - tabela zawierająca użytkowników serwisu, ich dane oraz ustawienia
 	\begin{itemize}
 	\item login - nazwa, za pomocą której użytkownik loguje się do serwisu, jego adres e-mail
 	\item pass\_md5 - hash MD5 hasła użytkownika
 	\item state - stan konta: aktywne, nieaktywne, zbanowane
 	\item level - poziom uprawnień konta: użytkownik, moderator, administrator
-	\end{itemize}
-\item users\_data - tabela z danymi użytkowników
-	\begin{itemize}
-	\item login - relacja do tabeli users
 	\item nickname - pseudonim, pod jakim użytkownik jest widziany przez innych
 	\item location - miejsce pochodzenia użytkownika
 	\item birthday - data urodzin użytkownika
 	\item homepage - strona domowa użytkownika
-	\end{itemize}
-\item users\_settings - tabela z ustawieniami użytkowników
-	\begin{itemize}
-	\item login - relacja do tabeli users
 	\item show\_chars - flaga określająca, czy użytkownik chce udostępniać innym swoje karty postaci
 	\item show\_scenarios - flaga określająca, czy użytkownik chce udostępniać innym swoje scenariusze
 	\item comment\_notify - flaga określająca, czy użytkownik chce otrzymywać drogą mailową powiadomienia o nowych komentarzach
@@ -87,6 +79,7 @@
 	\item id - identyfikator ogłoszenia
 	\item system - system, w ramach którego użytkownik chce zagrać
 	\item owner - twórca ogłoszenia
+	\item created - czas utworzenia ogłoszenia
 	\item time\_stamp - data i czas, kiedy użytkownik chce rozegrać sesję
 	\item type - rodzaj sesji: on-line, offline
 	\item location - miejsce, w którym użytkownik chce rozegrać sesję

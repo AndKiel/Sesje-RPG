@@ -12,8 +12,8 @@ DROP TABLE IF EXISTS participants CASCADE;
 CREATE TABLE users (
   login             VARCHAR(20)    PRIMARY KEY,
   pass_md5          VARCHAR(30)    NOT NULL,
-  state             "CHAR"         DEFAULT 'I',
-  level             "CHAR"         DEFAULT '0',
+  state             CHAR           DEFAULT 'I',
+  level             CHAR           DEFAULT '0',
   nickname          VARCHAR(30)    UNIQUE NOT NULL,
   location          VARCHAR(20),
   birthday          DATE,
@@ -59,7 +59,7 @@ CREATE TABLE scenarios (
   id                SERIAL         PRIMARY KEY,
   owner             VARCHAR(20)    NOT NULL REFERENCES users(login),
   system            INTEGER        NOT NULL REFERENCES rpg_systems(id),
-  type              "CHAR"         NOT NULL,
+  type              CHAR           NOT NULL,
   players_count     SMALLINT       NOT NULL,
   content           TEXT           NOT NULL
 );
@@ -77,7 +77,7 @@ CREATE TABLE sessions (
   owner         VARCHAR(20)   NOT NULL REFERENCES users(login),
   created       TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
   time_stamp    TIMESTAMP     NOT NULL,
-  type          "CHAR"        NOT NULL,
+  type          CHAR          NOT NULL,
   location      VARCHAR(20)
 );
 

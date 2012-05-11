@@ -1,8 +1,6 @@
 BEGIN;
 
 DROP TABLE IF EXISTS users CASCADE;
-DROP TABLE IF EXISTS users_data CASCADE;
-DROP TABLE IF EXISTS users_settings CASCADE;
 DROP TABLE IF EXISTS messages CASCADE;
 DROP TABLE IF EXISTS comments CASCADE;
 DROP TABLE IF EXISTS rpg_systems CASCADE;
@@ -12,29 +10,19 @@ DROP TABLE IF EXISTS sessions CASCADE;
 DROP TABLE IF EXISTS participants CASCADE;
 
 CREATE TABLE users (
-  login     VARCHAR(20)   PRIMARY KEY,
-  pass_md5  VARCHAR(30)   NOT NULL,
-  state     VARCHAR(1)    DEFAULT 'i',
-  level     VARCHAR(1)    DEFAULT '0'
-);
-
-CREATE TABLE users_data (
-  login       VARCHAR(20)   REFERENCES users(login),
-  nickname    VARCHAR(30)   UNIQUE NOT NULL,
-  location    VARCHAR(20),
-  birthday    DATE,
-  homepage    VARCHAR(40),
-  PRIMARY KEY (login)
-);
-
-CREATE TABLE users_settings (
-  login             VARCHAR(20)    REFERENCES users(login),
+  login             VARCHAR(20)    PRIMARY KEY,
+  pass_md5          VARCHAR(30)    NOT NULL,
+  state             "CHAR"         DEFAULT 'I',
+  level             "CHAR"         DEFAULT '0',
+  nickname          VARCHAR(30)    UNIQUE NOT NULL,
+  location          VARCHAR(20),
+  birthday          DATE,
+  homepage          VARCHAR(40),
   show_chars        BOOLEAN        DEFAULT false,
   show_scenarios    BOOLEAN        DEFAULT false,
   comment_notify    BOOLEAN        DEFAULT false,
   session_notify    BOOLEAN        DEFAULT false,
-  message_notify    BOOLEAN        DEFAULT false,
-  PRIMARY KEY (login)
+  message_notify    BOOLEAN        DEFAULT false
 );
 
 CREATE TABLE messages (
@@ -71,7 +59,7 @@ CREATE TABLE scenarios (
   id                SERIAL         PRIMARY KEY,
   owner             VARCHAR(20)    NOT NULL REFERENCES users(login),
   system            INTEGER        NOT NULL REFERENCES rpg_system(id),
-  type              VARCHAR(1)     NOT NULL,
+  type              "CHAR"         NOT NULL,
   players_count     SMALLINT       NOT NULL,
   content           TEXT           NOT NULL
 );
@@ -87,8 +75,9 @@ CREATE TABLE sessions (
   id            SERIAL        PRIMARY KEY,
   system        INTEGER       NOT NULL REFERENCES rpg_system(id),
   owner         VARCHAR(20)   NOT NULL REFERENCES users(login),
+  created       TIMESTAMP     DEFAULT CURRENT_TIMESTAMP,
   time_stamp    TIMESTAMP     NOT NULL,
-  type          VARCHAR(1)    NOT NULL,
+  type          "CHAR"        NOT NULL,
   location      VARCHAR(20)
 );
 

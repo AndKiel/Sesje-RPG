@@ -70,7 +70,7 @@ CREATE TABLE rpg_systems (
 CREATE TABLE scenarios (
   id                SERIAL         PRIMARY KEY,
   owner             VARCHAR(20)    NOT NULL REFERENCES users(login),
-  system            INTEGER        NOT NULL REFERENCES rpg_system(id),
+  system            INTEGER        NOT NULL REFERENCES rpg_systems(id),
   type              VARCHAR(1)     NOT NULL,
   players_count     SMALLINT       NOT NULL,
   content           TEXT           NOT NULL
@@ -79,13 +79,13 @@ CREATE TABLE scenarios (
 CREATE TABLE char_sheets (
   id        SERIAL         PRIMARY KEY,
   owner     VARCHAR(20)    NOT NULL REFERENCES users(login),
-  system    INTEGER        NOT NULL REFERENCES rpg_system(id),
+  system    INTEGER        NOT NULL REFERENCES rpg_systems(id),
   xml_data  XML            NOT NULL
 );
 
 CREATE TABLE sessions (
   id            SERIAL        PRIMARY KEY,
-  system        INTEGER       NOT NULL REFERENCES rpg_system(id),
+  system        INTEGER       NOT NULL REFERENCES rpg_systems(id),
   owner         VARCHAR(20)   NOT NULL REFERENCES users(login),
   time_stamp    TIMESTAMP     NOT NULL,
   type          VARCHAR(1)    NOT NULL,
@@ -93,7 +93,7 @@ CREATE TABLE sessions (
 );
 
 CREATE TABLE participants (
-  session     INTEGER        REFERENCES session(id),
+  session     INTEGER        REFERENCES sessions(id),
   login       VARCHAR(20)    REFERENCES users(login),
   role        BOOLEAN        NOT NULL,
   state       BOOLEAN        DEFAULT false,

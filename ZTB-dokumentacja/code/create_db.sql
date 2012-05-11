@@ -59,7 +59,7 @@ CREATE TABLE scenarios (
   id                SERIAL         PRIMARY KEY,
   owner             VARCHAR(20)    NOT NULL REFERENCES users(login),
   system            INTEGER        NOT NULL REFERENCES rpg_systems(id),
-  type              VARCHAR(1)     NOT NULL,
+  type              "CHAR"         NOT NULL,
   players_count     SMALLINT       NOT NULL,
   content           TEXT           NOT NULL
 );

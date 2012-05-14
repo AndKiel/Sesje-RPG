@@ -87,7 +87,7 @@
 \item participants - tabela z osobami biorącymi udział w sesji
 	\begin{itemize}
 	\item session - relacja do tabeli session
-	\item login - relacja do tabeli users
+	\item user - relacja do tabeli users
 	\item role - rola użytkownika: Mistrz Gry, Gracz
 	\item state - stan: oczekujący, zaakceptowany
 	\end{itemize}
@@ -98,14 +98,16 @@
 \section{Analiza zależności funkcyjnych i normalizacja tabel}
 \label{sec:normalizacja}
 
-Lorem ipsum.
+Baza danych jest w pierwszej postaci normalnej, ponieważ każda tabela spełnia następujące warunki:
+\begin{itemize}
+\item opisuje jeden obiekt,
+\item wartości atrybutów są elementarne (atomowe, niepodzielne) - każda kolumna jest wartością skalarną (atomową), a nie macierzą lub listą czy też czymkolwiek, co posiada własną strukturę,
+\item nie zawiera kolekcji (powtarzających się grup informacji),
+\item posiada klucz główny,
+\item kolejność wierszy może być dowolna (znaczenie danych nie zależy od kolejności wierszy).
+\end{itemize}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\section{Denormalizacja struktury danych}
-\label{sec:denormalizacja}
-
-Lorem ipsum.
+Baza danych jest w drugiej postaci normalnej, ponieważ jest w pierwszej postaci normalnej i każda kolumna zależy funkcyjnie od całego klucza głównego (a nie np. od części klucza). Jest także w trzeciej postaci normalnej, ponieważ spełnia warunki 2NF oraz wszystkie pola niebędące polami klucza głównego są od niego zależne bezpośrednio.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

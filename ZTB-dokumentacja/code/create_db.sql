@@ -83,7 +83,7 @@ CREATE TABLE sessions (
 
 CREATE TABLE participants (
   session     INTEGER        REFERENCES sessions(id),
-  login       VARCHAR(20)    REFERENCES users(login),
+  user        VARCHAR(20)    REFERENCES users(login),
   role        BOOLEAN        NOT NULL,
   state       BOOLEAN        DEFAULT false,
   PRIMARY KEY(session,login)

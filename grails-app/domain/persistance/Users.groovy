@@ -15,8 +15,7 @@ class Users {
 	}
 	String login
 	String passMd5
-	String state = "i"
-	String level = "0"
+	boolean state
 	String nickname
 	String location
 	Date birthday
@@ -29,9 +28,7 @@ class Users {
 
 	static constraints = {
 		login(size: 1..20, blank: false)
-		passMd5(size: 1..30, blank: false)
-		state(size: 0..1)
-		level(size: 0..1)
+		passMd5(size: 1..128, blank: false)
 		nickname(size: 1..30, blank: false, unique: true)
 		location(size: 0..20, nullable: true)
 		birthday(nullable: true)
@@ -42,6 +39,11 @@ class Users {
 		sessionNotify(nullable: true)
 		messageNotify(nullable: true)
 	}
+	
+	Set<Roles> getAuthorities() {
+		UserRole.findAllByUser(this).collect { it.role } as Set
+	 }
+	
 	String toString() {
 		return "${login}"
 	}

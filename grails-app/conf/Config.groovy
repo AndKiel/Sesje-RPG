@@ -100,3 +100,5 @@ grails.plugins.springsecurity.authority.className = 'persistance.Roles'
 grails.plugins.springsecurity.userLookup.usernamePropertyName = 'login'
 grails.plugins.springsecurity.userLookup.passwordPropertyName = 'passMd5'
 grails.plugins.springsecurity.userLookup.enabledPropertyName = 'state'
+
+grails.mime.file.extensions = false

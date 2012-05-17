@@ -16,6 +16,11 @@ class Users {
 	String login
 	String passMd5
 	boolean state
+	
+	boolean accountExpired
+	boolean accountLocked
+	boolean passwordExpired
+	
 	String nickname
 	String location
 	Date birthday
@@ -41,8 +46,8 @@ class Users {
 	}
 	
 	Set<Roles> getAuthorities() {
-		UserRole.findAllByUser(this).collect { it.role } as Set
-	 }
+		UsersRoles.findAllByUsers(this).collect { it.roles } as Set
+	}
 	
 	String toString() {
 		return "${login}"

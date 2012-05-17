@@ -130,7 +130,7 @@ Poniżej znajduje się wstępny zakres funkcjonalności, przy czym priorytet ka�
 
 %\begin{enumerate}
 %\item Zgłoszenie się do uczestnictwa w sesji:
-\subsection{Zgłoszenie się do uczestnictwa w sesji:}
+\subsection{Zgłoszenie się do uczestnictwa w sesji}
 
 \textbf{Aktorzy:} Ogłoszeniodawca, Uczestnik, System
 
@@ -146,13 +146,12 @@ Poniżej znajduje się wstępny zakres funkcjonalności, przy czym priorytet ka�
 
 \textbf{Scenariusze alternatywne:}
 	\begin{enumerate}
-	\item Niezarejestrowany Uczestnik rejestruje konto,
-	\item Ogłoszeniodawca odrzuca Uczestnika,
-	\item Uczestnik przegląda i wybiera interesujące ogłoszenie.
+	\item[2a.] Niezarejestrowany Uczestnik rejestruje konto,
+	\item[5a.] Ogłoszeniodawca odrzuca Uczestnika,
 	\end{enumerate}
 
 %\item Dodawanie ogłoszenia:
-\subsection{Dodawanie ogłoszenia:}
+\subsection{Dodawanie ogłoszenia}
 
 \textbf{Aktorzy:} Ogłoszeniodawca, System
 
@@ -165,17 +164,17 @@ Poniżej znajduje się wstępny zakres funkcjonalności, przy czym priorytet ka�
 	\item Ogłoszeniodawca wpisuje treść ogłoszenia, określa czas i miejsce sesji,
 	\item Ogłoszeniodawca zatwierdza wybrane opcje,
 	\item System dodaje ogłoszenie do listy nowych ogłoszeń,
-	\item System wysyła powiadomienie do Ogłoszeniodawcy.
+	\item System wyświetla powiadomienie o dodaniu Ogłoszeniodawcy.
 	\end{enumerate}
 
 \textbf{Scenariusze alternatywne:}
 	\begin{enumerate}
-	\item Niezarejestrowany Ogłoszeniodawca rejestruje konto,
-	\item Ogłoszeniodawca anuluje dodawanie ogłoszenia.
+	\item[2a.] Niezarejestrowany Ogłoszeniodawca rejestruje konto,
+	\item[6a.] Ogłoszeniodawca anuluje dodawanie ogłoszenia.
 	\end{enumerate}
 
 %\item Ocenianie użytkowników:
-\subsection{Ocenianie użytkowników:}
+\subsection{Ocenianie użytkowników}
 
 \textbf{Aktorzy:} Uczestnik
 
@@ -189,7 +188,7 @@ Poniżej znajduje się wstępny zakres funkcjonalności, przy czym priorytet ka�
 	\end{enumerate}
 
 %\item Resetowanie hasła:
-\subsection{Resetowanie hasła:}
+\subsection{Resetowanie hasła}
 
 \textbf{Aktorzy:} Uczestnik, System
 
@@ -208,20 +207,21 @@ Poniżej znajduje się wstępny zakres funkcjonalności, przy czym priorytet ka�
 
 \textbf{Scenariusze alternatywne:}
 	\begin{enumerate}
-	\item System nie odnajduje danego loginu i zwraca błąd.
+	\item[3a.] System nie odnajduje danego loginu i zwraca błąd.
 	\end{enumerate}
 
 %\item Banowanie kont:
-\subsection{Banowanie kont:}
+\subsection{Banowanie kont}
 
 \textbf{Aktorzy:} Administrator
 
 \textbf{Scenariusz główny:}
 	\begin{enumerate}
 	\item Administrator wchodzi na stronę serwisu,
-	\item Administrator loguje się do panelu administracyjnego,
+	\item Administrator loguje się,
+	\item Administrator przechodzi do panelu swojego konta,
 	\item Administrator wyszukuje użytkownika,
-	\item Administrator zaznacza opcję "Zbanowany",
+	\item Administrator zaznacza opcję ,,Zbanowany'',
 	\item System prosi o potwierdzenie,
 	\item Administrator potwierdza wybór,	
 	\item System zawiesza konto użytkownika.
@@ -229,7 +229,7 @@ Poniżej znajduje się wstępny zakres funkcjonalności, przy czym priorytet ka�
 
 \textbf{Scenariusze alternatywne:}
 	\begin{enumerate}
-	\item Administrator anuluje wybór.
+	\item[7a.] Administrator anuluje wybór.
 	\end{enumerate}
 %\end{enumerate}
 

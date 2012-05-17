@@ -124,7 +124,114 @@ Poniżej znajduje się wstępny zakres funkcjonalności, przy czym priorytet ka�
 \section{Wybrane scenariusze użycia}
 \label{sec:scenariusze}
 
-Lorem ipsum.
+%\renewcommand{\labelenumi}{\arabic{enumi}.} 
+%\renewcommand{\labelenumii}{\arabic{enumii}.}
+%\renewcommand{\labelenumiii}{\arabic{enumii}.\arabic{enumiii}.}
+
+%\begin{enumerate}
+%\item Zgłoszenie się do uczestnictwa w sesji:
+\subsection{Zgłoszenie się do uczestnictwa w sesji:}
+
+\textbf{Aktorzy:} Ogłoszeniodawca, Uczestnik, System
+
+\textbf{Scenariusz główny:}
+	\begin{enumerate}
+	\item Uczestnik wchodzi na stronę serwisu,
+	\item Uczestnik loguje się,
+	\item Uczestnik przegląda i wybiera interesujące ogłoszenie,
+	\item Uczestnik aplikuje na wolne miejsce / funkcję (Mistrz Gry lub Gracz),
+	\item Ogłoszeniodawca akceptuje Uczestnika,
+	\item System wysyła powiadomienie do Uczestnika.
+	\end{enumerate}
+
+\textbf{Scenariusze alternatywne:}
+	\begin{enumerate}
+	\item Niezarejestrowany Uczestnik rejestruje konto,
+	\item Ogłoszeniodawca odrzuca Uczestnika,
+	\item Uczestnik przegląda i wybiera interesujące ogłoszenie.
+	\end{enumerate}
+
+%\item Dodawanie ogłoszenia:
+\subsection{Dodawanie ogłoszenia:}
+
+\textbf{Aktorzy:} Ogłoszeniodawca, System
+
+\textbf{Scenariusz główny:}
+	\begin{enumerate}
+	\item Ogłoszeniodawca wchodzi na stronę serwisu,
+	\item Ogłoszeniodawca loguje się,
+	\item Ogłoszeniodawca przechodzi do formularza dodawania ogłoszenia,
+	\item Ogłoszeniodawca wybiera system RPG oraz określa liczbę uczestników,
+	\item Ogłoszeniodawca wpisuje treść ogłoszenia, określa czas i miejsce sesji,
+	\item Ogłoszeniodawca zatwierdza wybrane opcje,
+	\item System dodaje ogłoszenie do listy nowych ogłoszeń,
+	\item System wysyła powiadomienie do Ogłoszeniodawcy.
+	\end{enumerate}
+
+\textbf{Scenariusze alternatywne:}
+	\begin{enumerate}
+	\item Niezarejestrowany Ogłoszeniodawca rejestruje konto,
+	\item Ogłoszeniodawca anuluje dodawanie ogłoszenia.
+	\end{enumerate}
+
+%\item Ocenianie użytkowników:
+\subsection{Ocenianie użytkowników:}
+
+\textbf{Aktorzy:} Uczestnik
+
+\textbf{Scenariusz główny:}
+	\begin{enumerate}
+	\item Uczestnik wchodzi na stronę serwisu,
+	\item Uczestnik loguje się,
+	\item Uczestnik przechodzi do listy odbytych sesji,
+	\item Uczestnik wybiera profil innego użytkownika biorącego udział w sesji,
+	\item Uczestnik wystawia punktową ocenę i pisze komentarz.
+	\end{enumerate}
+
+%\item Resetowanie hasła:
+\subsection{Resetowanie hasła:}
+
+\textbf{Aktorzy:} Uczestnik, System
+
+\textbf{Scenariusz główny:}
+	\begin{enumerate}
+	\item Uczestnik wchodzi na stronę serwisu,
+	\item Uczestnik wpisuje login i błędne hasło,
+	\item System zgłasza błąd o niepoprawnym haśle dla danego loginu,
+	\item Uczestnik wybiera resetowanie hasła,
+	\item System prosi o podanie adresu e-mail, na który zarejestrowane jest konto,
+	\item System wysyła hasło tymczasowe,
+	\item Użytkownik loguje się przy pomocy hasła tymczasowego,
+	\item Uczestnik podaje nowe hasło,
+	\item System zapisuje zakodowane hasło w bazie.
+	\end{enumerate}
+
+\textbf{Scenariusze alternatywne:}
+	\begin{enumerate}
+	\item System nie odnajduje danego loginu i zwraca błąd.
+	\end{enumerate}
+
+%\item Banowanie kont:
+\subsection{Banowanie kont:}
+
+\textbf{Aktorzy:} Administrator
+
+\textbf{Scenariusz główny:}
+	\begin{enumerate}
+	\item Administrator wchodzi na stronę serwisu,
+	\item Administrator loguje się do panelu administracyjnego,
+	\item Administrator wyszukuje użytkownika,
+	\item Administrator zaznacza opcję "Zbanowany",
+	\item System prosi o potwierdzenie,
+	\item Administrator potwierdza wybór,	
+	\item System zawiesza konto użytkownika.
+	\end{enumerate}
+
+\textbf{Scenariusze alternatywne:}
+	\begin{enumerate}
+	\item Administrator anuluje wybór.
+	\end{enumerate}
+%\end{enumerate}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -198,7 +305,7 @@ Główną funkcją realizowaną przez bazę danych jest przechowywanie informacj
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=1]{./img/DFD-top.png}
+\centerline{\includegraphics[scale=1]{./img/DFD-top.png}}
 \caption[Diagram przepływu danych]{Diagram przepływu danych - proces nadrzędny}
 \label{fig:DFD-top}
 \end{center}
@@ -206,7 +313,7 @@ Główną funkcją realizowaną przez bazę danych jest przechowywanie informacj
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=1]{./img/DFD-user.png}
+\centerline{\includegraphics[scale=1]{./img/DFD-user.png}}
 \caption[Diagram przepływu danych]{Diagram przepływu danych - zarządzanie kontem użytkownika}
 \label{fig:DFD-user}
 \end{center}
@@ -214,7 +321,7 @@ Główną funkcją realizowaną przez bazę danych jest przechowywanie informacj
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=1]{./img/DFD-chars.png}
+\centerline{\includegraphics[scale=1]{./img/DFD-chars.png}}
 \caption[Diagram przepływu danych]{Diagram przepływu danych - zarządzanie kartami postaci}
 \label{fig:DFD-chars}
 \end{center}
@@ -222,7 +329,7 @@ Główną funkcją realizowaną przez bazę danych jest przechowywanie informacj
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=1]{./img/DFD-scenarios.png}
+\centerline{\includegraphics[scale=1]{./img/DFD-scenarios.png}}
 \caption[Diagram przepływu danych]{Diagram przepływu danych - zarządzanie scenariuszami}
 \label{fig:DFD-scenarios}
 \end{center}
@@ -230,7 +337,7 @@ Główną funkcją realizowaną przez bazę danych jest przechowywanie informacj
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=1]{./img/DFD-social.png}
+\centerline{\includegraphics[scale=1]{./img/DFD-social.png}}
 \caption[Diagram przepływu danych]{Diagram przepływu danych - działania społecznościowe}
 \label{fig:DFD-social}
 \end{center}
@@ -238,7 +345,7 @@ Główną funkcją realizowaną przez bazę danych jest przechowywanie informacj
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=1]{./img/DFD-announcements.png}
+\centerline{\includegraphics[scale=1]{./img/DFD-announcements.png}}
 \caption[Diagram przepływu danych]{Diagram przepływu danych - zarządzanie ogłoszeniami}
 \label{fig:DFD-announcements}
 \end{center}
@@ -246,7 +353,7 @@ Główną funkcją realizowaną przez bazę danych jest przechowywanie informacj
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=1]{./img/DFD-admin.png}
+\centerline{\includegraphics[scale=1]{./img/DFD-admin.png}}
 \caption[Diagram przepływu danych]{Diagram przepływu danych - administracja}
 \label{fig:DFD-admin}
 \end{center}
@@ -330,7 +437,7 @@ Główną funkcją realizowaną przez bazę danych jest przechowywanie informacj
 
 \begin{figure}[h!]
 \begin{center}
-\includegraphics[scale=1]{./img/ERD.png}
+\centerline{\includegraphics[scale=1]{./img/ERD.png}}
 \caption[Diagram związków encji]{Diagram związków encji}
 \label{fig:ERD}
 \end{center}

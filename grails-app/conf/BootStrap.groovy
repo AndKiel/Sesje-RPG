@@ -1,26 +1,26 @@
-import persistance.Comments
-import persistance.Roles
-import persistance.Users
-import persistance.UsersRoles
+import persistance.Comment
+import persistance.Role
+import persistance.User
+import persistance.UserRole
 
 class BootStrap {
 	
 	def springSecurityService
 
 	def init = { servletContext ->
-		Users marek = new Users(login: "Marcos", passMd5: springSecurityService.encodePassword("marcos5"), state: true, nickname: "Marek Cabaj", accountExpired: false, accountLocked: false, passwordExpired: false).save(failOnError: true, flush: true)
-		Users radek = new Users(login: "RGabiga", passMd5: springSecurityService.encodePassword("radek"), state: true, nickname: "Radoslaw Gabiga", accountExpired: false, accountLocked: false, passwordExpired: false).save(failOnError: true, flush: true)
-		Users andrzej = new Users(login: "AKieltyka", passMd5: springSecurityService.encodePassword("andrzej"), state: true, nickname: "Andrzej Kieltyka", accountExpired: false, accountLocked: false, passwordExpired: false).save(failOnError: true, flush: true)
+		User marek = new User(login: "marek.cbj@gmail.com", passMd5: "marek", state: true, nickname: "Marek Cabaj").save(failOnError: true, flush: true)
+		User radek = new User(login: "radoslaw.gabiga@gmail.com", passMd5: "radek", state: false, nickname: "Radoslaw Gabiga").save(failOnError: true, flush: true)
+		User andrzej = new User(login: "a.kieltyka@gmail.com", passMd5: "andrzej", state: true, nickname: "Andrzej Kieltyka").save(failOnError: true, flush: true)
 		
-		Roles admin = new Roles(authority: "ADMIN").save(failOnError: true, flush: true)
-		Roles moderator = new Roles(authority: "MOD").save(failOnError: true, flush: true)
-		Roles user = new Roles(authority: "USER").save(failOnError: true, flush: true)
+		Role admin = new Role(authority: "ADMIN").save(failOnError: true, flush: true)
+		Role moderator = new Role(authority: "MOD").save(failOnError: true, flush: true)
+		Role user = new Role(authority: "USER").save(failOnError: true, flush: true)
 		
-		new UsersRoles(users: marek, roles: admin).save(failOnError: true, flush: true)
-		new UsersRoles(users: radek, roles: user).save(failOnError: true, flush: true)
-		new UsersRoles(users: andrzej, roles: moderator).save(failOnError: true, flush: true)
-		
-		new Comments(grade: 5, comment: "Jest to komentarz testowy", commentee: marek, commentator: radek).save(failOnError: true, flush: true)
+		new UserRole(user: marek, role: admin).save(failOnError: true, flush: true)
+		new UserRole(user: marek, role: user).save(failOnError: true, flush: true)
+		new UserRole(user: marek, role: moderator).save(failOnError: true, flush: true)
+		new UserRole(user: radek, role: user).save(failOnError: true, flush: true)
+		new UserRole(user: andrzej, role: moderator).save(failOnError: true, flush: true)
 	}
 	def destroy = {
 	}

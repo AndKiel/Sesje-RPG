@@ -1,25 +1,12 @@
 package persistance
-/**
- * The Users entity.
- *
- * @author    
- *
- *
- */
-class Users {
-	static mapping = {
-		table 'users'
-		// version is set to false, because this isn't available by default for legacy databases
-		version false
-		id column:'login', generator:'assigned', type:'string', name: 'login'
-	}
+
+class User {
+	
+	transient springSecurityService
+	
 	String login
 	String passMd5
-	boolean state
-	
-	boolean accountExpired
-	boolean accountLocked
-	boolean passwordExpired
+	boolean state = true
 	
 	String nickname
 	String location
@@ -31,11 +18,18 @@ class Users {
 	Boolean sessionNotify = false
 	Boolean messageNotify = false
 
+	static mapping = {
+		version false
+		table 'users'
+		id column:'login', generator:'assigned', type:'string', name: 'login'
+		passMd5 column: '`passMd5`'
+	}
+	
 	static constraints = {
-		login(size: 1..20, blank: false)
+		login(size: 1..60, blank: false, unique: true, email: true)
 		passMd5(size: 1..128, blank: false)
 		nickname(size: 1..30, blank: false, unique: true)
-		location(size: 0..20, nullable: true)
+		location(size: 0..60, nullable: true)
 		birthday(nullable: true)
 		homepage(size: 0..40, nullable: true)
 		showChars(nullable: true)
@@ -45,8 +39,22 @@ class Users {
 		messageNotify(nullable: true)
 	}
 	
-	Set<Roles> getAuthorities() {
-		UsersRoles.findAllByUsers(this).collect { it.roles } as Set
+	Set<Role> getAuthorities() {
+		UserRole.findAllByUser(this).collect { it.role } as Set
+	}
+	
+	def beforeInsert() {
+		encodePassword()
+	}
+
+	def beforeUpdate() {
+		if (isDirty('passMd5')) {
+			encodePassword()
+		}
+	}
+
+	protected void encodePassword() {
+		passMd5 = springSecurityService.encodePassword(passMd5)
 	}
 	
 	String toString() {

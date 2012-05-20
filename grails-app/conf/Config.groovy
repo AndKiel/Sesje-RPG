@@ -93,12 +93,14 @@ log4j = {
 }
 
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'persistance.Users'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'persistance.UsersRoles'
-grails.plugins.springsecurity.authority.className = 'persistance.Roles'
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'persistance.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'persistance.UserRole'
+grails.plugins.springsecurity.authority.className = 'persistance.Role'
 
 grails.plugins.springsecurity.userLookup.usernamePropertyName = 'login'
 grails.plugins.springsecurity.userLookup.passwordPropertyName = 'passMd5'
 grails.plugins.springsecurity.userLookup.enabledPropertyName = 'state'
 
-grails.mime.file.extensions = false
+grails.plugins.springsecurity.userLookup.accountExpiredPropertyName = null
+grails.plugins.springsecurity.userLookup.accountLockedPropertyName = null
+grails.plugins.springsecurity.userLookup.passwordExpiredPropertyName = null

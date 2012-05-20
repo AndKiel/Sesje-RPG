@@ -1,19 +1,7 @@
 package persistance
-/**
- * The RpgSystems entity.
- *
- * @author    
- *
- *
- */
-class RpgSystems {
-	static mapping = {
-		table 'rpg_systems'
-		// version is set to false, because this isn't available by default for legacy databases
-		version false
-		id generator:'identity', column:'id'
-	}
-	Long id
+
+class RpgSystem {
+
 	String name
 	String description
 	String genre
@@ -22,8 +10,12 @@ class RpgSystems {
 	Date year
 	String charSheetDtd
 
+	static mapping = {
+		version false
+		table 'rpg_systems'
+	}
+	
 	static constraints = {
-		id()
 		name(size: 1..20, blank: false, unique: true)
 		description(nullable: true)
 		genre(size: 0..20, nullable: true)
@@ -32,6 +24,7 @@ class RpgSystems {
 		year(nullable: true)
 		charSheetDtd(nullable: true)
 	}
+	
 	String toString() {
 		return "${id}"
 	}

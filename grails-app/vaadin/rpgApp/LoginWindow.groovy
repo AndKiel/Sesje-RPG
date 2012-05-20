@@ -1,0 +1,81 @@
+package rpgApp
+
+import com.vaadin.ui.Alignment
+import com.vaadin.ui.CheckBox
+import com.vaadin.ui.GridLayout
+import com.vaadin.ui.PasswordField
+import com.vaadin.ui.Window
+import com.vaadin.ui.Form
+import com.vaadin.ui.TextField
+import com.vaadin.ui.Button
+import com.vaadin.ui.Button.ClickEvent
+import com.vaadin.event.ShortcutAction.KeyCode
+import com.vaadin.terminal.Sizeable
+import com.vaadin.ui.Window.Notification
+
+class LoginWindow extends Window implements Button.ClickListener {
+	private Button login = new Button("Login", (Button.ClickListener)this)
+	private Button cancel = new Button("Cancel", (Button.ClickListener)this)
+	private Form loginForm = new Form()
+	private CheckBox rememberMe = new CheckBox("Remember me")
+	private IndexApplication app
+	
+	LoginWindow(IndexApplication app) {
+		super("Login")
+		this.app = app
+		this.setCaption("Login")
+		setModal(true)
+		setDraggable(false)
+		setResizable(false)
+
+		TextField loginField = new TextField("Email: ")
+		loginField.setWidth("100%")
+		loginField.setRequired(true)
+		loginForm.addField("login", loginField)
+
+		PasswordField passwordField = new PasswordField("Password: ")
+		passwordField.setWidth("100%")
+		passwordField.setRequired(true)
+		loginForm.addField("password", passwordField)
+
+		rememberMe.setValue(true)
+
+		login.setClickShortcut(KeyCode.ENTER);
+		login.addStyleName("primary");
+		GridLayout footer = new GridLayout(2,2);
+		footer.setSpacing(true);
+		footer.setWidth(100, Sizeable.UNITS_PERCENTAGE)
+		footer.addComponent(rememberMe, 0, 0, 1, 0)
+		footer.setComponentAlignment(rememberMe, Alignment.MIDDLE_CENTER)
+		footer.addComponent(login, 0, 1, 0, 1);
+		footer.setComponentAlignment(login, Alignment.MIDDLE_CENTER)
+		footer.addComponent(cancel, 1, 1, 1, 1);
+		footer.setComponentAlignment(cancel, Alignment.MIDDLE_CENTER)
+
+		loginForm.setFooter(footer)
+		loginForm.setWidth("100%")
+
+		addComponent(loginForm);
+
+		setWidth(15, Sizeable.UNITS_PERCENTAGE)
+		center();
+	}
+
+	void buttonClick(ClickEvent clickEvent) {
+		switch(clickEvent.source){
+			case login:
+				if(loginForm.isValid()){
+					if(app.login((String)(loginForm.getField("login").getValue()), (String)(loginForm.getField("password").getValue()))){
+						if(rememberMe.getValue()) {
+							app.setLoginCookies((String)(loginForm.getField("login").getValue()), (String)(loginForm.getField("password").getValue()), 604800) 	// Cookie lifetime = 1 week
+						}
+						this.close()
+					}
+				} 
+				break;
+			case cancel:
+				this.close()
+				break;
+		}
+	}
+}

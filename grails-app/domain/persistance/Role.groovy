@@ -1,12 +1,13 @@
 package persistance
 
-class Roles {
+class Role {
 
 	String authority
 
 	static mapping = {
 		cache true
 		version false
+		table 'roles'
 	}
 
 	static constraints = {

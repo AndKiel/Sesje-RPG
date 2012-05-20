@@ -1,5 +1,5 @@
 vaadin {
-    applicationClass = "rpgSession.IndexApplication"
+    applicationClass = "rpgApp.IndexApplication"
 
     // This is optional, GrailsAwareApplicationServlet is provided by default. Use this if you need to add or change application servlet. 
     // You should extend GrailsAwareApplicationServlet or GrailsAwareGAEApplicationServlet (from com.vaadin.grails.terminal.gwt.server package).

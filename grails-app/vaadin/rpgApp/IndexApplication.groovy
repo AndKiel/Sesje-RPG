@@ -6,26 +6,31 @@ import javax.servlet.http.HttpServletResponse
 
 
 import com.vaadin.Application
-import com.vaadin.terminal.Sizeable
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
-import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Label
+import com.vaadin.ui.Panel
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Window
 import com.vaadin.ui.Button.ClickListener
 import com.vaadin.ui.Window.Notification
+import com.vaadin.ui.themes.Reindeer
 
 
 class IndexApplication extends Application implements ClickListener, HttpServletRequestListener{
 
-	private Button login = new Button("Login")
-	private Button logout = new Button("Logout")
-	private Button register = new Button("Register")
-	private Label who = new Label("")
-	private VerticalLayout layout = new VerticalLayout()
-	private HorizontalLayout toolbar = new HorizontalLayout()
+	private Button login
+	private Button logout
+	private Button register
+	private Label who
+
+	private VerticalLayout layout	// Main window layout
+	private Panel main				// Main window panel
+	private Panel header
+	private Panel menuBar
+	private Panel content
+	private Panel footer
 
 	HttpServletResponse response
 
@@ -59,39 +64,83 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	void init() {
 		def window = new Window("RPG Sessions")
 		setMainWindow(window)
-		window.setContent(layout)	
-		layout.setWidth(300, Sizeable.UNITS_PIXELS)
-		layout.setHeight(100, Sizeable.UNITS_PIXELS)
-		layout.addComponent(toolbar)
-		layout.setComponentAlignment(toolbar, Alignment.MIDDLE_CENTER)
-		toolbar.setSpacing(true)
 		
+		// Creating main panel (FullSize)
+		main = new Panel()
+		main.setSizeFull()
+		main.setStyleName(Reindeer.PANEL_LIGHT);
+		window.setContent(main)
+		
+		// Creating main layout (FullSize)
+		layout = new VerticalLayout()
+		layout.setSizeFull()
+		main.addComponent(layout)
+
+		// Main window layout settings
+		layout.addComponent(createHeader())
+		layout.addComponent(createMenuBar())
+		layout.addComponent(createContent())
+		layout.addComponent(createFooter())
+		layout.setComponentAlignment(header, Alignment.MIDDLE_CENTER)
+		layout.setComponentAlignment(menuBar, Alignment.MIDDLE_CENTER)
+		layout.setComponentAlignment(content, Alignment.MIDDLE_CENTER)
+		layout.setComponentAlignment(footer, Alignment.MIDDLE_CENTER)
+		layout.setMargin(true)
+		layout.setSpacing(true)
+	}
+
+	Panel createHeader() {
+		header = new Panel()
+		header.setWidth("50%")
+		header.setHeight("120px")
+		login = new Button("Login")
+		logout = new Button("Logout")
+		register = new Button("Register")
+		who = new Label("")
+
 		boolean isSigned = security.isSignedIn()
 
 		login.addListener((Button.ClickListener)this)
-		toolbar.addComponent(login)
 		login.setVisible(!isSigned)
-		
+
 		logout.addListener((Button.ClickListener)this)
-		toolbar.addComponent(logout)
 		logout.setVisible(isSigned)
 
 		register.addListener((Button.ClickListener)this)
-		toolbar.addComponent(register)
 		register.setVisible(!isSigned)
-		
-		toolbar.addComponent(who)
+
 		who.setVisible(isSigned)
-		who.setCaption("You are logged in as: "+security.getContextNickname())
+		who.setCaption("Your are logged in as: "+security.getContextNickname())
 		
-//		toolbar.setComponentAlignment(login, Alignment.MIDDLE_RIGHT)
-//		toolbar.setComponentAlignment(logout, Alignment.MIDDLE_RIGHT)
-//		toolbar.setComponentAlignment(register, Alignment.MIDDLE_LEFT)
-//		toolbar.setComponentAlignment(who, Alignment.MIDDLE_LEFT)
-		
+		header.addComponent(logout)
+		header.addComponent(login)
+		header.addComponent(register)
+		header.addComponent(who)
+
+		return header
 	}
 
-	
+	Panel createMenuBar() {
+		menuBar = new Panel()
+		menuBar.setWidth("50%")
+		menuBar.setHeight("50px")
+		return menuBar
+	}
+
+	Panel createContent() {
+		content = new Panel()
+		content.setWidth("50%")
+		content.setHeight("600px")
+		return content
+	}
+
+	Panel createFooter() {
+		footer = new Panel()
+		footer.setWidth("50%")
+		footer.setHeight("70px")
+		return footer
+	}
+
 	// Buttons clicks listner
 	public void buttonClick(Button.ClickEvent event) {
 		final Button source = event.getButton()
@@ -132,7 +181,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 
 	private void refreshToolbar(){
 		boolean isSigned = security.isSignedIn()
-		
+
 		login.setVisible(!isSigned)
 		logout.setVisible(isSigned)
 		register.setVisible(!isSigned)

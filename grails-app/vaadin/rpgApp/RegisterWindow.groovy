@@ -44,7 +44,7 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 		PasswordField passwordField = new PasswordField("Password: ")
 		loginField.addValidator(new StringLengthValidator("Password must be 6 to 30 signs", 6, 30, false))
 		passwordField.setWidth("100%")
-		passwordField.setRequired(true)
+		passwordField.setRequired(true)	
 		registerForm.addField("password", passwordField)
 
 		PasswordField password2Field = new PasswordField("Repeat password: ")

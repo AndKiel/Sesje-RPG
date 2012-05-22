@@ -12,8 +12,8 @@ import rpgApp.SecurityServiceException;
 
 class SecurityService {
 
-	static transactional = true
-
+	static transactional
+	
 	def springSecurityService
 	def authenticationManager
 

@@ -1,4 +1,6 @@
-package rpgApp
+package rpgApp.windows
+
+import rpgApp.main.IndexApplication;
 
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.CheckBox

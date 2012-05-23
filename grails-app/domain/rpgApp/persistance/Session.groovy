@@ -1,10 +1,11 @@
-package persistance
+package rpgApp.persistance
 
-class Scenario {
+class Session {
 	
+	Date dateCreated
+	Date timeStamp
 	String type
-	Integer playersCount
-	String content
+	String location
 	
 	// Relation
 	User owner
@@ -12,15 +13,15 @@ class Scenario {
 
 	static mapping = {
 		version false
-		table 'scenarios'
+		table 'sessions'
 		owner column: 'owner'
 		system column: 'system'
 	}
 	
 	static constraints = {
+		timeStamp()
 		type(size: 1..1, blank: false)
-		playersCount(max: 99999)
-		content(blank: false)
+		location(size: 0..20, nullable: true)
 		owner()
 		system()
 	}

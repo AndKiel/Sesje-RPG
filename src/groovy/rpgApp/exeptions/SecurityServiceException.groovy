@@ -1,4 +1,4 @@
-package rpgApp
+package rpgApp.exeptions
 
 class SecurityServiceException extends RuntimeException {
     SecurityServiceException(String message){

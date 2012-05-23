@@ -1,7 +1,7 @@
-import persistance.Comment
-import persistance.Role
-import persistance.User
-import persistance.UserRole
+import rpgApp.persistance.Role
+import rpgApp.persistance.User
+import rpgApp.persistance.UserRole
+
 
 class BootStrap {
 	

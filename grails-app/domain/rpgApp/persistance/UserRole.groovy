@@ -1,4 +1,4 @@
-package persistance
+package rpgApp.persistance
 
 import org.apache.commons.lang.builder.HashCodeBuilder
 

@@ -1,0 +1,36 @@
+@import url(../reindeer/styles.css);
+
+ .v-panel-content-header-panel {
+    background: transparent;
+}
+
+ .v-panel-content-header-panel > div {
+   background: url(img/logo.jpg);
+}
+
+ .v-panel-content-login-panel {
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+ .v-panel-content-login-panel > div {
+   background: transparent;
+}
+
+.v-panel-content-footer-panel {
+	background: transparent;
+}
+
+.v-panel-content-footer-panel > div {
+	background-color: black;
+	color: white;
+}
+
+.v-tabsheet-tabitemcell {
+    width: 15%;
+}
+
+.v-tabsheet-tabitem .v-caption {
+    width: auto !important;
+}

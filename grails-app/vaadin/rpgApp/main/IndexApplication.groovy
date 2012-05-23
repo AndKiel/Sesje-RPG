@@ -1,8 +1,17 @@
-package rpgApp
+package rpgApp.main
 
 import javax.servlet.http.Cookie
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+
+import rpgApp.exeptions.ValidationException
+import rpgApp.panels.Content
+import rpgApp.panels.Footer
+import rpgApp.panels.Header
+import rpgApp.services.SecurityService;
+import rpgApp.services.UserService;
+import rpgApp.windows.LoginWindow;
+import rpgApp.windows.RegisterWindow;
 
 
 import com.vaadin.Application
@@ -20,15 +29,15 @@ import com.vaadin.ui.themes.Reindeer
 
 class IndexApplication extends Application implements ClickListener, HttpServletRequestListener{
 
-	private Button login
-	private Button logout
-	private Button register
-	private Label who
+	public Button login
+	public Button logout
+	public Button register
+	public Label who
+	public boolean isSigned
 
 	private VerticalLayout layout	// Main window layout
 	private Panel main				// Main window panel
 	private Panel header
-	private Panel menuBar
 	private Panel content
 	private Panel footer
 
@@ -64,7 +73,10 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	void init() {
 		def window = new Window("RPG Sessions")
 		setMainWindow(window)
-		
+		isSigned = security.isSignedIn()
+		// Setting custom theme
+		this.setTheme("rpg-theme")
+
 		// Creating main panel (FullSize)
 		main = new Panel()
 		main.setSizeFull()
@@ -77,69 +89,16 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		main.addComponent(layout)
 
 		// Main window layout settings
-		layout.addComponent(createHeader())
-		layout.addComponent(createMenuBar())
-		layout.addComponent(createContent())
-		layout.addComponent(createFooter())
+		layout.addComponent(header = new Header(this))
+		layout.addComponent(content = new Content(this))
+		layout.addComponent(footer = new Footer(this))
 		layout.setComponentAlignment(header, Alignment.MIDDLE_CENTER)
-		layout.setComponentAlignment(menuBar, Alignment.MIDDLE_CENTER)
 		layout.setComponentAlignment(content, Alignment.MIDDLE_CENTER)
 		layout.setComponentAlignment(footer, Alignment.MIDDLE_CENTER)
 		layout.setMargin(true)
 		layout.setSpacing(true)
 	}
 
-	Panel createHeader() {
-		header = new Panel()
-		header.setWidth("50%")
-		header.setHeight("120px")
-		login = new Button("Login")
-		logout = new Button("Logout")
-		register = new Button("Register")
-		who = new Label("")
-
-		boolean isSigned = security.isSignedIn()
-
-		login.addListener((Button.ClickListener)this)
-		login.setVisible(!isSigned)
-
-		logout.addListener((Button.ClickListener)this)
-		logout.setVisible(isSigned)
-
-		register.addListener((Button.ClickListener)this)
-		register.setVisible(!isSigned)
-
-		who.setVisible(isSigned)
-		who.setCaption("Your are logged in as: "+security.getContextNickname())
-		
-		header.addComponent(logout)
-		header.addComponent(login)
-		header.addComponent(register)
-		header.addComponent(who)
-
-		return header
-	}
-
-	Panel createMenuBar() {
-		menuBar = new Panel()
-		menuBar.setWidth("50%")
-		menuBar.setHeight("50px")
-		return menuBar
-	}
-
-	Panel createContent() {
-		content = new Panel()
-		content.setWidth("50%")
-		content.setHeight("600px")
-		return content
-	}
-
-	Panel createFooter() {
-		footer = new Panel()
-		footer.setWidth("50%")
-		footer.setHeight("70px")
-		return footer
-	}
 
 	// Buttons clicks listner
 	public void buttonClick(Button.ClickEvent event) {
@@ -188,6 +147,17 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		who.setVisible(isSigned)
 	}
 
+	private void setLoginPanel() {
+		login.addListener((Button.ClickListener)this)
+		login.setVisible(!isSigned)
+		logout.addListener((Button.ClickListener)this)
+		logout.setVisible(isSigned)
+		register.addListener((Button.ClickListener)this)
+		register.setVisible(!isSigned)
+		who.setVisible(isSigned)
+		who.setCaption("Your are logged in as: "+security.getContextNickname())
+	}
+	
 	public void setLoginCookies(String username, String password, int maxAge) {
 		Cookie cookie = new Cookie("username", username)
 		cookie.setMaxAge(maxAge)

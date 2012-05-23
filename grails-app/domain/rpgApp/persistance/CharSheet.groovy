@@ -1,4 +1,4 @@
-package persistance
+package rpgApp.persistance
 
 class CharSheet {
 	

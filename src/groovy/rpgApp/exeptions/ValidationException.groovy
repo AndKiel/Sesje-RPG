@@ -1,4 +1,4 @@
-package rpgApp
+package rpgApp.exeptions
 
 class ValidationException extends RuntimeException {
     ValidationException(String message){

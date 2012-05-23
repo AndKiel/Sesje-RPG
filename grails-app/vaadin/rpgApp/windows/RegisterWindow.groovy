@@ -1,6 +1,8 @@
-package rpgApp
+package rpgApp.windows
 
 import java.text.DateFormat
+
+import rpgApp.main.IndexApplication;
 
 import com.vaadin.data.Property.ValueChangeEvent
 import com.vaadin.data.Property.ValueChangeListener

@@ -1,6 +1,8 @@
-package rpgApp
+package rpgApp.services
 
-import persistance.User
+import rpgApp.exeptions.ValidationException
+import rpgApp.persistance.User
+
 
 class UserService {
 

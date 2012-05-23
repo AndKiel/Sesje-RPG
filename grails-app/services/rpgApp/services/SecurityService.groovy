@@ -1,13 +1,14 @@
-package rpgApp
+package rpgApp.services
 
 import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.authentication.DisabledException
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.context.SecurityContextHolder as SCH
 
-import persistance.Role
-import persistance.User
-import rpgApp.SecurityServiceException;
+import rpgApp.exeptions.SecurityServiceException
+import rpgApp.persistance.Role
+import rpgApp.persistance.User
+
 
 
 class SecurityService {

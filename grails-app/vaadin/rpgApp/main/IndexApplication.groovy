@@ -119,7 +119,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	boolean login(String username, String password) {
 		try {
 			security.signIn(username, password)
-			who.setCaption("You are logged in as: "+security.getContextNickname())
+			who.setCaption("Hello "+security.getContextNickname()+" !")
 			refreshToolbar()
 			return true
 		} catch (Exception e) {
@@ -155,7 +155,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		register.addListener((Button.ClickListener)this)
 		register.setVisible(!isSigned)
 		who.setVisible(isSigned)
-		who.setCaption("Your are logged in as: "+security.getContextNickname())
+		who.setCaption("Hello "+security.getContextNickname()+" !")
 	}
 	
 	public void setLoginCookies(String username, String password, int maxAge) {

@@ -34,3 +34,13 @@
 .v-tabsheet-tabitem .v-caption {
     width: auto !important;
 }
+
+.v-tree {
+      padding-top: 15px;
+      padding-left: 10px;
+}
+
+.v-tree-node-no-children
+{
+    background: none;
+}

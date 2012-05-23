@@ -9,20 +9,22 @@ import rpgApp.content.Systems
 import rpgApp.content.Users
 import rpgApp.main.IndexApplication
 
-import com.vaadin.ui.Alignment
 import com.vaadin.ui.HorizontalLayout
+import com.vaadin.ui.HorizontalSplitPanel
 import com.vaadin.ui.Panel
 import com.vaadin.ui.TabSheet
 import com.vaadin.ui.VerticalLayout
+import com.vaadin.ui.TabSheet.SelectedTabChangeEvent
+import com.vaadin.ui.TabSheet.Tab
 
-class Content extends Panel {
+class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 	private IndexApplication app
 	private TabSheet tabSheet
 	private HorizontalLayout startPage
 	private VerticalLayout systems 
 	private VerticalLayout announcements 
 	private VerticalLayout users
-	private VerticalLayout myPage
+	private HorizontalSplitPanel myPage
 	private VerticalLayout about
 	private VerticalLayout faq
 	
@@ -45,7 +47,18 @@ class Content extends Panel {
 		tabSheet.addTab(myPage = new MyPage(), "My Page")
 		tabSheet.addTab(about = new About(), "About")
 		tabSheet.addTab(faq = new Faq(), "FAQ")
+		tabSheet.addListener((TabSheet.SelectedTabChangeListener) this)
 		panelLayout.addComponent(tabSheet)
+	}
+	
+	public void selectedTabChange(SelectedTabChangeEvent event) {
+		TabSheet tabsheet = event.getTabSheet();
+		Tab tab = tabsheet.getTab(tabsheet.getSelectedTab());
+		if (tab != null) {
+			if((tab.getCaption()).equals("My Page")) {
+				myPage.setStartSelection()
+			}
+		}
 	}
 
 }

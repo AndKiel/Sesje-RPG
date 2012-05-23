@@ -16,8 +16,8 @@ environments {
 			// one of 'create', 'create-drop','update'
 			dbCreate = "create-drop"
 			url="jdbc:postgresql://localhost:5432/rpg_app"
-			username = "rpg"
-			password = "rpg"
+			username = "postgres"
+			password = "postgres"
 		}
 	}
 	test {

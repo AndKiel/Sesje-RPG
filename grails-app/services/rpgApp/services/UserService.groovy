@@ -28,7 +28,13 @@ class UserService {
 				return
 			}
 		} else {
-			u.save(flush: true)
+			u.save()
+		}
+	}
+	
+	List<String> getAllUsersNicknames() {
+		return User.findAll().collect {
+			new String(it.nickname)
 		}
 	}
 }

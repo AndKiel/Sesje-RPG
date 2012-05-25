@@ -19,7 +19,7 @@ class Comment {
 	
 	static constraints = {
 		grade(max: 99999)
-		comment(blank: false)
+		comment(maxSize: 5000, blank: false)
 		commentee()
 		commentator()
 	}

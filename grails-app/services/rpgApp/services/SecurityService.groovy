@@ -9,8 +9,6 @@ import rpgApp.exeptions.SecurityServiceException
 import rpgApp.persistance.Role
 import rpgApp.persistance.User
 
-
-
 class SecurityService {
 
 	static transactional
@@ -45,6 +43,11 @@ class SecurityService {
 		} else {
 			return user.getNickname()
 		}
+	}
+	
+	User getContextUser() {
+		String login = SCH.getContext().getAuthentication().name
+		return User.get(login)
 	}
 
 	boolean checkRole(String role) {

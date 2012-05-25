@@ -10,8 +10,8 @@ import com.vaadin.ui.Panel
 
 class Header extends Panel {
 	private IndexApplication app
-	private HorizontalLayout hl
-	private Panel p
+	private HorizontalLayout headerLayout
+	private Panel loginPanel
 	
 	
 	public Header(IndexApplication app) {
@@ -27,21 +27,22 @@ class Header extends Panel {
 	
 		app.setLoginPanel()
 	
-		hl = new HorizontalLayout()
-		p = new Panel()
-		p.addStyleName("login-panel")
+		headerLayout = new HorizontalLayout()
+		loginPanel = new Panel()
+		loginPanel.addStyleName("login-panel")
 		
-		setContent(hl)
-		hl.setSizeFull()
-		hl.setMargin(true)
-		hl.addComponent(p)
-		hl.setComponentAlignment(p, Alignment.MIDDLE_RIGHT)
+		headerLayout.setSizeFull()
+		headerLayout.setMargin(true)
+		headerLayout.addComponent(loginPanel)
+		headerLayout.setComponentAlignment(loginPanel, Alignment.MIDDLE_RIGHT)
 				
-		p.getContent().setSpacing(true)
-		p.setWidth("300px")
-		p.addComponent(app.logout)
-		p.addComponent(app.login)
-		p.addComponent(app.register)
-		p.addComponent(app.who)
+		loginPanel.getContent().setSpacing(true)
+		loginPanel.setWidth("300px")
+		loginPanel.addComponent(app.logout)
+		loginPanel.addComponent(app.login)
+		loginPanel.addComponent(app.register)
+		loginPanel.addComponent(app.who)
+		
+		setContent(headerLayout)
 	}
 }

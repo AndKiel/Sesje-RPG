@@ -10,7 +10,14 @@
 
  .v-panel-content-login-panel {
     background: transparent;
+    /* Fallback for web browsers that doesn't support RGBa */
+	background: rgb(255, 255, 255);
+	/* RGBa with 0.6 opacity */
+	background: rgba(117,177,177, 0.2);
     border: none;
+    -webkit-border-radius: 20px;
+	-moz-border-radius: 20px;
+	border-radius: 20px;
     color: white;
 }
 
@@ -36,11 +43,33 @@
 }
 
 .v-tree {
-      padding-top: 15px;
-      padding-left: 10px;
+	padding-top: 15px;
+    padding-left: 10px;
 }
 
 .v-tree-node-no-children
 {
     background: none;
+}
+
+.v-table-row.v-table-row-unread {
+	font-weight: bold; 
+    background-color: white;
+ }
+ 
+.v-table-row-odd.v-table-row-unread {
+	font-weight: bold; 
+	background-color: white;
+}
+
+.v-table-row.v-table-row-read {
+    background-color: #DCE7E8;
+ }
+.v-table-row-odd.v-table-row-read {
+	background-color: #DCE7E8;
+}
+
+.v-button .v-button-wrap>.v-icon{
+	height:16px;
+	width:16px;
 }

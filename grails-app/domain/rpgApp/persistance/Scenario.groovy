@@ -20,7 +20,7 @@ class Scenario {
 	static constraints = {
 		type(size: 1..1, blank: false)
 		playersCount(max: 99999)
-		content(blank: false)
+		content(maxSize: 5000, blank: false)
 		owner()
 		system()
 	}

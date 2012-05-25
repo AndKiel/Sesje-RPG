@@ -12,6 +12,7 @@ import rpgApp.services.SecurityService;
 import rpgApp.services.UserService;
 import rpgApp.windows.LoginWindow;
 import rpgApp.windows.RegisterWindow;
+import rpgApp.windows.YesNoDialog
 
 
 import com.vaadin.Application
@@ -22,6 +23,7 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.Panel
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Window
+import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Button.ClickListener
 import com.vaadin.ui.Window.Notification
 import com.vaadin.ui.themes.Reindeer
@@ -82,11 +84,10 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		main.setSizeFull()
 		main.setStyleName(Reindeer.PANEL_LIGHT);
 		window.setContent(main)
-		
+
 		// Creating main layout (FullSize)
-		layout = new VerticalLayout()
+		layout = main.getContent()
 		layout.setSizeFull()
-		main.addComponent(layout)
 
 		// Main window layout settings
 		layout.addComponent(header = new Header(this))
@@ -95,7 +96,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		layout.setComponentAlignment(header, Alignment.MIDDLE_CENTER)
 		layout.setComponentAlignment(content, Alignment.MIDDLE_CENTER)
 		layout.setComponentAlignment(footer, Alignment.MIDDLE_CENTER)
-		layout.setMargin(true)
+		layout.setMargin(true, false, true, false)
 		layout.setSpacing(true)
 	}
 
@@ -108,7 +109,9 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		}
 		else if(source == logout) {
 			security.signOut()
+			isSigned = security.isSignedIn()
 			setLoginCookies("","",0)
+			content.selectStartPage()
 			refreshToolbar()
 		}
 		else if(source == register) {
@@ -119,7 +122,9 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	boolean login(String username, String password) {
 		try {
 			security.signIn(username, password)
+			isSigned = security.isSignedIn()
 			who.setCaption("Hello "+security.getContextNickname()+" !")
+			content.selectStartPage()
 			refreshToolbar()
 			return true
 		} catch (Exception e) {
@@ -157,7 +162,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		who.setVisible(isSigned)
 		who.setCaption("Hello "+security.getContextNickname()+" !")
 	}
-	
+
 	public void setLoginCookies(String username, String password, int maxAge) {
 		Cookie cookie = new Cookie("username", username)
 		cookie.setMaxAge(maxAge)

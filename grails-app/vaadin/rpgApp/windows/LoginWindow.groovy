@@ -16,13 +16,15 @@ import com.vaadin.terminal.Sizeable
 import com.vaadin.ui.Window.Notification
 
 class LoginWindow extends Window implements Button.ClickListener {
-	private Button login = new Button("Login", (Button.ClickListener)this)
-	private Button cancel = new Button("Cancel", (Button.ClickListener)this)
-	private Form loginForm = new Form()
-	private CheckBox rememberMe = new CheckBox("Remember me")
 	private IndexApplication app
 	
+	private Button login
+	private Button cancel
+	private Form loginForm
+	private CheckBox rememberMe
+	
 	LoginWindow(IndexApplication app) {
+		// Window settings
 		super("Login")
 		this.app = app
 		this.setCaption("Login")
@@ -30,6 +32,8 @@ class LoginWindow extends Window implements Button.ClickListener {
 		setDraggable(false)
 		setResizable(false)
 
+		// Creating login form
+		loginForm = new Form()
 		TextField loginField = new TextField("Email: ")
 		loginField.setWidth("100%")
 		loginField.setRequired(true)
@@ -40,10 +44,16 @@ class LoginWindow extends Window implements Button.ClickListener {
 		passwordField.setRequired(true)
 		loginForm.addField("password", passwordField)
 
+		rememberMe = new CheckBox("Remember me")
 		rememberMe.setValue(true)
 
+		login = new Button("Login", (Button.ClickListener)this)
 		login.setClickShortcut(KeyCode.ENTER);
 		login.addStyleName("primary");
+	
+		cancel = new Button("Cancel", (Button.ClickListener)this)
+	
+		// Creating login form footer 
 		GridLayout footer = new GridLayout(2,2);
 		footer.setSpacing(true);
 		footer.setWidth(100, Sizeable.UNITS_PERCENTAGE)
@@ -59,7 +69,7 @@ class LoginWindow extends Window implements Button.ClickListener {
 
 		addComponent(loginForm);
 
-		setWidth(15, Sizeable.UNITS_PERCENTAGE)
+		setWidth(300, Sizeable.UNITS_PIXELS)
 		center();
 	}
 

@@ -19,8 +19,8 @@ class Message {
 	}
 	
 	static constraints = {
-		topic(size: 0..20, nullable: true)
-		content(blank: false)
+		topic(size: 0..50, nullable: true)
+		content(maxSize: 5000, blank: false)
 		wasRead(nullable: true)
 		sender()
 		addressee()

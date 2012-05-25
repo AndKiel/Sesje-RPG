@@ -1,5 +1,6 @@
 package rpgApp.content
 
+import rpgApp.main.IndexApplication
 import rpgApp.pages.Chars
 import rpgApp.pages.Messages
 import rpgApp.pages.Profile
@@ -14,6 +15,8 @@ import com.vaadin.ui.Tree
 import com.vaadin.ui.VerticalLayout
 
 class MyPage extends HorizontalSplitPanel implements ItemClickListener {
+	private IndexApplication app
+	
 	private Tree menu
 	private static final Object profileN = "Profile"
 	private static final Object messagesN = "Messages"
@@ -27,14 +30,10 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 	private VerticalLayout chars
 	private VerticalLayout sessions
 
-	public MyPage() {
+	public MyPage(IndexApplication app) {
+		this.app = app
+		
 		menu = new Tree()
-
-		setFirstComponent(menu)
-		setSecondComponent(getProfile())
-		setSplitPosition(15)
-		setLocked(true)
-
 		menu.setItemStyleGenerator(new TreeItemStyleGenerator())
 		menu.addItem(profileN)
 		menu.addItem(messagesN)
@@ -45,6 +44,12 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		menu.setNullSelectionAllowed(false)
 		menu.addListener((ItemClickListener) this)
 		menu.select(profileN)
+
+		setFirstComponent(menu)
+		setSecondComponent(getProfile())
+		setSplitPosition(15)
+		setLocked(true)
+
 	}
 
 	public void itemClick(ItemClickEvent event) {
@@ -54,6 +59,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 				setSecondComponent(getProfile())
 			} else if(messagesN.equals(itemId)) {
 				setSecondComponent(getMessages())
+				messages.fillMessages()
 			} else if(scenariosN.equals(itemId)) {
 				setSecondComponent(getScenarios())
 			} else if(charsN.equals(itemId)) {
@@ -64,37 +70,39 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		}
 	}
 
+	
+	// LAZY LOADS
 	private VerticalLayout getMessages() {
 		if(messages == null) {
-			messages = new Messages()
+			messages = new Messages(app)
 		}
 		return messages
 	}
 
 	private VerticalLayout getProfile() {
 		if(profile == null) {
-			profile = new Profile()
+			profile = new Profile(app)
 		}
 		return profile
 	}
 	
 	private VerticalLayout getScenarios() {
 		if(scenarios == null) {
-			scenarios = new Scenarios()
+			scenarios = new Scenarios(app)
 		}
 		return scenarios
 	}
 	
 	private VerticalLayout getChars() {
 		if(chars == null) {
-			chars = new Chars()
+			chars = new Chars(app)
 		}
 		return chars
 	}
 	
 	private VerticalLayout getSessions() {
 		if(sessions == null) {
-			sessions = new Sessions()
+			sessions = new Sessions(app)
 		}
 		return sessions
 	}

@@ -17,12 +17,12 @@ class RpgSystem {
 	
 	static constraints = {
 		name(size: 1..20, blank: false, unique: true)
-		description(nullable: true)
+		description(maxSize: 5000, nullable: true)
 		genre(size: 0..20, nullable: true)
 		designer(size: 0..20, nullable: true)
 		publisher(size: 0..20, nullable: true)
 		year(nullable: true)
-		charSheetDtd(nullable: true)
+		charSheetDtd(maxSize: 5000, nullable: true)
 	}
 	
 	String toString() {

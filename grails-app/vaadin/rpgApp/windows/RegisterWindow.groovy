@@ -23,13 +23,14 @@ import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Window.Notification
 
 class RegisterWindow extends Window implements Button.ClickListener, ValueChangeListener {
-
-	private Button register = new Button("Create account", (Button.ClickListener)this)
-	private Button cancel = new Button("Cancel", (Button.ClickListener)this)
-	private Form registerForm = new Form()
 	private IndexApplication app
 
+	private Button register
+	private Button cancel
+	private Form registerForm
+
 	RegisterWindow(IndexApplication app) {
+		// Window settings
 		super("Registration")
 		this.app = app
 		this.setCaption("Registration")
@@ -37,6 +38,8 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 		setDraggable(false)
 		setResizable(false)
 
+		// Creating register form
+		registerForm = new Form()
 		TextField loginField = new TextField("Email: ")
 		loginField.addValidator(new EmailValidator("Wrong e-mail format"))
 		loginField.setWidth("100%")
@@ -84,15 +87,16 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 		birthday.setImmediate(true)
 		registerForm.addField("birthday", birthday)
 
-
 		TextField homepageField = new TextField("Homepage: ")
 		homepageField.addValidator(new StringLengthValidator("Homepage must be less than 40 signs", 0, 40, true))
 		homepageField.setWidth("100%")
 		registerForm.addField("homepage", homepageField)
 
-
+		register = new Button("Create account", (Button.ClickListener)this)
 		register.setClickShortcut(KeyCode.ENTER);
 		register.addStyleName("primary");
+		
+		cancel = new Button("Cancel", (Button.ClickListener)this)
 
 		// Adding form footer
 		HorizontalLayout footer = new HorizontalLayout();
@@ -107,7 +111,7 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 
 		addComponent(registerForm);
 
-		setWidth(20, Sizeable.UNITS_PERCENTAGE)
+		setWidth(400, Sizeable.UNITS_PIXELS)
 		center();
 	}
 

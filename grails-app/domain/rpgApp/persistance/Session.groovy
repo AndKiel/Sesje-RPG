@@ -21,7 +21,7 @@ class Session {
 	static constraints = {
 		timeStamp()
 		type(size: 1..1, blank: false)
-		location(size: 0..20, nullable: true)
+		location(size: 0..40, nullable: true)
 		owner()
 		system()
 	}

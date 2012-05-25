@@ -16,7 +16,7 @@ class CharSheet {
 	}
 	
 	static constraints = {
-		xmlData()
+		xmlData(maxSize: 5000)
 		owner()
 		system()
 	}

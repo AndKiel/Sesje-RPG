@@ -1,3 +1,4 @@
+import rpgApp.persistance.Message
 import rpgApp.persistance.Role
 import rpgApp.persistance.User
 import rpgApp.persistance.UserRole
@@ -8,19 +9,21 @@ class BootStrap {
 	def springSecurityService
 
 	def init = { servletContext ->
-		User marek = new User(login: "marek.cbj@gmail.com", passMd5: "marek", state: true, nickname: "Marek Cabaj").save(failOnError: true, flush: true)
-		User radek = new User(login: "radoslaw.gabiga@gmail.com", passMd5: "radek", state: false, nickname: "Radoslaw Gabiga").save(failOnError: true, flush: true)
-		User andrzej = new User(login: "a.kieltyka@gmail.com", passMd5: "andrzej", state: true, nickname: "Andrzej Kieltyka").save(failOnError: true, flush: true)
+		User marek = new User(login: "marek@gmail.com", passMd5: "marek",  nickname: "Marek").save()
+		User radek = new User(login: "radek@gmail.com", passMd5: "radek",  nickname: "Radek").save()
+		User andrzej = new User(login: "andrzej@gmail.com", passMd5: "andrzej", nickname: "Andrzej").save()
+		User wojtek = new User(login: "wojtek@gmail.com", passMd5: "wojtek",  nickname: "Wojtek").save()
+		User adam = new User(login: "adam@gmail.com", passMd5: "adam", nickname: "Adam").save()
 		
-		Role admin = new Role(authority: "ADMIN").save(failOnError: true, flush: true)
-		Role moderator = new Role(authority: "MOD").save(failOnError: true, flush: true)
-		Role user = new Role(authority: "USER").save(failOnError: true, flush: true)
+		Role admin = new Role(authority: "ADMIN").save()
+		Role moderator = new Role(authority: "MOD").save()
+		Role user = new Role(authority: "USER").save()
 		
-		new UserRole(user: marek, role: admin).save(failOnError: true, flush: true)
-		new UserRole(user: marek, role: user).save(failOnError: true, flush: true)
-		new UserRole(user: marek, role: moderator).save(failOnError: true, flush: true)
-		new UserRole(user: radek, role: user).save(failOnError: true, flush: true)
-		new UserRole(user: andrzej, role: moderator).save(failOnError: true, flush: true)
+		new UserRole(user: marek, role: admin).save()
+		new UserRole(user: radek, role: user).save()
+		new UserRole(user: andrzej, role: moderator).save()
+		new UserRole(user: wojtek, role: user).save()
+		new UserRole(user: adam, role: user).save()
 	}
 	def destroy = {
 	}

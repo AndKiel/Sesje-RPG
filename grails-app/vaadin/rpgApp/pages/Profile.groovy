@@ -1,15 +1,15 @@
-package rpgApp.content
+package rpgApp.pages
 
 import rpgApp.main.IndexApplication
 
 import com.vaadin.ui.Label
 import com.vaadin.ui.VerticalLayout
 
-class Systems extends VerticalLayout {
+class Profile extends VerticalLayout {
 	private IndexApplication app
 	
-	public Systems(IndexApplication app) {
+	public Profile(IndexApplication app) {
 		this.app = app
-		addComponent(new Label("Systems in construction..."));
+		addComponent(new Label("Profile in construction..."));
 	}
 }

@@ -93,9 +93,9 @@ log4j = {
 }
 
 // Added by the Spring Security Core plugin:
-grails.plugins.springsecurity.userLookup.userDomainClassName = 'persistance.User'
-grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'persistance.UserRole'
-grails.plugins.springsecurity.authority.className = 'persistance.Role'
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'rpgApp.persistance.User'
+grails.plugins.springsecurity.userLookup.authorityJoinClassName = 'rpgApp.persistance.UserRole'
+grails.plugins.springsecurity.authority.className = 'rpgApp.persistance.Role'
 
 grails.plugins.springsecurity.userLookup.usernamePropertyName = 'login'
 grails.plugins.springsecurity.userLookup.passwordPropertyName = 'passMd5'

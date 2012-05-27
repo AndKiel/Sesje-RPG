@@ -13,7 +13,7 @@ import com.vaadin.ui.Button
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.event.ShortcutAction.KeyCode
 import com.vaadin.terminal.Sizeable
-import com.vaadin.ui.Window.Notification
+import com.vaadin.terminal.ThemeResource
 
 class LoginWindow extends Window implements Button.ClickListener {
 	private IndexApplication app
@@ -37,6 +37,7 @@ class LoginWindow extends Window implements Button.ClickListener {
 		TextField loginField = new TextField("Email: ")
 		loginField.setWidth("100%")
 		loginField.setRequired(true)
+		loginField.focus()
 		loginForm.addField("login", loginField)
 
 		PasswordField passwordField = new PasswordField("Password: ")
@@ -50,8 +51,10 @@ class LoginWindow extends Window implements Button.ClickListener {
 		login = new Button("Login", (Button.ClickListener)this)
 		login.setClickShortcut(KeyCode.ENTER);
 		login.addStyleName("primary");
+		login.setIcon(new ThemeResource("icons/ok.png"))
 	
 		cancel = new Button("Cancel", (Button.ClickListener)this)
+		cancel.setIcon(new ThemeResource("icons/cancel.png"))
 	
 		// Creating login form footer 
 		GridLayout footer = new GridLayout(2,2);
@@ -81,6 +84,7 @@ class LoginWindow extends Window implements Button.ClickListener {
 						if(rememberMe.getValue()) {
 							app.setLoginCookies((String)(loginForm.getField("login").getValue()), (String)(loginForm.getField("password").getValue()), 604800) 	// Cookie lifetime = 1 week
 						}
+						println app.getURL()
 						this.close()
 					}
 				} 

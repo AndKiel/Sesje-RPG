@@ -6,7 +6,7 @@ class User {
 	
 	String login
 	String passMd5
-	boolean state = true
+	boolean state = false
 	
 	String nickname
 	String location

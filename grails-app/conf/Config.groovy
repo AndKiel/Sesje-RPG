@@ -104,3 +104,17 @@ grails.plugins.springsecurity.userLookup.enabledPropertyName = 'state'
 grails.plugins.springsecurity.userLookup.accountExpiredPropertyName = null
 grails.plugins.springsecurity.userLookup.accountLockedPropertyName = null
 grails.plugins.springsecurity.userLookup.passwordExpiredPropertyName = null
+
+// Email sending configuration
+grails {
+	mail {
+	  host = "smtp.gmail.com"
+	  port = 465
+	  username = "sessions.rpg@gmail.com"
+	  password = "rpgsessions"
+	  props = ["mail.smtp.auth":"true",
+			   "mail.smtp.socketFactory.port":"465",
+			   "mail.smtp.socketFactory.class":"javax.net.ssl.SSLSocketFactory",
+			   "mail.smtp.socketFactory.fallback":"false"]
+	}
+ }

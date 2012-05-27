@@ -6,21 +6,22 @@ import rpgApp.services.MessageService
 import rpgApp.services.UserService
 
 import com.vaadin.data.validator.StringLengthValidator
+import com.vaadin.event.ShortcutAction.KeyCode
 import com.vaadin.terminal.Sizeable
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
 import com.vaadin.ui.ComboBox
 import com.vaadin.ui.Form
 import com.vaadin.ui.HorizontalLayout
-import com.vaadin.ui.TextArea
+import com.vaadin.ui.RichTextArea
 import com.vaadin.ui.TextField
 import com.vaadin.ui.Window
 import com.vaadin.ui.AbstractSelect.Filtering
 import com.vaadin.ui.Button.ClickEvent
 
 class NewMessageWindow extends Window implements Button.ClickListener {
-	private Button send = new Button("Send", (Button.ClickListener)this)
-	private Button cancel = new Button("Cancel", (Button.ClickListener)this)
+	private Button send 
+	private Button cancel 
 	private Form messageForm = new Form()
 	private IndexApplication app
 	private MessageService messageService
@@ -41,10 +42,11 @@ class NewMessageWindow extends Window implements Button.ClickListener {
 		allNicknames.each {
 			addressee.addItem(it)
 		}
-		addressee.setNewItemsAllowed(false)
 		addressee.setNullSelectionAllowed(false)
+		addressee.setNewItemsAllowed(false)
 		addressee.setWidth("100%")
 		addressee.setFilteringMode(Filtering.FILTERINGMODE_CONTAINS)
+		addressee.focus()
 		addressee.setRequired(true)
 		messageForm.addField("addressee", addressee)
 
@@ -53,15 +55,17 @@ class NewMessageWindow extends Window implements Button.ClickListener {
 		topicField.addValidator(new StringLengthValidator("Topic must be less than 50 signs", 0, 50, false))
 		messageForm.addField("topic", topicField)
 
-		TextArea content = new TextArea("Content: ");
-		content.setRows(15);
-		content.setColumns(32);
+		RichTextArea content = new RichTextArea("Content: ");
+		content.setWidth("100%")
+		content.setHeight("400px")
 		content.setRequired(true)
 		messageForm.addField("content", content)
 
 		HorizontalLayout footer = new HorizontalLayout()
 		footer.setSpacing(true);
 		footer.setWidth("100%")
+		send = new Button("Send", (Button.ClickListener)this)
+		cancel = new Button("Cancel", (Button.ClickListener)this)
 		footer.addComponent(send);
 		footer.setComponentAlignment(send, Alignment.MIDDLE_CENTER)
 		footer.addComponent(cancel);
@@ -72,7 +76,7 @@ class NewMessageWindow extends Window implements Button.ClickListener {
 
 		addComponent(messageForm);
 
-		setWidth(500, Sizeable.UNITS_PIXELS)
+		setWidth(800, Sizeable.UNITS_PIXELS)
 		center();
 	}
 

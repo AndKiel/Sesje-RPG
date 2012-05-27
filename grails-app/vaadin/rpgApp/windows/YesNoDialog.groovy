@@ -1,6 +1,7 @@
 package rpgApp.windows
 
 import com.vaadin.terminal.Sizeable
+import com.vaadin.terminal.ThemeResource
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
 import com.vaadin.ui.HorizontalLayout
@@ -29,6 +30,8 @@ public class YesNoDialog extends Window implements Button.ClickListener {
 		}
 
 		HorizontalLayout hl = new HorizontalLayout();
+		yes.setIcon(new ThemeResource("icons/ok.png"))
+		no.setIcon(new ThemeResource("icons/cancel.png"))
 		hl.addComponent(yes);
 		hl.addComponent(no);
 		hl.setSpacing(true)

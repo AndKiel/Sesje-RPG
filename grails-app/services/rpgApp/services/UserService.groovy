@@ -1,7 +1,9 @@
 package rpgApp.services
 
 import rpgApp.exeptions.ValidationException
+import rpgApp.persistance.Role
 import rpgApp.persistance.User
+import rpgApp.persistance.UserRole
 
 
 class UserService {
@@ -30,6 +32,10 @@ class UserService {
 		} else {
 			u.save()
 		}
+		
+		// Adding USER role to newly created user
+		Role user = Role.findByAuthority("USER")
+		new UserRole(user: u, role: user).save()
 	}
 	
 	List<String> getAllUsersNicknames() {

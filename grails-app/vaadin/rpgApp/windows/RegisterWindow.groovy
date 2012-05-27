@@ -135,7 +135,7 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 						(String)(registerForm.getField("homepage").getValue())
 						)) {
 							Window.Notification emailNotif = new Window.Notification("You must activate your account. Activation e-mail was send to: "+registerForm.getField("login").getValue(), Notification.TYPE_WARNING_MESSAGE)
-							emailNotif.setDelayMsec(5000)
+							emailNotif.setDelayMsec(2500)
 							app.getMainWindow().showNotification(emailNotif)
 							// Sending activation email
 							emailService.sendActivationMail(registerForm.getField("login").getValue(), registerForm.getField("password").getValue(), app.getURL().toString())

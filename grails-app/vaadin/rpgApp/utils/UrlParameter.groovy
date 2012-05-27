@@ -1,6 +1,7 @@
 package rpgApp.utils
 
 import rpgApp.main.IndexApplication
+import rpgApp.services.UserService
 
 import com.vaadin.terminal.DownloadStream
 import com.vaadin.terminal.ParameterHandler
@@ -9,12 +10,15 @@ import com.vaadin.ui.Window
 import com.vaadin.ui.Window.Notification
 
 public class UrlParameter implements URIHandler, ParameterHandler {
-	private String email = null
-	private String code = null
+	private UserService userService
 	private IndexApplication app
 
-	UrlParameter(IndexApplication app) {
+	private String email = null
+	private String code = null
+
+	UrlParameter(IndexApplication app, UserService userService) {
 		this.app = app
+		this.userService = userService
 	}
 	/**
 	 * Handle the URL parameters and store them for the URI
@@ -50,10 +54,20 @@ public class UrlParameter implements URIHandler, ParameterHandler {
 		if(email == null || code == null) {
 			app.getMainWindow().showNotification("Invalid activation link", Notification.TYPE_WARNING_MESSAGE)
 		} else {
-			String notification = "Account: "+email+" has been activated. You can now Log in"+code
-			Window.Notification emailNotif = new Window.Notification(notification, Notification.TYPE_WARNING_MESSAGE)
-			emailNotif.setDelayMsec(5000)
-			app.getMainWindow().showNotification(emailNotif);
+			String encodedPassword = userService.getEncodedPassword(email)
+			if(encodedPassword == null) {
+				app.getMainWindow().showNotification("Invalid activation link", Notification.TYPE_WARNING_MESSAGE)
+			} else {
+				if(code != encodedPassword || userService.getState(email) == true) {
+					app.getMainWindow().showNotification("Invalid activation link", Notification.TYPE_WARNING_MESSAGE)
+				} else {
+					userService.activateAccount(email)
+					String notification = "Account: "+email+" has been activated. You can now Log in"
+					Window.Notification emailNotif = new Window.Notification(notification, Notification.TYPE_WARNING_MESSAGE)
+					emailNotif.setDelayMsec(2500)
+					app.getMainWindow().showNotification(emailNotif);
+				}
+			}
 		}
 
 		email = null

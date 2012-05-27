@@ -6,7 +6,7 @@ class User {
 	
 	String login
 	String passMd5
-	boolean state = false
+	Boolean state
 	
 	String nickname
 	String location
@@ -28,6 +28,7 @@ class User {
 	static constraints = {
 		login(size: 1..60, blank: false, unique: true, email: true)
 		passMd5(size: 1..128, blank: false)
+		state(nullable: true)
 		nickname(size: 1..30, blank: false, unique: true)
 		location(size: 0..60, nullable: true)
 		birthday(nullable: true)

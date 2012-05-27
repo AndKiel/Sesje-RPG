@@ -80,7 +80,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		this.setTheme("rpg-theme")
 		
 		// Url parameters getting
-		UrlParameter urlParameter = new UrlParameter(this)
+		UrlParameter urlParameter = new UrlParameter(this, userService)
 		window.addParameterHandler(urlParameter);
 		window.addURIHandler(urlParameter);
 

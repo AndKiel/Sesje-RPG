@@ -14,6 +14,7 @@ class UserService {
 		User u = new User(
 				login: lgn,
 				passMd5: pass,
+				state: false,
 				nickname: nick,
 				location: loc,
 				birthday: bday,
@@ -30,7 +31,7 @@ class UserService {
 				return
 			}
 		} else {
-			u.save()
+			u.save(failOnError: true)
 		}
 		
 		// Adding USER role to newly created user
@@ -41,6 +42,26 @@ class UserService {
 	List<String> getAllUsersNicknames() {
 		return User.findAll().collect {
 			new String(it.nickname)
+		}
+	}
+	
+	void activateAccount(String login) {
+		User.executeUpdate('UPDATE User SET state=true WHERE login=:email', [email: login])
+	}
+	
+	String getEncodedPassword(String login) {
+		User u = User.get(login)
+		if(u) {
+			return u.getPassMd5()
+		} else {
+			return null
+		}
+	}
+	
+	boolean getState(String login) {
+		User u = User.get(login)
+		if(u) {
+			return u.getState()
 		}
 	}
 }

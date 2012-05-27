@@ -84,7 +84,6 @@ class LoginWindow extends Window implements Button.ClickListener {
 						if(rememberMe.getValue()) {
 							app.setLoginCookies((String)(loginForm.getField("login").getValue()), (String)(loginForm.getField("password").getValue()), 604800) 	// Cookie lifetime = 1 week
 						}
-						println app.getURL()
 						this.close()
 					}
 				} 

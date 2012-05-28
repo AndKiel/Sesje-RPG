@@ -8,7 +8,7 @@ class MessageItem implements Serializable {
 	private Boolean wasRead
 	private String sender
 	private String addressee
-	
+
 	public Integer getId() {
 		return id
 	}

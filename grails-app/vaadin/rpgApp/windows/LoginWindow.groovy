@@ -11,18 +11,20 @@ import com.vaadin.ui.Form
 import com.vaadin.ui.TextField
 import com.vaadin.ui.Button
 import com.vaadin.ui.Button.ClickEvent
+import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.event.ShortcutAction.KeyCode
 import com.vaadin.terminal.Sizeable
 import com.vaadin.terminal.ThemeResource
 
 class LoginWindow extends Window implements Button.ClickListener {
 	private IndexApplication app
-	
+
 	private Button login
 	private Button cancel
 	private Form loginForm
 	private CheckBox rememberMe
-	
+	private Button forgotPassword
+
 	LoginWindow(IndexApplication app) {
 		// Window settings
 		super("Login")
@@ -52,12 +54,15 @@ class LoginWindow extends Window implements Button.ClickListener {
 		login.setClickShortcut(KeyCode.ENTER);
 		login.addStyleName("primary");
 		login.setIcon(new ThemeResource("icons/ok.png"))
-	
+
 		cancel = new Button("Cancel", (Button.ClickListener)this)
 		cancel.setIcon(new ThemeResource("icons/cancel.png"))
-	
-		// Creating login form footer 
-		GridLayout footer = new GridLayout(2,2);
+
+		forgotPassword = new Button("Forgotten password? Click here", (Button.ClickListener)this)
+		forgotPassword.setStyleName(BaseTheme.BUTTON_LINK)
+
+		// Creating login form footer
+		GridLayout footer = new GridLayout(2,3);
 		footer.setSpacing(true);
 		footer.setWidth(100, Sizeable.UNITS_PERCENTAGE)
 		footer.addComponent(rememberMe, 0, 0, 1, 0)
@@ -66,6 +71,9 @@ class LoginWindow extends Window implements Button.ClickListener {
 		footer.setComponentAlignment(login, Alignment.MIDDLE_CENTER)
 		footer.addComponent(cancel, 1, 1, 1, 1);
 		footer.setComponentAlignment(cancel, Alignment.MIDDLE_CENTER)
+		footer.addComponent(forgotPassword, 0, 2, 1, 2);
+		footer.setComponentAlignment(forgotPassword, Alignment.MIDDLE_CENTER)
+
 
 		loginForm.setFooter(footer)
 		loginForm.setWidth("100%")
@@ -86,10 +94,13 @@ class LoginWindow extends Window implements Button.ClickListener {
 						}
 						this.close()
 					}
-				} 
+				}
 				break;
 			case cancel:
 				this.close()
+				break;
+			case forgotPassword:
+				app.getMainWindow().addWindow(new PasswordReset(app))
 				break;
 		}
 	}

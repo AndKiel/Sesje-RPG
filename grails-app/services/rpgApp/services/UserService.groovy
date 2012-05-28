@@ -1,5 +1,7 @@
 package rpgApp.services
 
+import org.apache.commons.lang.RandomStringUtils
+
 import rpgApp.exeptions.ValidationException
 import rpgApp.persistance.Role
 import rpgApp.persistance.User
@@ -9,6 +11,8 @@ import rpgApp.persistance.UserRole
 class UserService {
 
 	static transactional = true
+	def emailService
+	def springSecurityService
 
 	void createPerson(String lgn, String pass, String nick, String loc, Date bday, String home) {
 		User u = new User(
@@ -42,6 +46,18 @@ class UserService {
 	List<String> getAllUsersNicknames() {
 		return User.findAll().collect {
 			new String(it.nickname)
+		}
+	}
+	
+	boolean resetPassword(String login) {
+		User u = User.get(login)
+		if(u) {
+			String newPass = RandomStringUtils.randomAlphanumeric(8);
+			User.executeUpdate('UPDATE User SET passMd5=:newpass WHERE login=:email', [newpass: springSecurityService.encodePassword(newPass),email: login])
+			emailService.sendPasswordResetMail(login, newPass)
+			return true
+		} else {
+			return false
 		}
 	}
 	

@@ -30,9 +30,9 @@ import com.vaadin.ui.themes.Reindeer
 class Messages extends VerticalLayout implements Property.ValueChangeListener, ClickListener {
 	private IndexApplication app
 
-	private MessageService messageService = (MessageService)getBean(MessageService)
-	private UserService userService = (UserService)getBean(UserService)
-	private MessageContainer dataSource = new MessageContainer(messageService)
+	private MessageService messageService
+	private UserService userService
+	private MessageContainer dataSource
 	private CheckBox onlyUnread
 	private Button newMessage
 	private Table messages
@@ -48,6 +48,9 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 
 	public Messages(IndexApplication app) {
 		this.app = app
+		messageService = app.messageService
+		userService = app.userService
+		dataSource = new MessageContainer(messageService)
 
 		addComponent(createHeader())
 		addComponent(createMessageTable())
@@ -219,7 +222,7 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 	public void buttonClick(ClickEvent event) {
 		final Button source = event.getButton()
 		if(source == newMessage) {
-			app.getMainWindow().addWindow(new NewMessageWindow(app, messageService, userService))
+			app.getMainWindow().addWindow(new NewMessageWindow(app))
 		} else if(source == onlyUnread) {
 			if(source.booleanValue()) {
 				dataSource.addContainerFilter("wasRead", "false", true, false);

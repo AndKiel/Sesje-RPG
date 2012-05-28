@@ -8,6 +8,8 @@ import rpgApp.exeptions.ValidationException
 import rpgApp.panels.Content
 import rpgApp.panels.Footer
 import rpgApp.panels.Header
+import rpgApp.services.EmailService
+import rpgApp.services.MessageService
 import rpgApp.services.SecurityService;
 import rpgApp.services.UserService;
 import rpgApp.utils.UrlParameter
@@ -45,8 +47,10 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 
 	HttpServletResponse response
 
-	private SecurityService security = (SecurityService)getBean(SecurityService)
-	private UserService userService = (UserService)getBean(UserService)
+	public SecurityService security = (SecurityService)getBean(SecurityService)
+	public UserService userService = (UserService)getBean(UserService)
+	public EmailService emailService = (EmailService)getBean(EmailService)
+	public MessageService messageService = (MessageService)getBean(MessageService)
 
 	public void onRequestStart(HttpServletRequest request, HttpServletResponse response) {
 		String username = null
@@ -80,7 +84,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		this.setTheme("rpg-theme")
 		
 		// Url parameters getting
-		UrlParameter urlParameter = new UrlParameter(this, userService)
+		UrlParameter urlParameter = new UrlParameter(this)
 		window.addParameterHandler(urlParameter);
 		window.addURIHandler(urlParameter);
 

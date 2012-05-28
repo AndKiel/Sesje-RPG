@@ -16,9 +16,9 @@ public class UrlParameter implements URIHandler, ParameterHandler {
 	private String email = null
 	private String code = null
 
-	UrlParameter(IndexApplication app, UserService userService) {
+	UrlParameter(IndexApplication app) {
 		this.app = app
-		this.userService = userService
+		userService = app.userService
 	}
 	/**
 	 * Handle the URL parameters and store them for the URI

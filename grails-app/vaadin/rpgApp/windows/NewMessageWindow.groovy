@@ -20,18 +20,19 @@ import com.vaadin.ui.AbstractSelect.Filtering
 import com.vaadin.ui.Button.ClickEvent
 
 class NewMessageWindow extends Window implements Button.ClickListener {
-	private Button send 
-	private Button cancel 
-	private Form messageForm = new Form()
 	private IndexApplication app
 	private MessageService messageService
 	private UserService userService
+	
+	private Button send 
+	private Button cancel 
+	private Form messageForm = new Form()
 
-	NewMessageWindow(IndexApplication app, MessageService messageService, UserService userService) {
+	NewMessageWindow(IndexApplication app) {
 		super("New Message")
 		this.app = app
-		this.messageService = messageService
-		this.userService = userService
+		messageService = app.messageService
+		userService = app.userService
 		this.setCaption("New Message")
 		setModal(true)
 		setDraggable(false)

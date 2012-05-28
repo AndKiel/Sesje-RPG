@@ -37,6 +37,8 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	public Button logout
 	public Button register
 	public Label who
+	public Button refresh
+	public Button unreadMessages
 	public boolean isSigned
 
 	private VerticalLayout layout	// Main window layout
@@ -82,7 +84,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		isSigned = security.isSignedIn()
 		// Setting custom theme
 		this.setTheme("rpg-theme")
-		
+
 		// Url parameters getting
 		UrlParameter urlParameter = new UrlParameter(this)
 		window.addParameterHandler(urlParameter);
@@ -126,6 +128,11 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		else if(source == register) {
 			getMainWindow().addWindow(new RegisterWindow(this))
 		}
+		else if(source == unreadMessages) {
+			content.goToMessages()
+		} else if(source == refresh) {
+			unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
+		}
 	}
 
 	boolean login(String username, String password) {
@@ -133,6 +140,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 			security.signIn(username, password)
 			isSigned = security.isSignedIn()
 			who.setCaption("Hello "+security.getContextNickname()+" !")
+			unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
 			content.selectStartPage()
 			refreshToolbar()
 			return true
@@ -159,6 +167,8 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		logout.setVisible(isSigned)
 		register.setVisible(!isSigned)
 		who.setVisible(isSigned)
+		unreadMessages.setVisible(isSigned)
+		refresh.setVisible(isSigned)
 	}
 
 	private void setLoginPanel() {
@@ -170,6 +180,11 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		register.setVisible(!isSigned)
 		who.setVisible(isSigned)
 		who.setCaption("Hello "+security.getContextNickname()+" !")
+		unreadMessages.setVisible(isSigned)
+		unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
+		unreadMessages.addListener((Button.ClickListener)this)
+		refresh.setVisible(isSigned)
+		refresh.addListener((Button.ClickListener)this)
 	}
 
 	public void setLoginCookies(String username, String password, int maxAge) {

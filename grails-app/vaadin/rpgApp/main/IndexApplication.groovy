@@ -10,9 +10,9 @@ import rpgApp.panels.Footer
 import rpgApp.panels.Header
 import rpgApp.services.SecurityService;
 import rpgApp.services.UserService;
+import rpgApp.utils.UrlParameter
 import rpgApp.windows.LoginWindow;
 import rpgApp.windows.RegisterWindow;
-import rpgApp.windows.YesNoDialog
 
 
 import com.vaadin.Application
@@ -78,6 +78,11 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		isSigned = security.isSignedIn()
 		// Setting custom theme
 		this.setTheme("rpg-theme")
+		
+		// Url parameters getting
+		UrlParameter urlParameter = new UrlParameter(this, userService)
+		window.addParameterHandler(urlParameter);
+		window.addURIHandler(urlParameter);
 
 		// Creating main panel (FullSize)
 		main = new Panel()

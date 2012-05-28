@@ -3,6 +3,7 @@ package rpgApp.windows
 import java.text.DateFormat
 
 import rpgApp.main.IndexApplication;
+import rpgApp.services.EmailService
 
 import com.vaadin.data.Property.ValueChangeEvent
 import com.vaadin.data.Property.ValueChangeListener
@@ -10,6 +11,7 @@ import com.vaadin.data.validator.EmailValidator
 import com.vaadin.data.validator.StringLengthValidator
 import com.vaadin.event.ShortcutAction.KeyCode
 import com.vaadin.terminal.Sizeable
+import com.vaadin.terminal.ThemeResource
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
 import com.vaadin.ui.ComboBox
@@ -23,6 +25,7 @@ import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Window.Notification
 
 class RegisterWindow extends Window implements Button.ClickListener, ValueChangeListener {
+	private EmailService emailService = (EmailService)getBean(EmailService)
 	private IndexApplication app
 
 	private Button register
@@ -44,12 +47,13 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 		loginField.addValidator(new EmailValidator("Wrong e-mail format"))
 		loginField.setWidth("100%")
 		loginField.setRequired(true)
+		loginField.focus()
 		registerForm.addField("login", loginField)
 
 		PasswordField passwordField = new PasswordField("Password: ")
-		loginField.addValidator(new StringLengthValidator("Password must be 6 to 30 signs", 6, 30, false))
+		passwordField.addValidator(new StringLengthValidator("Password must be 6 to 30 signs", 6, 30, false))
 		passwordField.setWidth("100%")
-		passwordField.setRequired(true)	
+		passwordField.setRequired(true)
 		registerForm.addField("password", passwordField)
 
 		PasswordField password2Field = new PasswordField("Repeat password: ")
@@ -95,8 +99,10 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 		register = new Button("Create account", (Button.ClickListener)this)
 		register.setClickShortcut(KeyCode.ENTER);
 		register.addStyleName("primary");
-		
+		register.setIcon(new ThemeResource("icons/document-txt.png"))
+
 		cancel = new Button("Cancel", (Button.ClickListener)this)
+		cancel.setIcon(new ThemeResource("icons/cancel.png"))
 
 		// Adding form footer
 		HorizontalLayout footer = new HorizontalLayout();
@@ -128,12 +134,17 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 						(Date)(registerForm.getField("birthday").getValue()),
 						(String)(registerForm.getField("homepage").getValue())
 						)) {
+							Window.Notification emailNotif = new Window.Notification("You must activate your account. Activation e-mail was send to: "+registerForm.getField("login").getValue(), Notification.TYPE_WARNING_MESSAGE)
+							emailNotif.setDelayMsec(2500)
+							app.getMainWindow().showNotification(emailNotif)
+							// Sending activation email
+							emailService.sendActivationMail(registerForm.getField("login").getValue(), registerForm.getField("password").getValue(), app.getURL().toString())
 							this.close()
 						}
 					} else {
 						app.getMainWindow().showNotification("Passwords are not the same", Notification.TYPE_ERROR_MESSAGE);
 					}
-				} 
+				}
 				break;
 			case cancel:
 				this.close()

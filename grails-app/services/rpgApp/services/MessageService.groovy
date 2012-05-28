@@ -27,7 +27,7 @@ class MessageService {
 	void addMessage(String topic, String content, String receiver) { 
 		User sender  = securityService.getContextUser()
 		User addressee = User.findByNickname(receiver)
-		new Message(topic: topic, content: content, sender: sender, addressee: addressee).save()
+		new Message(topic: topic, content: content, sender: sender, addressee: addressee).save(failOnError: true)
 	}
 	
 	void removeMessage(MessageItem message) {
@@ -45,7 +45,7 @@ class MessageService {
 		Message m = Message.get(message.getId())
 		if(m) {
 			m.wasRead = true
-			m.save()
+			m.save(failOnError: true)
 		}
 	}
 }

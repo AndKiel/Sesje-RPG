@@ -25,7 +25,7 @@ import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Window.Notification
 
 class RegisterWindow extends Window implements Button.ClickListener, ValueChangeListener {
-	private EmailService emailService = (EmailService)getBean(EmailService)
+	private EmailService emailService
 	private IndexApplication app
 
 	private Button register
@@ -36,6 +36,7 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 		// Window settings
 		super("Registration")
 		this.app = app
+		emailService = app.emailService
 		this.setCaption("Registration")
 		setModal(true)
 		setDraggable(false)

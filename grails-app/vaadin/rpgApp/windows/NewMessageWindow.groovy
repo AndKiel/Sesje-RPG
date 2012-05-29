@@ -6,8 +6,8 @@ import rpgApp.services.MessageService
 import rpgApp.services.UserService
 
 import com.vaadin.data.validator.StringLengthValidator
-import com.vaadin.event.ShortcutAction.KeyCode
 import com.vaadin.terminal.Sizeable
+import com.vaadin.terminal.ThemeResource
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
 import com.vaadin.ui.ComboBox
@@ -20,23 +20,24 @@ import com.vaadin.ui.AbstractSelect.Filtering
 import com.vaadin.ui.Button.ClickEvent
 
 class NewMessageWindow extends Window implements Button.ClickListener {
-	private Button send 
-	private Button cancel 
-	private Form messageForm = new Form()
 	private IndexApplication app
 	private MessageService messageService
 	private UserService userService
 
-	NewMessageWindow(IndexApplication app, MessageService messageService, UserService userService) {
+	private Button send
+	private Button cancel
+	private Form messageForm = new Form()
+
+	NewMessageWindow(IndexApplication app, String receiver) {
 		super("New Message")
 		this.app = app
-		this.messageService = messageService
-		this.userService = userService
+		messageService = app.messageService
+		userService = app.userService
 		this.setCaption("New Message")
 		setModal(true)
 		setDraggable(false)
 		setResizable(false)
-		
+
 		ComboBox addressee = new ComboBox("To: ")
 		List<String> allNicknames = userService.getAllUsersNicknames()
 		allNicknames.each {
@@ -47,6 +48,10 @@ class NewMessageWindow extends Window implements Button.ClickListener {
 		addressee.setWidth("100%")
 		addressee.setFilteringMode(Filtering.FILTERINGMODE_CONTAINS)
 		addressee.focus()
+		addressee.setValue(receiver)
+		if(receiver != null) {
+			addressee.setEnabled(false)
+		}
 		addressee.setRequired(true)
 		messageForm.addField("addressee", addressee)
 
@@ -65,7 +70,9 @@ class NewMessageWindow extends Window implements Button.ClickListener {
 		footer.setSpacing(true);
 		footer.setWidth("100%")
 		send = new Button("Send", (Button.ClickListener)this)
+		send.setIcon(new ThemeResource("icons/email.png"))
 		cancel = new Button("Cancel", (Button.ClickListener)this)
+		cancel.setIcon(new ThemeResource("icons/cancel.png"))
 		footer.addComponent(send);
 		footer.setComponentAlignment(send, Alignment.MIDDLE_CENTER)
 		footer.addComponent(cancel);

@@ -8,6 +8,8 @@ import rpgApp.exeptions.ValidationException
 import rpgApp.panels.Content
 import rpgApp.panels.Footer
 import rpgApp.panels.Header
+import rpgApp.services.EmailService
+import rpgApp.services.MessageService
 import rpgApp.services.SecurityService;
 import rpgApp.services.UserService;
 import rpgApp.utils.UrlParameter
@@ -35,6 +37,8 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	public Button logout
 	public Button register
 	public Label who
+	public Button refresh
+	public Button unreadMessages
 	public boolean isSigned
 
 	private VerticalLayout layout	// Main window layout
@@ -45,8 +49,10 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 
 	HttpServletResponse response
 
-	private SecurityService security = (SecurityService)getBean(SecurityService)
-	private UserService userService = (UserService)getBean(UserService)
+	public SecurityService security = (SecurityService)getBean(SecurityService)
+	public UserService userService = (UserService)getBean(UserService)
+	public EmailService emailService = (EmailService)getBean(EmailService)
+	public MessageService messageService = (MessageService)getBean(MessageService)
 
 	public void onRequestStart(HttpServletRequest request, HttpServletResponse response) {
 		String username = null
@@ -78,9 +84,9 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		isSigned = security.isSignedIn()
 		// Setting custom theme
 		this.setTheme("rpg-theme")
-		
+
 		// Url parameters getting
-		UrlParameter urlParameter = new UrlParameter(this, userService)
+		UrlParameter urlParameter = new UrlParameter(this)
 		window.addParameterHandler(urlParameter);
 		window.addURIHandler(urlParameter);
 
@@ -122,6 +128,11 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		else if(source == register) {
 			getMainWindow().addWindow(new RegisterWindow(this))
 		}
+		else if(source == unreadMessages) {
+			content.goToMessages()
+		} else if(source == refresh) {
+			unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
+		}
 	}
 
 	boolean login(String username, String password) {
@@ -129,6 +140,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 			security.signIn(username, password)
 			isSigned = security.isSignedIn()
 			who.setCaption("Hello "+security.getContextNickname()+" !")
+			unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
 			content.selectStartPage()
 			refreshToolbar()
 			return true
@@ -155,6 +167,8 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		logout.setVisible(isSigned)
 		register.setVisible(!isSigned)
 		who.setVisible(isSigned)
+		unreadMessages.setVisible(isSigned)
+		refresh.setVisible(isSigned)
 	}
 
 	private void setLoginPanel() {
@@ -166,6 +180,11 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		register.setVisible(!isSigned)
 		who.setVisible(isSigned)
 		who.setCaption("Hello "+security.getContextNickname()+" !")
+		unreadMessages.setVisible(isSigned)
+		unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
+		unreadMessages.addListener((Button.ClickListener)this)
+		refresh.setVisible(isSigned)
+		refresh.addListener((Button.ClickListener)this)
 	}
 
 	public void setLoginCookies(String username, String password, int maxAge) {

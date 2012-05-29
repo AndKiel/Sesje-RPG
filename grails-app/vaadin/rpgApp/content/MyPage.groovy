@@ -16,7 +16,7 @@ import com.vaadin.ui.VerticalLayout
 
 class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 	private IndexApplication app
-	
+
 	private Tree menu
 	private static final Object profileN = "Profile"
 	private static final Object messagesN = "Messages"
@@ -32,7 +32,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 
 	public MyPage(IndexApplication app) {
 		this.app = app
-		
+
 		menu = new Tree()
 		menu.setItemStyleGenerator(new TreeItemStyleGenerator())
 		menu.addItem(profileN)
@@ -40,8 +40,8 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		menu.addItem(scenariosN)
 		menu.addItem(charsN)
 		menu.addItem(sessionsN)
-		menu.setSelectable(true)
 		menu.setNullSelectionAllowed(false)
+		menu.setMultiSelect(false)
 		menu.addListener((ItemClickListener) this)
 		menu.select(profileN)
 
@@ -59,7 +59,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 				setSecondComponent(getProfile())
 			} else if(messagesN.equals(itemId)) {
 				setSecondComponent(getMessages())
-				messages.fillMessages()
+				getMessages().fillMessages()
 			} else if(scenariosN.equals(itemId)) {
 				setSecondComponent(getScenarios())
 			} else if(charsN.equals(itemId)) {
@@ -70,7 +70,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		}
 	}
 
-	
+
 	// LAZY LOADS
 	private VerticalLayout getMessages() {
 		if(messages == null) {
@@ -85,21 +85,21 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		}
 		return profile
 	}
-	
+
 	private VerticalLayout getScenarios() {
 		if(scenarios == null) {
 			scenarios = new Scenarios(app)
 		}
 		return scenarios
 	}
-	
+
 	private VerticalLayout getChars() {
 		if(chars == null) {
 			chars = new Chars(app)
 		}
 		return chars
 	}
-	
+
 	private VerticalLayout getSessions() {
 		if(sessions == null) {
 			sessions = new Sessions(app)
@@ -110,5 +110,11 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 	public void setStartSelection() {
 		menu.select(profileN)
 		setSecondComponent(getProfile())
+	}
+	
+	public void setMessagesSelection() {
+		menu.select(messagesN)
+		getMessages().fillMessages()
+		setSecondComponent(getMessages())
 	}
 }

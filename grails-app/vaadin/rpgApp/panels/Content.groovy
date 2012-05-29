@@ -64,6 +64,11 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		tabSheet.setSelectedTab(startPage)
 		startPage.refreshContent()
 	}
+	
+	public void goToMessages() {
+		tabSheet.setSelectedTab(myPage)
+		myPage.setMessagesSelection()
+	}
 
 	public void selectedTabChange(SelectedTabChangeEvent event) {
 		TabSheet tabsheet = event.getTabSheet();

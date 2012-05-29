@@ -21,6 +21,7 @@ import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Label
 import com.vaadin.ui.Panel
 import com.vaadin.ui.Table
+import com.vaadin.ui.Tree
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Button.ClickListener
@@ -30,12 +31,13 @@ import com.vaadin.ui.themes.Reindeer
 class Messages extends VerticalLayout implements Property.ValueChangeListener, ClickListener {
 	private IndexApplication app
 
-	private MessageService messageService = (MessageService)getBean(MessageService)
-	private UserService userService = (UserService)getBean(UserService)
-	private MessageContainer dataSource = new MessageContainer(messageService)
+	private MessageService messageService
+	private UserService userService
+	private MessageContainer dataSource
 	private CheckBox onlyUnread
 	private Button newMessage
 	private Table messages
+	private Button reply
 	private Button deleteMessage
 	private Button refresh
 	private Button deleteAll
@@ -48,6 +50,9 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 
 	public Messages(IndexApplication app) {
 		this.app = app
+		messageService = app.messageService
+		userService = app.userService
+		dataSource = new MessageContainer(messageService)
 
 		addComponent(createHeader())
 		addComponent(createMessageTable())
@@ -134,7 +139,7 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 		messages.setColumnExpandRatio("sender", 1)
 		messages.setColumnExpandRatio("topic", 6)
 		messages.setColumnExpandRatio("dateCreated", 1)
-		
+
 		return messages
 	}
 
@@ -144,14 +149,18 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 		hl.setMargin(true, true, false, true)
 
 		time = new Label("", Label.CONTENT_XHTML)
+		reply = new Button("Reply")
+		reply.addListener((ClickListener) this)
+		reply.setIcon(new ThemeResource("icons/email-reply.png"))
 		deleteMessage = new Button("Delete Message")
 		deleteMessage.addListener((ClickListener) this)
 		deleteMessage.setIcon(new ThemeResource("icons/document-delete.png"))
 
 		hl.addComponent(time)
+		hl.addComponent(reply)
 		hl.addComponent(deleteMessage)
-		hl.setComponentAlignment(time, Alignment.MIDDLE_LEFT)
-		hl.setComponentAlignment(deleteMessage, Alignment.MIDDLE_RIGHT)
+		hl.setSpacing(true)
+		hl.setExpandRatio(time,1.0f)
 
 		return hl
 	}
@@ -181,8 +190,10 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 	public fillMessages() {
 		// Refresh container
 		dataSource.fillContainer()
-		
+		app.unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
+
 		deleteMessage.setVisible(false)
+		reply.setVisible(false)
 		topic.setValue("")
 		from.setValue("")
 		grid.setValue("")
@@ -206,12 +217,14 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 			time.setValue("<b>"+m.getDateCreated().substring(0, 19)+"</b>")
 
 			deleteMessage.setVisible(true)
+			reply.setVisible(true)
 
 			// If message clicked then change wasRead to true
 			if(!m.getWasRead()) {
 				m.setWasRead(true)
 				dataSource.setWasRead(m)
 				dataSource.fireItemSetChange()
+				app.unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
 			}
 		}
 	}
@@ -219,7 +232,7 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 	public void buttonClick(ClickEvent event) {
 		final Button source = event.getButton()
 		if(source == newMessage) {
-			app.getMainWindow().addWindow(new NewMessageWindow(app, messageService, userService))
+			app.getMainWindow().addWindow(new NewMessageWindow(app, null))
 		} else if(source == onlyUnread) {
 			if(source.booleanValue()) {
 				dataSource.addContainerFilter("wasRead", "false", true, false);
@@ -236,6 +249,9 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 							}
 						}
 					}))
+		} else if(source == reply) {
+			MessageItem m = (MessageItem)messages.getValue()
+			app.getMainWindow().addWindow(new NewMessageWindow(app, m.getSender()))
 		} else if(source == deleteMessage) {
 			app.getMainWindow().addWindow(new YesNoDialog("Message delete","Are you sure you want to delete this message?",
 					new YesNoDialog.Callback() {

@@ -48,4 +48,9 @@ class MessageService {
 			m.save(failOnError: true)
 		}
 	}
+	
+	int getUnreadCount() {
+		User user  = securityService.getContextUser()
+		return Message.countByAddresseeAndWasRead(user, false)
+	}
 }

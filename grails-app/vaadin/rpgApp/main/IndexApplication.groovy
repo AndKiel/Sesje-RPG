@@ -98,8 +98,8 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 
 		// Creating main layout (FullSize)
 		layout = main.getContent()
-		layout.setSizeFull()
-
+		layout.setWidth("100%")
+		
 		// Main window layout settings
 		layout.addComponent(header = new Header(this))
 		layout.addComponent(content = new Content(this))

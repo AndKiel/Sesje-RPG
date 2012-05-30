@@ -34,6 +34,7 @@ class Profile extends VerticalLayout implements Button.ClickListener {
 	private Label roles
 	private Label nickname
 	private Label joined
+	private Label state
 
 	private ComboBox location
 	private PopupDateField birthday
@@ -52,7 +53,7 @@ class Profile extends VerticalLayout implements Button.ClickListener {
 		setWidth("60%")
 
 		// Creating profile info labels
-		GridLayout gl = new GridLayout(2,6)
+		GridLayout gl = new GridLayout(2,5)
 		gl.setSpacing(true)
 
 		Resource res = new ThemeResource("icons/profile-img.png");
@@ -68,11 +69,14 @@ class Profile extends VerticalLayout implements Button.ClickListener {
 		nickname.setContentMode(Label.CONTENT_XHTML)
 		joined = new Label("")
 		joined.setContentMode(Label.CONTENT_XHTML)
-		gl.addComponent(e,0,0,0,5)
+		state = new Label("")
+		state.setContentMode(Label.CONTENT_XHTML)
+		gl.addComponent(e,0,0,0,4)
 		gl.addComponent(login,1,0,1,0)
 		gl.addComponent(nickname,1,1,1,1)
 		gl.addComponent(roles,1,2,1,2)
-		gl.addComponent(joined,1,4,1,4)
+		gl.addComponent(joined,1,3,1,3)
+		gl.addComponent(state, 1,4,1,4)
 		addComponent(gl)
 
 		// Creating register form
@@ -140,7 +144,6 @@ class Profile extends VerticalLayout implements Button.ClickListener {
 
 		addComponent(profileForm);
 		this.setExpandRatio(profileForm, 1.0f)
-		setProfileInfo()
 	}
 
 	void buttonClick(ClickEvent clickEvent) {
@@ -170,9 +173,10 @@ class Profile extends VerticalLayout implements Button.ClickListener {
 	public void setProfileInfo() {
 		setReadOnly(false)
 		login.setValue("<b>Login: </b>"+app.userService.getLogin())
-		roles.setValue("<b>Your roles: </b>"+app.userService.getRoles().toString())
+		roles.setValue("<b>Roles: </b>"+app.userService.getRoles().toString())
 		nickname.setValue("<b>Nickname: </b>"+app.userService.getNickname())
 		joined.setValue("<b>Joined </b>: "+app.userService.getDateCreated().toLocaleString())
+		state.setValue(app.userService.getState() ? "<b>Account status: </b> Active" : "<b>Account status </b>: Inactive")
 
 		location.setValue(app.userService.getLocation())
 		birthday.setValue(app.userService.getBirthday())

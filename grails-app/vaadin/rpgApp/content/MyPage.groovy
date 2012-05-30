@@ -46,7 +46,6 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		menu.select(profileN)
 
 		setFirstComponent(menu)
-		setSecondComponent(getProfile())
 		setSplitPosition(15)
 		setLocked(true)
 

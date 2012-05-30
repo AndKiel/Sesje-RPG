@@ -54,7 +54,7 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		tabSheet.addTab(about = new About(app), "About")
 		tabSheet.addTab(faq = new Faq(app), "FAQ")
 		tabSheet.addListener((TabSheet.SelectedTabChangeListener) this)
-		
+
 		VerticalLayout panelLayout = getContent()
 		panelLayout.setMargin(false)		
 		panelLayout.addComponent(tabSheet)
@@ -98,6 +98,8 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 				if(app.isSigned == false) {
 					tabSheet.setSelectedTab(startPage)
 					app.getMainWindow().showNotification(loginError);
+				} else {
+					users.fillUsers()
 				}
 			}
 		}

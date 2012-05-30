@@ -46,7 +46,6 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		menu.select(profileN)
 
 		setFirstComponent(menu)
-		setSecondComponent(getProfile())
 		setSplitPosition(15)
 		setLocked(true)
 
@@ -59,7 +58,6 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 				setSecondComponent(getProfile())
 			} else if(messagesN.equals(itemId)) {
 				setSecondComponent(getMessages())
-				getMessages().fillMessages()
 			} else if(scenariosN.equals(itemId)) {
 				setSecondComponent(getScenarios())
 			} else if(charsN.equals(itemId)) {
@@ -76,6 +74,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		if(messages == null) {
 			messages = new Messages(app)
 		}
+		messages.fillMessages()
 		return messages
 	}
 
@@ -83,6 +82,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		if(profile == null) {
 			profile = new Profile(app)
 		}
+		profile.setProfileInfo()
 		return profile
 	}
 
@@ -114,7 +114,6 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 	
 	public void setMessagesSelection() {
 		menu.select(messagesN)
-		getMessages().fillMessages()
 		setSecondComponent(getMessages())
 	}
 }

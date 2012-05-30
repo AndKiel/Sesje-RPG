@@ -7,6 +7,7 @@ class User {
 	String login
 	String passMd5
 	Boolean state
+	Date dateCreated
 	
 	String nickname
 	String location

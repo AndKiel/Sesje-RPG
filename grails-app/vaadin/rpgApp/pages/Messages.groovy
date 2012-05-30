@@ -58,8 +58,6 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 		addComponent(createMessageTable())
 		addComponent(createDeleteBar())
 		addComponent(createMessagePanel())
-
-		fillMessages()
 	}
 
 	private HorizontalLayout createHeader() {
@@ -97,7 +95,6 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 		messages.setContainerDataSource(dataSource)
 		messages.setVisibleColumns(dataSource.NATURAL_COL_ORDER)
 		messages.setColumnHeaders(dataSource.COL_HEADERS_ENGLISH)
-		messages.setSortDisabled(true)
 		messages.setPageLength(10)
 		messages.setSelectable(true)
 		messages.setImmediate(true)
@@ -136,8 +133,8 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 				});
 
 		messages.setColumnAlignment("dateCreated",Table.ALIGN_RIGHT);
-		messages.setColumnExpandRatio("sender", 1)
-		messages.setColumnExpandRatio("topic", 6)
+		messages.setColumnExpandRatio("sender", 2)
+		messages.setColumnExpandRatio("topic", 5)
 		messages.setColumnExpandRatio("dateCreated", 1)
 
 		return messages

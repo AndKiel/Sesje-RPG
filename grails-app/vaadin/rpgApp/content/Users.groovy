@@ -21,6 +21,8 @@ import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Button.ClickListener
 import com.vaadin.ui.Table.ColumnGenerator
+import com.vaadin.ui.Window.Notification
+import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.ui.themes.Reindeer
 
 class Users extends VerticalLayout implements Property.ValueChangeListener, ClickListener {
@@ -31,6 +33,10 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 
 	private Button showDetails
 	private Button activate
+	private Button showAll
+	private Button letter
+
+	private char[] alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']
 
 	public Users(IndexApplication app) {
 		this.app = app
@@ -40,8 +46,24 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 
 		userService = app.userService
 		dataSource = new UserContainer(userService)
-
 		addComponent(createHeader())
+
+		HorizontalLayout hl = new HorizontalLayout()
+		hl.setWidth("100%")
+		for(char let : alphabet) {
+			letter = new Button(let.toString())
+			letter.addListener(new Button.ClickListener() {
+						public void buttonClick(ClickEvent event) {
+							dataSource.removeAllContainerFilters()
+							dataSource.addContainerFilter("nickname",event.source.getCaption(),true,true)
+						}
+					}
+					)
+			letter.setStyleName(BaseTheme.BUTTON_LINK)
+			hl.addComponent(letter)
+		}
+		addComponent(hl)
+
 		addComponent(createUserTable())
 	}
 
@@ -59,7 +81,7 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 	private HorizontalLayout createHeader() {
 		HorizontalLayout hl = new HorizontalLayout()
 		hl.setSpacing(true)
-		hl.setMargin(true)
+		hl.setMargin(true, true, false, true)
 		hl.setWidth("100%")
 
 		showDetails = new Button("Show details")
@@ -68,11 +90,13 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 		activate = new Button("Disactivate account")
 		activate.addListener((ClickListener) this)
 		activate.setIcon(new ThemeResource("icons/lock.png"))
+		showAll = new Button("Show all")
+		showAll.addListener((ClickListener) this)
 
+		hl.addComponent(showAll)
 		hl.addComponent(showDetails)
 		hl.addComponent(activate)
-		hl.setComponentAlignment(showDetails, Alignment.BOTTOM_RIGHT)
-		hl.setExpandRatio(showDetails, 1.0f)
+		hl.setExpandRatio(showAll, 1.0f)
 
 		return hl
 	}
@@ -83,7 +107,6 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 		users.setContainerDataSource(dataSource)
 		users.setVisibleColumns(dataSource.NATURAL_COL_ORDER)
 		users.setColumnHeaders(dataSource.COL_HEADERS_ENGLISH)
-		users.setSortDisabled(true)
 		users.setPageLength(20)
 		users.setSelectable(true)
 		users.setImmediate(true)
@@ -139,16 +162,21 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 		}
 	}
 
-	public void buttonClick(ClickEvent event) {
-		final Button source = event.getButton()
-		if(source == showDetails) {
-			app.getMainWindow().addWindow(new UserProfile(app, (UserItem)users.getValue()))
-		} else if(source == activate) {
-			app.getMainWindow().addWindow(new YesNoDialog("Account status change","Are you sure you want change account status?",
-					new YesNoDialog.Callback() {
-						public void onDialogResult(boolean answer) {
-							if(answer) {
-								UserItem u = (UserItem)users.getValue()
+	public void buttonClick(ClickEvent clickEvent) {
+		final Button source = clickEvent.getButton()
+		switch(clickEvent.source){
+			case showDetails:
+				app.getMainWindow().addWindow(new UserProfile(app, (UserItem)users.getValue()))
+				break
+			case activate:
+				app.getMainWindow().addWindow(new YesNoDialog("Account status change","Are you sure you want to change account status?",
+				new YesNoDialog.Callback() {
+					public void onDialogResult(boolean answer) {
+						if(answer) {
+							UserItem u = (UserItem)users.getValue()
+							if(u.isAdmin()) {
+								app.getMainWindow().showNotification("You cannot disactivate administrator account !",  Notification.TYPE_ERROR_MESSAGE)
+							} else {
 								u.setState(!u.getState())
 								if(u.getState()) {
 									activate.setCaption("Disactivate account")
@@ -159,7 +187,12 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 								dataSource.fireItemSetChange()
 							}
 						}
-					}))
+					}
+				}))
+				break
+			case showAll:
+				dataSource.removeAllContainerFilters()
+				break
 		}
 	}
 }

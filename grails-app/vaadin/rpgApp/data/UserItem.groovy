@@ -58,4 +58,13 @@ class UserItem implements Serializable{
 	public void setHomepage(String homepage) {
 		this.homepage = homepage;
 	}
+	public boolean isAdmin() {
+		boolean flag = false
+		for(String role in roles) {
+			if(role == "Administrator"){
+				flag = true
+			}
+		}
+		return flag
+	}
 }

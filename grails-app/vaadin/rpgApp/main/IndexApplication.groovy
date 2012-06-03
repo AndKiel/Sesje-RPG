@@ -11,6 +11,7 @@ import rpgApp.panels.Header
 import rpgApp.services.EmailService
 import rpgApp.services.MessageService
 import rpgApp.services.SecurityService;
+import rpgApp.services.SystemService
 import rpgApp.services.UserService;
 import rpgApp.utils.UrlParameter
 import rpgApp.windows.LoginWindow;
@@ -53,6 +54,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	public UserService userService = (UserService)getBean(UserService)
 	public EmailService emailService = (EmailService)getBean(EmailService)
 	public MessageService messageService = (MessageService)getBean(MessageService)
+	public SystemService systemService = (SystemService)getBean(SystemService)
 
 	public void onRequestStart(HttpServletRequest request, HttpServletResponse response) {
 		String username = null

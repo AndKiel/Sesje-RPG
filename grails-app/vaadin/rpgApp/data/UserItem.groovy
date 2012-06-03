@@ -1,14 +1,14 @@
 package rpgApp.data
 
 class UserItem implements Serializable{
-	String login
-	Boolean state
-	Set<String> roles
-	Date dateCreated
-	String nickname
-	String location
-	Date birthday
-	String homepage
+	private String login
+	private Boolean state
+	private Set<String> roles
+	private Date dateCreated
+	private String nickname
+	private String location
+	private Date birthday
+	private String homepage
 	
 	public String getLogin() {
 		return login;

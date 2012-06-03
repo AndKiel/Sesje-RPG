@@ -7,7 +7,7 @@ class RpgSystem {
 	String genre
 	String designer
 	String publisher
-	Date year
+	Integer year
 	String charSheetDtd
 
 	static mapping = {
@@ -16,11 +16,11 @@ class RpgSystem {
 	}
 	
 	static constraints = {
-		name(size: 1..20, blank: false, unique: true)
+		name(size: 1..30, blank: false, unique: true)
 		description(maxSize: 5000, nullable: true)
-		genre(size: 0..20, nullable: true)
-		designer(size: 0..20, nullable: true)
-		publisher(size: 0..20, nullable: true)
+		genre(size: 0..30, nullable: true)
+		designer(size: 0..40, nullable: true)
+		publisher(size: 0..40, nullable: true)
 		year(nullable: true)
 		charSheetDtd(maxSize: 5000, nullable: true)
 	}

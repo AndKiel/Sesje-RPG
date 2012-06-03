@@ -57,7 +57,10 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 		addComponent(createHeader())
 		addComponent(createMessageTable())
 		addComponent(createDeleteBar())
-		addComponent(createMessagePanel())
+		Panel messagePanel = createMessagePanel()
+		addComponent(messagePanel)
+		
+		setExpandRatio(messagePanel,1.0f)
 	}
 
 	private HorizontalLayout createHeader() {
@@ -168,7 +171,7 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 		p.setSizeFull()
 
 		VerticalLayout panelLayout = p.getContent()
-		panelLayout.setSizeFull()
+		panelLayout.setSizeUndefined()
 		panelLayout.setMargin(false, true, true, true)
 
 		topic = new Label("", Label.CONTENT_XHTML)

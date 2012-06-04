@@ -69,6 +69,11 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		tabSheet.setSelectedTab(myPage)
 		myPage.setMessagesSelection()
 	}
+	
+	public void goToNotifications() {
+		tabSheet.setSelectedTab(myPage)
+		myPage.setNotificationsSelection()
+	}
 
 	public void selectedTabChange(SelectedTabChangeEvent event) {
 		TabSheet tabsheet = event.getTabSheet();

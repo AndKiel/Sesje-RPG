@@ -10,6 +10,7 @@ import rpgApp.panels.Footer
 import rpgApp.panels.Header
 import rpgApp.services.EmailService
 import rpgApp.services.MessageService
+import rpgApp.services.NotificationService
 import rpgApp.services.SecurityService;
 import rpgApp.services.SessionService
 import rpgApp.services.SystemService
@@ -40,6 +41,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	public Button register
 	public Label who
 	public Button refresh
+	public Button notifications
 	public Button unreadMessages
 	public boolean isSigned
 
@@ -57,6 +59,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	public MessageService messageService = (MessageService)getBean(MessageService)
 	public SystemService systemService = (SystemService)getBean(SystemService)
 	public SessionService sessionService = (SessionService)getBean(SessionService)
+	public NotificationService notificationService = (NotificationService)getBean(NotificationService)
 
 	public void onRequestStart(HttpServletRequest request, HttpServletResponse response) {
 		String username = null
@@ -134,7 +137,10 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		}
 		else if(source == unreadMessages) {
 			content.goToMessages()
+		} else if(source == notifications) {
+			content.goToNotifications()
 		} else if(source == refresh) {
+			notifications.setCaption("You've got: "+sessionService.getNotificationsCount()+" notifications")
 			unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
 		}
 	}
@@ -144,6 +150,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 			security.signIn(username, password)
 			isSigned = security.isSignedIn()
 			who.setCaption("Hello "+security.getContextNickname()+" !")
+			notifications.setCaption("You've got: "+sessionService.getNotificationsCount()+" notifications")
 			unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
 			content.selectStartPage()
 			refreshToolbar()
@@ -171,6 +178,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		logout.setVisible(isSigned)
 		register.setVisible(!isSigned)
 		who.setVisible(isSigned)
+		notifications.setVisible(isSigned)
 		unreadMessages.setVisible(isSigned)
 		refresh.setVisible(isSigned)
 	}
@@ -184,6 +192,9 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		register.setVisible(!isSigned)
 		who.setVisible(isSigned)
 		who.setCaption("Hello "+security.getContextNickname()+" !")
+		notifications.setVisible(isSigned)
+		notifications.setCaption("You've got: "+sessionService.getNotificationsCount()+" notifications")
+		notifications.addListener((Button.ClickListener)this)
 		unreadMessages.setVisible(isSigned)
 		unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
 		unreadMessages.addListener((Button.ClickListener)this)

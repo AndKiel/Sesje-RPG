@@ -1,10 +1,13 @@
 package rpgApp.services
 
 import rpgApp.data.SessionItem
-import rpgApp.persistance.Session
+import rpgApp.persistance.Notification
 import rpgApp.persistance.Participant
-import rpgApp.persistance.User
 import rpgApp.persistance.RpgSystem
+import rpgApp.persistance.Session
+import rpgApp.persistance.User
+
+
 
 class SessionService {
 
@@ -47,17 +50,20 @@ class SessionService {
 		}
 	}
 
-	boolean checkMembership(Integer id) {
+	// 0 - not member , 1 - member, 2 - waiting
+	int checkMembership(Integer id) {
 		User contextUser = securityService.getContextUser()
 		Session sessionS = Session.get(id)
 		Participant p = Participant.findByUserAndSession(contextUser, sessionS)
 		if(p) {
 			if(p.getState() == true) {
-				return true
+				return 1
+			} else {
+				return 2
 			}
 		}
 
-		return false
+		return 0
 	}
 
 	Integer participantsCount(Integer id) {
@@ -87,5 +93,93 @@ class SessionService {
 		}
 
 		return players
+	}
+	
+	void createNotification(String to, Integer id, Boolean type, Boolean role) {
+		User contextUser = securityService.getContextUser()
+		User rec = User.findByNickname(to)
+		Session sessionS = Session.get(id)
+		new Notification(sender: contextUser, receiver: rec, session: sessionS, type: type, role: role).save(failOnError: true)
+	}
+	
+	void createParticipant(Integer id, Boolean role, Boolean state) {
+		User u = securityService.getContextUser()
+		new Participant(
+			user: u,
+			session: Session.get(id),
+			role: role,
+			state: state,
+			).save(failOnError: true)
+		
+	}
+	
+	void setParticipantActive(String who, Integer sessionId) {
+		User u = User.findByNickname(who)
+		Session s = Session.get(sessionId)
+		Participant p = Participant.findByUserAndSession(u,s)
+		p.setState(true)
+		p.save()
+	}
+	
+	void deleteParticipant(String who, Integer sessionId) {
+		User u = User.findByNickname(who)
+		Session s = Session.get(sessionId)
+		Participant p = Participant.findByUserAndSession(u,s)
+		p.delete()
+	}
+	
+	void playerLeave(Integer id) {
+		User contextUser = securityService.getContextUser()
+		Session sessionS = Session.get(id)
+		Participant p = Participant.findByUserAndSession(contextUser, sessionS)
+		if(p) {
+			p.delete()
+		}
+		
+		Notification n = Notification.findBySenderAndSession(contextUser, sessionS)
+		if(n) {
+			n.delete()
+		}
+	}
+	
+	boolean isMasterSlot(Integer id) {
+		Session sessionS = Session.get(id)
+		Participant p = Participant.findBySessionAndRole(sessionS, true)
+		if(p != null) {
+			if(p.getState() == true) {
+				return false
+			}
+		}
+		
+		return true
+	}
+	
+	boolean isPlayerSlot(Integer id, Integer maxPlayers) {
+		Session sessionS = Session.get(id)
+		int counter = 0
+		Participant.findAllBySessionAndRole(sessionS, false).collect() {
+			if(it.getState() == true) {
+				counter++
+			}
+		}
+		
+		if(counter < maxPlayers-1) {
+			return true
+		} else {
+			return false
+		}
+	}
+	
+	int getNotificationsCount() {
+		User contextUser = securityService.getContextUser()
+		return Notification.countByReceiver(contextUser)
+	}
+	
+	boolean isMineSession(String owner) {
+		if(securityService.getContextNickname().equals(owner)) {
+			return true
+		} else {
+			return false
+		}
 	}
 }

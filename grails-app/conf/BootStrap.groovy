@@ -35,7 +35,7 @@ class BootStrap {
 		Session ses3 = new Session(type: "offline", location: "Warszawa", maxPlayers: 7, timeStamp: new Date(2012-1900, 7, 24, 18,00), owner: marek, system: s2).save(failOnError: true)
 		
 		new Participant(user: marek, session: ses, role: true, state: true).save(failOnError: true)
-		new Participant(user: marek, session: ses2, role: false).save(failOnError: true)
+		new Participant(user: marek, session: ses2, role: false, state: true).save(failOnError: true)
 		new Participant(user: radek, session: ses3, role: false, state: true).save(failOnError: true)
 		new Participant(user: wojtek, session: ses3, role: false, state: true).save(failOnError: true)
 	}

@@ -18,6 +18,7 @@ class Footer extends Panel {
 		addStyleName("footer-panel")
 		setWidth("1000px")
 		setHeight("50px")
+		addStyleName("footer-panel")
 
 		// Create layout
 		footerLayout = new HorizontalLayout();

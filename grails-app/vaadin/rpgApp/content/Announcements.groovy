@@ -5,6 +5,7 @@ import rpgApp.data.SessionItem
 import rpgApp.main.IndexApplication
 import rpgApp.services.SessionService
 import rpgApp.windows.NewSessionWindow
+import rpgApp.windows.SessionJoin
 
 import com.vaadin.data.Item
 import com.vaadin.data.Property
@@ -22,6 +23,7 @@ import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Button.ClickListener
 import com.vaadin.ui.Table.ColumnGenerator
 import com.vaadin.ui.themes.Reindeer
+import com.vaadin.ui.Window.Notification
 
 class Announcements extends VerticalLayout implements Property.ValueChangeListener, ClickListener {
 	private IndexApplication app
@@ -29,6 +31,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 
 	private SessionContainer dataSource
 	private Button newSession
+	private Button refresh
 	private Table sessions
 	private Button join
 
@@ -67,9 +70,13 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		newSession = new Button("New Session")
 		newSession.addListener((ClickListener) this)
 		newSession.setIcon(new ThemeResource("icons/document-add.png"))
+		refresh = new Button("Refresh")
+		refresh.addListener((ClickListener) this)
+		refresh.setIcon(new ThemeResource("icons/reload.png"))
 
 		hl.addComponent(join)
 		hl.addComponent(newSession)
+		hl.addComponent(refresh)
 		hl.setExpandRatio(join, 1.0f)
 
 		return hl
@@ -96,10 +103,12 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 							// Styling for row
 							Item item = sessions.getItem(itemId);
 							Integer id = (Integer)item.getItemProperty("id").getValue()
-							if(sessionService.checkMembership(id)) {
+							if(sessionService.checkMembership(id) == 1) {
 								return "member"
-							} else {
+							} else if(sessionService.checkMembership(id) == 0) {
 								return "notmember"
+							} else if(sessionService.checkMembership(id) == 2) {
+								return "waiting"
 							}
 						} else {
 							// styling for column propertyId
@@ -168,7 +177,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		gl.addComponent(owner)
 		gl.addComponent(master, 0,4,2,4)
 		gl.addComponent(players, 0,5,2,5)
-		
+
 		return p
 	}
 
@@ -186,7 +195,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		master.setValue("")
 		players.setValue("")
 	}
-	
+
 	public Table getSessions() {
 		return sessions
 	}
@@ -195,7 +204,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		Property property = event.getProperty()
 		if (property == sessions) {
 			SessionItem s = (SessionItem)sessions.getValue()
-			
+
 			system.setValue("<b>System: </b>"+s.getSystem())
 			type.setValue("<b>Type: </b>"+s.getType())
 			created.setValue("<b>Created: </b>"+s.getDateCreated().toString().substring(0, 10))
@@ -213,9 +222,9 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 			for(int i = counter; i < s.getMaxPlayers()-1; i++) {
 				txt += "<font size=2>(empty slot)</font>"
 			}
-			
+
 			players.setValue(txt)
-			
+
 			join.setVisible(true)
 			if(sessionService.checkMembership(s.getId())) {
 				join.setCaption("Leave")
@@ -228,8 +237,26 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 	public void buttonClick(ClickEvent event) {
 		final Button source = event.getButton()
 		switch(source) {
+			case join:
+				if(join.getCaption().equals("Join")) {
+					SessionItem s = (SessionItem)sessions.getValue()
+					if(sessionService.participantsCount(s.getId()) == s.getMaxPlayers()) {
+						app.getMainWindow().showNotification("No slots for this session", Notification.TYPE_ERROR_MESSAGE)
+					} else {
+						app.getMainWindow().addWindow(new SessionJoin(app, this, s, sessionService))
+					}
+				} else if(join.getCaption().equals("Leave")) {
+					SessionItem s = (SessionItem)sessions.getValue()
+					sessionService.playerLeave(s.getId())
+					app.getMainWindow().showNotification("You have left the session", Notification.TYPE_WARNING_MESSAGE)
+					fillSessions()
+				}
+				break
 			case newSession:
 				app.getMainWindow().addWindow(new NewSessionWindow(app, this))
+				break
+			case refresh:
+				fillSessions()
 				break
 		}
 	}

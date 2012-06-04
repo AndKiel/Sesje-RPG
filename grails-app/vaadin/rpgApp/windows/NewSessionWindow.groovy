@@ -79,7 +79,7 @@ class NewSessionWindow extends Window implements Button.ClickListener, Property.
 		type.select("offline")
 
 		ComboBox maxPlayers = new ComboBox("Max. players: ")
-		for(int i = 0; i < 10; i++) {
+		for(int i = 3; i < 10; i++) {
 			maxPlayers.addItem(i)
 		}
 		maxPlayers.setNullSelectionAllowed(false)

@@ -69,6 +69,21 @@
 	background-color: #DCE7E8;
 }
 
+.v-table-row.v-table-row-notmember {
+    background-color: white;
+ }
+ 
+.v-table-row-odd.v-table-row-notmember {
+	background-color: white;
+}
+
+.v-table-row.v-table-row-member {
+    background-color: #61C0E8;
+ }
+.v-table-row-odd.v-table-row-member {
+	background-color: #61C0E8;
+}
+
 .v-button .v-button-wrap>.v-icon{
 	height:16px;
 	width:16px;

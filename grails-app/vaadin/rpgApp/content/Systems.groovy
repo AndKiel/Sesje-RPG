@@ -8,6 +8,7 @@ import com.vaadin.terminal.Resource
 import com.vaadin.terminal.ThemeResource
 import com.vaadin.ui.Button
 import com.vaadin.ui.Embedded
+import com.vaadin.ui.GridLayout
 import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Label
 import com.vaadin.ui.Panel
@@ -156,8 +157,9 @@ class Systems extends VerticalLayout implements Property.ValueChangeListener, Cl
 		HorizontalLayout hl = new HorizontalLayout()
 		hl.setSizeFull()
 		hl.setMargin(true)
-		VerticalLayout vl = new VerticalLayout()
-
+		GridLayout vl = new GridLayout(3,3)
+		vl.setSpacing(true)
+		
 		p.setContent(hl)
 		hl.addComponent(vl)
 		Resource res = new ThemeResource("icons/empty-image.jpg");
@@ -182,11 +184,11 @@ class Systems extends VerticalLayout implements Property.ValueChangeListener, Cl
 		year.setContentMode(Label.CONTENT_XHTML)
 		
 		vl.addComponent(name)
-		vl.addComponent(description)
 		vl.addComponent(genre)
+		vl.addComponent(year)
 		vl.addComponent(designer)
 		vl.addComponent(publisher)
-		vl.addComponent(year)
+		vl.addComponent(description,0,2,2,2)
 		
 		return p
 	}
@@ -200,9 +202,21 @@ class Systems extends VerticalLayout implements Property.ValueChangeListener, Cl
 		if(property == systems) {
 			SystemItem s = (SystemItem)systems.getValue()
 			name.setValue("<b>System name: </b>"+s.getName())
+			if(s.getDescription() == null) {
+				s.setDescription("")
+			}
 			description.setValue("<b>Description: </b>"+s.getDescription())
+			if(s.getGenre() == null) {
+				s.setGenre("")
+			}
 			genre.setValue("<b>Genre: </b>"+s.getGenre())
+			if(s.getDesigner() == null) {
+				s.setDesigner("")
+			}
 			designer.setValue("<b>Designer: </b>"+s.getDesigner())
+			if(s.getPublisher() == null) {
+				s.setPublisher("")
+			}
 			publisher.setValue("<b>Publisher: </b>"+s.getPublisher())
 			year.setValue("<b>Year: </b>"+s.getYear())
 		}

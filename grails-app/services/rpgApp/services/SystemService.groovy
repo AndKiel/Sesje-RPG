@@ -9,7 +9,7 @@ class SystemService {
 	static transactional = true
 	
     List<SystemItem> getAllSystems() {
-		return RpgSystem.findAll([sort: 'name', order:'desc']).collect {
+		return RpgSystem.findAll([sort: 'name', order:'asc']).collect {
 			new SystemItem(
 				id: it.id,
 				name: it.name,
@@ -19,6 +19,12 @@ class SystemService {
 				publisher: it.designer,
 				year: it.year,
 				)
+		}
+	}
+	
+	List<String> getAllSystemsNames() {
+		return RpgSystem.findAll([sort: 'name', order:'asc']).collect {
+			new String(it.name)
 		}
 	}
 	

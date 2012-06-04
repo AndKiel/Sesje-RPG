@@ -94,6 +94,8 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 				if(app.isSigned == false) {
 					tabSheet.setSelectedTab(startPage)
 					app.getMainWindow().showNotification(loginError);
+				} else {
+					announcements.fillSessions()
 				}
 			}
 			if((tab.getCaption()).equals("Users")) {

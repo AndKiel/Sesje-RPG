@@ -46,6 +46,14 @@
     width: auto !important;
 }
 
+.v-tabsheet-sessions .v-tabsheet-tabitemcell {
+    width: 33.33%;
+}
+
+.v-tabsheet-sessions .v-tabsheet-tabitem .v-caption {
+    width: auto !important;
+}
+
 .v-tree {
 	padding-top: 15px;
     padding-left: 10px;

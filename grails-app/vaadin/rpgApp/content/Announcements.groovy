@@ -95,7 +95,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		sessions.addListener((Property.ValueChangeListener) this)
 		sessions.setStyleName(Reindeer.TABLE_STRONG)
 
-		// Setting bold rows for unreaded messages
+		// Setting row colors generator
 		sessions.setCellStyleGenerator(new Table.CellStyleGenerator() {
 					@Override
 					public String getStyle(Object itemId, Object propertyId) {
@@ -211,16 +211,16 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 			where.setValue("<b>Where: </b>"+s.getLocation())
 			owner.setValue("<b>Owner: </b>"+s.getOwner())
 			when.setValue("<b>When: </b>"+s.getTimeStamp().toString().substring(0, 16))
-			master.setValue("<font size=3><b>Master: </b>"+sessionService.getMaster(s.getId())+"</font>")
+			master.setValue("<font size=3><b>Master: </b><font color=#786D3C>"+sessionService.getMaster(s.getId())+"</font></font>")
 			List<String> plrs = sessionService.getPlayers(s.getId())
 			int counter = 0
 			String txt = "<font size=3><b>Players: </b>"
 			for(String player in plrs) {
-				txt += "<b> "+player+"</b>,"
+				txt += "<b> <font color=#786D3C>"+player+"</b></font>,"
 				counter++
 			}
 			for(int i = counter; i < s.getMaxPlayers()-1; i++) {
-				txt += "<font size=2>(empty slot)</font>"
+				txt += "<font size=2 color=#786D3C>(empty slot)</font>"
 			}
 
 			players.setValue(txt)

@@ -22,6 +22,13 @@ class Notifications extends VerticalLayout {
 	public void fillNotifications() {
 		removeAllComponents()
 		List<NotificationItem> notifications = app.notificationService.getAllNotifications()
+		if(notifications.size() == 0) {
+			VerticalLayout vl = new VerticalLayout()
+			Label l = new Label("<font size=4>NO NOTIFICATIONS</font>",Label.CONTENT_XHTML)
+			vl.addComponent(l)
+			vl.setComponentAlignment(l, Alignment.MIDDLE_CENTER)
+			addComponent(vl)
+		}
 		for(NotificationItem notif in notifications) {
 			String role = notif.getRole() ? "Master" : "Player"
 

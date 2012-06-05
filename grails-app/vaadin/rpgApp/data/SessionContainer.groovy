@@ -31,4 +31,19 @@ class SessionContainer extends BeanItemContainer<MessageItem> implements Seriali
 		removeAllItems()
 		addAll(sessionService.getAllSessions())
 	}
+
+	void fillWithMySessions() {
+		removeAllItems()
+		addAll(sessionService.getMySessions())
+	}
+
+	void fillWithJoinedSessions() {
+		removeAllItems()
+		addAll(sessionService.getJoinedSessions())
+	}
+
+	void fillWithWaitingSessions() {
+		removeAllItems()
+		addAll(sessionService.getWaitingSessions())
+	}
 }

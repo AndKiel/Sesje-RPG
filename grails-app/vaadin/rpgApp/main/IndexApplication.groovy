@@ -91,7 +91,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		isSigned = security.isSignedIn()
 		// Setting custom theme
 		this.setTheme("rpg-theme")
-
+		
 		// Url parameters getting
 		UrlParameter urlParameter = new UrlParameter(this)
 		window.addParameterHandler(urlParameter);

@@ -104,6 +104,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		if(sessions == null) {
 			sessions = new Sessions(app)
 		}
+		sessions.fillSessions()
 		return sessions
 	}
 	

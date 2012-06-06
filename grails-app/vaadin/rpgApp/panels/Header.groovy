@@ -21,11 +21,14 @@ class Header extends Panel {
 		
 		addStyleName("header-panel")
 		setWidth("1000px")
-		setHeight("165px")
+		setHeight("200px")
 		app.login = new Button("Login")
 		app.logout = new Button("Logout")
 		app.register = new Button("Register")
 		app.who = new Label("")
+		app.notifications = new Button("")
+		app.notifications.setStyleName(BaseTheme.BUTTON_LINK)
+		app.notifications.addStyleName("white-link")
 		app.unreadMessages = new Button("")
 		app.unreadMessages.setStyleName(BaseTheme.BUTTON_LINK)
 		app.unreadMessages.addStyleName("white-link")
@@ -58,6 +61,7 @@ class Header extends Panel {
 		loginPanel.addComponent(app.login)
 		loginPanel.addComponent(app.register)
 		loginPanel.addComponent(app.who)
+		loginPanel.addComponent(app.notifications)
 		loginPanel.addComponent(hl)
 		
 		setContent(headerLayout)

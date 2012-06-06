@@ -69,6 +69,11 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		tabSheet.setSelectedTab(myPage)
 		myPage.setMessagesSelection()
 	}
+	
+	public void goToNotifications() {
+		tabSheet.setSelectedTab(myPage)
+		myPage.setNotificationsSelection()
+	}
 
 	public void selectedTabChange(SelectedTabChangeEvent event) {
 		TabSheet tabsheet = event.getTabSheet();
@@ -94,6 +99,8 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 				if(app.isSigned == false) {
 					tabSheet.setSelectedTab(startPage)
 					app.getMainWindow().showNotification(loginError);
+				} else {
+					announcements.fillSessions()
 				}
 			}
 			if((tab.getCaption()).equals("Users")) {

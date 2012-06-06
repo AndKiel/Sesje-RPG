@@ -1,12 +1,9 @@
 package rpgApp.windows
 
-import java.text.DateFormat
 
 import rpgApp.main.IndexApplication;
 import rpgApp.services.EmailService
 
-import com.vaadin.data.Property.ValueChangeEvent
-import com.vaadin.data.Property.ValueChangeListener
 import com.vaadin.data.validator.EmailValidator
 import com.vaadin.data.validator.StringLengthValidator
 import com.vaadin.event.ShortcutAction.KeyCode
@@ -24,7 +21,7 @@ import com.vaadin.ui.Window
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Window.Notification
 
-class RegisterWindow extends Window implements Button.ClickListener, ValueChangeListener {
+class RegisterWindow extends Window implements Button.ClickListener {
 	private EmailService emailService
 	private IndexApplication app
 
@@ -88,7 +85,6 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 		birthday.setInputPrompt("mm.dd.rr")
 		birthday.setCaption("Birthday: ")
 		birthday.setResolution(PopupDateField.RESOLUTION_DAY)
-		birthday.addListener(this)
 		birthday.setImmediate(true)
 		registerForm.addField("birthday", birthday)
 
@@ -150,15 +146,6 @@ class RegisterWindow extends Window implements Button.ClickListener, ValueChange
 			case cancel:
 				this.close()
 				break;
-		}
-	}
-
-	public void valueChange(ValueChangeEvent event) {
-		// Get the new value and format it to the current locale
-		DateFormat dateFormatter = DateFormat.getDateInstance(DateFormat.SHORT);
-		Object value = event.getProperty().getValue();
-		if (value == null || !(value instanceof Date)) {
-			getWindow().showNotification("Invalid date entered");
 		}
 	}
 }

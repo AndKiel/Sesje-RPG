@@ -8,12 +8,16 @@
    background: url(img/logo.jpg);
 }
 
+ .v-panel-content-footer-panel > div {
+   background: url(img/footer.jpg);
+}
+
  .v-panel-content-login-panel {
     background: transparent;
     /* Fallback for web browsers that doesn't support RGBa */
 	background: rgb(255, 255, 255);
 	/* RGBa with 0.6 opacity */
-	background: rgba(117,177,177, 0.2);
+	background: rgba(100,100,100, 0.4);
     border: none;
     -webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
@@ -42,6 +46,14 @@
     width: auto !important;
 }
 
+.v-tabsheet-sessions .v-tabsheet-tabitemcell {
+    width: 33.33%;
+}
+
+.v-tabsheet-sessions .v-tabsheet-tabitem .v-caption {
+    width: auto !important;
+}
+
 .v-tree {
 	padding-top: 15px;
     padding-left: 10px;
@@ -67,6 +79,28 @@
  }
 .v-table-row-odd.v-table-row-read {
 	background-color: #DCE7E8;
+}
+
+.v-table-row.v-table-row-notmember {
+    background-color: white;
+ }
+ 
+.v-table-row-odd.v-table-row-notmember {
+	background-color: white;
+}
+
+.v-table-row.v-table-row-member {
+    background-color: #61C0E8;
+ }
+.v-table-row-odd.v-table-row-member {
+	background-color: #61C0E8;
+}
+
+.v-table-row.v-table-row-waiting {
+    background-color: #CBA135;
+ }
+.v-table-row-odd.v-table-row-waiting{
+	background-color: #CBA135;
 }
 
 .v-button .v-button-wrap>.v-icon{

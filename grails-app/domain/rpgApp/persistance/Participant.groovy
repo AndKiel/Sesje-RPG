@@ -1,8 +1,8 @@
 package rpgApp.persistance
 
 class Participant implements Serializable {
-	Boolean role
-	Boolean state = "false"
+	Boolean role	// true - master , false - player
+	Boolean state = false
 
 	// Relation
 	User user

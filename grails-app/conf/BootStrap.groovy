@@ -1,5 +1,7 @@
-import rpgApp.persistance.Message
+import rpgApp.persistance.Participant
 import rpgApp.persistance.Role
+import rpgApp.persistance.RpgSystem
+import rpgApp.persistance.Session
 import rpgApp.persistance.User
 import rpgApp.persistance.UserRole
 
@@ -24,6 +26,18 @@ class BootStrap {
 		new UserRole(user: andrzej, role: moderator).save()
 		new UserRole(user: wojtek, role: user).save()
 		new UserRole(user: adam, role: user).save()
+
+		RpgSystem s1 = new RpgSystem(name: "System testowy", year: 2010).save()		
+		RpgSystem s2 = new RpgSystem(name: "System testowy2", year: 2012).save()
+		
+		Session ses = new Session(type: "offline", location: "Krakow", maxPlayers: 6, timeStamp: new Date(2012-1900, 6, 20, 14,30), owner: marek, system: s1).save(failOnError: true)
+		Session ses2 = new Session(type: "offline", location: "Warszawa", maxPlayers: 8, timeStamp: new Date(2012-1900, 7, 23, 17,30), owner: radek, system: s1).save(failOnError: true)
+		Session ses3 = new Session(type: "offline", location: "Warszawa", maxPlayers: 7, timeStamp: new Date(2012-1900, 7, 24, 18,00), owner: marek, system: s2).save(failOnError: true)
+		
+		new Participant(user: marek, session: ses, role: true, state: true).save(failOnError: true)
+		new Participant(user: marek, session: ses2, role: false, state: true).save(failOnError: true)
+		new Participant(user: radek, session: ses3, role: false, state: true).save(failOnError: true)
+		new Participant(user: wojtek, session: ses3, role: false, state: true).save(failOnError: true)
 	}
 	def destroy = {
 	}

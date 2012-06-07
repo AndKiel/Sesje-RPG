@@ -16,7 +16,7 @@ class SystemService {
 				description: it.description,
 				genre: it.genre,
 				designer: it.designer,
-				publisher: it.designer,
+				publisher: it.publisher,
 				year: it.year,
 				)
 		}

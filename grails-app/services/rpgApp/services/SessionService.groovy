@@ -1,5 +1,7 @@
 package rpgApp.services
 
+import org.apache.commons.lang.time.DateUtils
+
 import rpgApp.data.SessionItem
 import rpgApp.persistance.Notification
 import rpgApp.persistance.Participant
@@ -29,12 +31,13 @@ class SessionService {
 		}
 	}
 	
-	List<SessionItem> getLastSessions() {
+	List<SessionItem> getIncomingSessions() {
+		Date actualDate = new Date()
 		int maximum = 5
 		if(User.count() < 5) {
 			maximum = Session.count()
 		}
-		return Session.findAll([sort: 'dateCreated', order:'desc', max: maximum]).collect {
+		return Session.findAllByTimeStampGreaterThan(actualDate, [sort: 'timeStamp', order:'asc', max: maximum]).collect {
 			new SessionItem(
 					id: it.id,
 					dateCreated: it.dateCreated,

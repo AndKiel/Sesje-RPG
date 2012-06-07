@@ -175,7 +175,7 @@ class Profile extends VerticalLayout implements Button.ClickListener {
 		login.setValue("<b>Login: </b>"+app.userService.getLogin())
 		roles.setValue("<b>Roles: </b>"+app.userService.getRoles().toString())
 		nickname.setValue("<b>Nickname: </b>"+app.userService.getNickname())
-		joined.setValue("<b>Joined </b>: "+app.userService.getDateCreated().toLocaleString())
+		joined.setValue("<b>Joined </b>: "+app.userService.getDateCreated().toString().substring(0, 16))
 		state.setValue(app.userService.getState() ? "<b>Account status: </b> Active" : "<b>Account status </b>: Inactive")
 
 		location.setValue(app.userService.getLocation())

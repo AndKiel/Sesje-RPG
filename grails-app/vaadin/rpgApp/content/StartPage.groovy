@@ -32,7 +32,7 @@ class StartPage extends HorizontalLayout {
 		p1 = new Panel("News")
 		p1.setStyleName(Reindeer.PANEL_LIGHT)
 		p1.setIcon(new ThemeResource("icons/news-icon.png"))
-		p2 = new Panel("Last 5 Announcements")
+		p2 = new Panel("Incoming sessions")
 		p2.setStyleName(Reindeer.PANEL_LIGHT)
 		p2.setIcon(new ThemeResource("icons/announcement-icon.png"))
 		p3 = new Panel("New users")
@@ -77,22 +77,22 @@ class StartPage extends HorizontalLayout {
 		vl2.removeAllComponents()
 		vl3.removeAllComponents()
 		List<UserItem> lastUsers = app.userService.getLastUsers()
-		List<SessionItem> lastSessions = app.sessionService.getLastSessions()
+		List<SessionItem> incomingSessions = app.sessionService.getIncomingSessions()
 
 		for(UserItem user in lastUsers) {
 			Label l = new Label("<b>"+user.getNickname()+"</b> from <b>"+user.getLocation()+"</b> has registered at: ", Label.CONTENT_XHTML)
-			Label l2 = new Label("<b>"+user.getDateCreated().substring(0,10)+" <font color=#80760B>"+user.getDateCreated().substring(11,19)+"</font></b>", Label.CONTENT_XHTML)
+			Label l2 = new Label("<b>"+user.getDateCreated().substring(0,10)+" <font color=#80760B>"+user.getDateCreated().substring(11,16)+"</font></b>", Label.CONTENT_XHTML)
 			Panel p = new Panel()
 			p.addComponent(l)
 			p.addComponent(l2)
 			vl3.addComponent(p)
 		}
 		
-		for(SessionItem ses in lastSessions) {
+		for(SessionItem ses in incomingSessions) {
 			
 			Label l = new Label("<b>#"+ses.getId()+" "+ses.getSystem()+"</b> session. Players: <b>"+app.sessionService.participantsCount(ses.getId())+"/"+ses.getMaxPlayers()+"</b>", Label.CONTENT_XHTML)
 			Label l2 = new Label("Where: <b>"+ses.getLocation()+"</b>", Label.CONTENT_XHTML)
-			Label l3 = new Label("When: <b>"+ses.getTimeStamp().toString().substring(0,10)+" <font color=#80760B>"+ses.getTimeStamp().toString().substring(11,19)+"</font></b>", Label.CONTENT_XHTML)
+			Label l3 = new Label("When: <b>"+ses.getTimeStamp().toString().substring(0,10)+" <font color=#80760B>"+ses.getTimeStamp().toString().substring(11,16)+"</font></b>", Label.CONTENT_XHTML)
 			Panel p = new Panel()
 			p.addComponent(l)
 			p.addComponent(l2)

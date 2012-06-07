@@ -61,7 +61,7 @@ class UserProfile extends Window implements Button.ClickListener {
 		roles.setContentMode(Label.CONTENT_XHTML)
 		nickname = new Label("<b>Nickname: </b>"+userItem.getNickname())
 		nickname.setContentMode(Label.CONTENT_XHTML)
-		joined = new Label("<b>Joined </b>: "+userItem.getDateCreated().substring(0,19))
+		joined = new Label("<b>Joined </b>: "+userItem.getDateCreated().substring(0,16))
 		joined.setContentMode(Label.CONTENT_XHTML)
 		state = new Label(userItem.getState() ? "<b>Account status: </b> Active" : "<b>Account status: </b> Inactive")
 		state.setContentMode(Label.CONTENT_XHTML)

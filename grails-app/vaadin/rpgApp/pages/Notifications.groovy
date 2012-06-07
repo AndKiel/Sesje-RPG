@@ -50,7 +50,7 @@ class Notifications extends VerticalLayout {
 			hl.setSpacing(true)
 			hl.setSizeFull()
 
-			Label l = new Label("<b>"+notif.getSender()+"</b> invites you to join session <b>#"+notif.getSession()+"</b> as a "+role)
+			Label l = new Label("<b>"+notif.getSender()+"</b> invites you to join session <b>#"+notif.getSession()+"</b> as a "+role, ,Label.CONTENT_XHTML)
 			hl.addComponent(l)
 			buttons.add(new Button("Join"))
 			buttons.get(buttons.size()-1).addListener(new Button.ClickListener() {
@@ -92,7 +92,7 @@ class Notifications extends VerticalLayout {
 			hl.setSpacing(true)
 			hl.setSizeFull()
 
-			Label l = new Label("<b>"+notif.getSender()+"</b> wants to join session <b>#"+notif.getSession()+"</b> as a "+role)
+			Label l = new Label("<b>"+notif.getSender()+"</b> wants to join session <b>#"+notif.getSession()+"</b> as a "+role,Label.CONTENT_XHTML)
 			hl.addComponent(l)
 			buttons.add(new Button("Accept"))
 			buttons.get(buttons.size()-1).addListener(new Button.ClickListener() {

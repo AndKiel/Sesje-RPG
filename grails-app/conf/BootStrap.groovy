@@ -32,10 +32,10 @@ class BootStrap {
 		new UserRole(user: piotrek, role: user).save()
 
 
-		RpgSystem s1 = new RpgSystem(name: "System testowy", year: 2010).save()		
-		RpgSystem s2 = new RpgSystem(name: "System testowy2", year: 2012).save()
-		RpgSystem s3 = new RpgSystem(name: "System testowy3", year: 2008).save()
-		RpgSystem s4 = new RpgSystem(name: "System testowy4", year: 2008).save()
+		RpgSystem s1 = new RpgSystem(name: "Call of Cthulhu", year: 1981, genre: "Horror", designer: "Sandy Petersen", publisher: "Chaosium", description: "The definitive horror roleplaying game, based on the writing of H.P. Lovecraft and other contributors to the Lovecraft mythos, such as August Derleth, Brian Lumley, and Ramsey Campbell.").save()		
+		RpgSystem s2 = new RpgSystem(name: "Dungeons & Dragons", year: 1974, genre: "Fantasy", designer: "Gary Gygax, Dave Arneson", publisher: "TSR, Wizards of the Coast", description: "The Dungeons & Dragons Roleplaying Game has defined the medieval fantasy genre and the tabletop RPG industry for more than 30 years. In the D&D game, players create characters that band together to explore dungeons, slay monsters, and find treasure.").save()
+		RpgSystem s3 = new RpgSystem(name: "Vampire: The Masquerade", year: 1991, genre: "Horror", designer: "Mark Rein·Hagen", publisher: "White Wolf Publishing", description: "The game of personal horror, where you pretend to be vampires in modern times.").save()
+		RpgSystem s4 = new RpgSystem(name: "Monastyr", year: 2004, genre: "Dark fantasy", designer: "I. Trzewiczek, M. Oracz, M. Blacha", publisher: "Wydawnictwo Portal", description: "Monastyr is a Polish role-playing game set in a dark fantasy world of Dominium. Its setting features a fantastic equivalent of the Age of Enlightenment. Most often, the game plays in a cloak and dagger mood and involves plotting, intrigue, but also struggle in the name of honour. The game has been inspired by such authors as Alexandre Dumas, père, Michael Moorcock and H. P. Lovecraft.").save()
 		
 		Session ses = new Session(type: "offline", location: "Kraków", maxPlayers: 6, timeStamp: new Date(2012-1900, 6, 20, 14,30), owner: marek, system: s2).save(failOnError: true)
 		Session ses2 = new Session(type: "offline", location: "Warszawa", maxPlayers: 8, timeStamp: new Date(2012-1900, 7, 23, 17,30), owner: radek, system: s1).save(failOnError: true)

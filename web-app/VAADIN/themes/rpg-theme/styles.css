@@ -1,5 +1,10 @@
 @import url(../reindeer/styles.css);
 
+.v-table tr.v-selected {
+    background: #8C7F56;
+    color: #fff;
+}
+
  .v-panel-content-header-panel {
     background: transparent;
 }
@@ -36,6 +41,14 @@
 .v-panel-content-footer-panel > div {
 	background-color: black;
 	color: white;
+}
+
+.v-panel-content-blabla {
+	background: transparent;
+}
+
+.v-panel-content-blabla > div {
+	background-color: yellow;
 }
 
 .v-tabsheet-tabitemcell {
@@ -90,17 +103,17 @@
 }
 
 .v-table-row.v-table-row-member {
-    background-color: #61C0E8;
+    background-color: #D1C17B;
  }
 .v-table-row-odd.v-table-row-member {
-	background-color: #61C0E8;
+	background-color: #D1C17B;
 }
 
 .v-table-row.v-table-row-waiting {
-    background-color: #CBA135;
+    background-color: #F2ECD3;
  }
 .v-table-row-odd.v-table-row-waiting{
-	background-color: #CBA135;
+	background-color: #F2ECD3;
 }
 
 .v-button .v-button-wrap>.v-icon{
@@ -127,6 +140,11 @@
 .white-link .v-button-caption
 {
 	color: white
+}
+
+.gold-link .v-button-caption
+{
+	color: #786D3C	
 }
 
 .v-verticallayout-left75 .v-verticallayout-margin {

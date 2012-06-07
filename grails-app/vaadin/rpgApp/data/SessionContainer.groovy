@@ -4,7 +4,7 @@ import rpgApp.services.SessionService
 
 import com.vaadin.data.util.BeanItemContainer
 
-class SessionContainer extends BeanItemContainer<MessageItem> implements Serializable {
+class SessionContainer extends BeanItemContainer<SessionItem> implements Serializable {
 	private SessionService sessionService
 	public static final Object[] NATURAL_COL_ORDER = [
 		"id",

@@ -27,7 +27,7 @@ class MessageService {
 	void addMessage(String topic, String content, String receiver) { 
 		User sender  = securityService.getContextUser()
 		User addressee = User.findByNickname(receiver)
-		new Message(topic: topic, content: content, sender: sender, addressee: addressee).save(failOnError: true)
+		new Message(topic: topic, content: content, sender: sender, addressee: addressee).save(failOnError: true, flush: true)
 	}
 	
 	void removeMessage(MessageItem message) {
@@ -45,12 +45,15 @@ class MessageService {
 		Message m = Message.get(message.getId())
 		if(m) {
 			m.wasRead = true
-			m.save(failOnError: true)
+			m.save(failOnError: true, flush: true)
 		}
 	}
 	
 	int getUnreadCount() {
 		User user  = securityService.getContextUser()
+		if(user == null) {
+			return 0
+		}
 		return Message.countByAddresseeAndWasRead(user, false)
 	}
 }

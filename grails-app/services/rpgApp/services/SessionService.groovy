@@ -28,6 +28,23 @@ class SessionService {
 					)
 		}
 	}
+	
+	List<SessionItem> getLastSessions() {
+		int maximum = 5
+		if(User.count() < 5) {
+			maximum = Session.count()
+		}
+		return Session.findAll([sort: 'dateCreated', order:'desc', max: maximum]).collect {
+			new SessionItem(
+					id: it.id,
+					dateCreated: it.dateCreated,
+					timeStamp: it.timeStamp,
+					location: it.location,
+					maxPlayers: it.maxPlayers,
+					system: it.system.name,
+					)
+		}
+	}
 
 
 	List<SessionItem> getMySessions() {
@@ -52,7 +69,7 @@ class SessionService {
 		Participant.findAllByUserAndState(user, true).collect() {
 			sessions.add(it.getSession())
 		}
-		
+
 		List<SessionItem> joinedSessions = []
 		for(Session ses in sessions) {
 			joinedSessions.add(new SessionItem(
@@ -66,7 +83,7 @@ class SessionService {
 					system: ses.system.name,
 					))
 		}
-		
+
 		return joinedSessions
 	}
 
@@ -76,7 +93,7 @@ class SessionService {
 		Participant.findAllByUserAndState(user, false).collect() {
 			sessions.add(it.getSession())
 		}
-		
+
 		List<SessionItem> waitingSessions = []
 		for(Session ses in sessions) {
 			waitingSessions.add(new SessionItem(
@@ -90,7 +107,7 @@ class SessionService {
 					system: ses.system.name,
 					))
 		}
-		
+
 		return waitingSessions
 	}
 
@@ -106,13 +123,27 @@ class SessionService {
 				system: system,
 				)
 
-		s.save(failOnError: true)
+		s.save(failOnError: true, flush: true)
 
 		if(role.equals("Master")) {
-			new Participant(user: owner, session: s, role: true, state: true).save()
+			new Participant(user: owner, session: s, role: true, state: true).save(flush: true)
 		} else if(role.equals("Player")) {
-			new Participant(user: owner, session: s, role: false, state: true).save()
+			new Participant(user: owner, session: s, role: false, state: true).save(flush: true)
 		}
+	}
+
+	void updateSession(Date ts, String type, String loc, Integer mP, String sysName, Long id) {
+		RpgSystem rpgsystem = RpgSystem.findByName(sysName)
+		Session.executeUpdate('UPDATE Session SET timeStamp=:timeStamp, type=:type, location=:location, maxPlayers=:maxPlayers, system=:system WHERE id=:sessionId', [timeStamp: ts, type: type, location: loc, maxPlayers: mP, system: rpgsystem, sessionId: id])
+	}
+
+	void deleteSession(Integer id) {
+		Session sessionS = Session.get(id)
+		Participant.findAllBySession(sessionS).collect() {
+			it.delete()
+		}
+
+		sessionS.delete()
 	}
 
 	// 0 - not member , 1 - member, 2 - waiting
@@ -141,7 +172,7 @@ class SessionService {
 		Participant p = Participant.findBySessionAndRole(sessionS, true)
 		if(p) {
 			if(p.getState() == true) {
-				return "<b>"+p.getUser().getNickname()+"</b>"
+				return p.getUser().getNickname()
 			}
 		}
 
@@ -164,7 +195,7 @@ class SessionService {
 		User contextUser = securityService.getContextUser()
 		User rec = User.findByNickname(to)
 		Session sessionS = Session.get(id)
-		new Notification(sender: contextUser, receiver: rec, session: sessionS, type: type, role: role).save(failOnError: true)
+		new Notification(sender: contextUser, receiver: rec, session: sessionS, type: type, role: role).save(failOnError: true, flush: true)
 	}
 
 	void createParticipant(Integer id, Boolean role, Boolean state) {
@@ -174,7 +205,18 @@ class SessionService {
 				session: Session.get(id),
 				role: role,
 				state: state,
-				).save(failOnError: true)
+				).save(failOnError: true, flush: true)
+
+	}
+	
+	void createOtherParticipant(String user, Integer id, Boolean role, Boolean state) {
+		User u = User.findByNickname(user)
+		new Participant(
+				user: u,
+				session: Session.get(id),
+				role: role,
+				state: state,
+				).save(failOnError: true, flush: true)
 
 	}
 
@@ -233,11 +275,6 @@ class SessionService {
 		} else {
 			return false
 		}
-	}
-
-	int getNotificationsCount() {
-		User contextUser = securityService.getContextUser()
-		return Notification.countByReceiver(contextUser)
 	}
 
 	boolean isMineSession(String owner) {

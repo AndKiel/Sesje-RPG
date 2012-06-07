@@ -79,6 +79,7 @@ class RegisterWindow extends Window implements Button.ClickListener {
 		}
 		location.setNewItemsAllowed(false)
 		location.setWidth("100%")
+		location.setRequired(true)
 		registerForm.addField("location", location)
 
 		PopupDateField birthday = new PopupDateField()

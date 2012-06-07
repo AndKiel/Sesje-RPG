@@ -121,6 +121,7 @@ class Systems extends VerticalLayout implements Property.ValueChangeListener, Cl
 					}
 					)
 			letter.setStyleName(BaseTheme.BUTTON_LINK)
+			letter.addStyleName("gold-link")
 			hl.addComponent(letter)
 
 		}

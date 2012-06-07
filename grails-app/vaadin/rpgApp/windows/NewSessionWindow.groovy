@@ -2,7 +2,9 @@ package rpgApp.windows
 
 
 import rpgApp.content.Announcements
+import rpgApp.data.SessionItem
 import rpgApp.main.IndexApplication
+import rpgApp.pages.Sessions
 import rpgApp.services.SessionService
 
 import com.vaadin.data.Property
@@ -26,16 +28,20 @@ class NewSessionWindow extends Window implements Button.ClickListener, Property.
 	private IndexApplication app
 	private SessionService sessionService
 	private Announcements announcements
+	private Sessions sessions
+	private boolean editMode
 
 	private Button create
 	private Button cancel
 	private TextField location
 	private Form sessionForm = new Form()
 
-	NewSessionWindow(IndexApplication app, Announcements announcements) {
+	NewSessionWindow(IndexApplication app, Announcements announcements, Sessions sessions, boolean editMode) {
 		super("New Session")
 		this.app = app
 		this.announcements = announcements
+		this.sessions = sessions
+		this.editMode = editMode
 		sessionService = app.sessionService
 		this.setCaption("New Session")
 		setModal(true)
@@ -77,10 +83,20 @@ class NewSessionWindow extends Window implements Button.ClickListener, Property.
 		location.setRequired(true)
 		sessionForm.addField("location", location)
 		type.select("offline")
-
 		ComboBox maxPlayers = new ComboBox("Max. players: ")
-		for(int i = 3; i < 10; i++) {
-			maxPlayers.addItem(i)
+		if(!editMode) {
+			for(int i = 3; i < 10; i++) {
+				maxPlayers.addItem(i)
+			}
+		} else {
+			SessionItem s = (SessionItem)sessions.getMySessions().getValue()
+			int players = sessionService.participantsCount(s.getId())
+			if(sessionService.isMasterSlot(s.getId())) {
+				players++
+			}
+			for(int i = players; i < 10; i++) {
+				maxPlayers.addItem(i)
+			}
 		}
 		maxPlayers.setNullSelectionAllowed(false)
 		maxPlayers.setNewItemsAllowed(false)
@@ -102,6 +118,10 @@ class NewSessionWindow extends Window implements Button.ClickListener, Property.
 		footer.setWidth("100%")
 		create = new Button("Create", (Button.ClickListener)this)
 		create.setIcon(new ThemeResource("icons/document-txt.png"))
+		if(editMode) {
+			create.setCaption("Save")
+			create.setIcon(new ThemeResource("icons/ok.png"))
+		}
 		cancel = new Button("Cancel", (Button.ClickListener)this)
 		cancel.setIcon(new ThemeResource("icons/cancel.png"))
 		footer.addComponent(create);
@@ -114,22 +134,58 @@ class NewSessionWindow extends Window implements Button.ClickListener, Property.
 
 		setWidth(400, Sizeable.UNITS_PIXELS)
 		center();
+
+		if(editMode) {
+			this.setCaption("Edit Session")
+
+			SessionItem s = (SessionItem)sessions.getMySessions().getValue()
+			system.setValue(s.getSystem())
+			time.setValue(s.getTimeStamp())
+			type.setValue(s.getType())
+			location.setValue(s.getLocation())
+			maxPlayers.setValue(s.getMaxPlayers())
+			role.setVisible(false)
+		}
 	}
 
 	void buttonClick(ClickEvent clickEvent) {
 		switch(clickEvent.source){
 			case create:
 				if(sessionForm.isValid()) {
-					sessionService.createSession(
-							(Date)(sessionForm.getField("time").getValue()),
-							(String)(sessionForm.getField("type").getValue()),
-							(String)(sessionForm.getField("location").getValue()), 
-							new Integer(sessionForm.getField("maxPlayers").getValue()),
-							(String)(sessionForm.getField("system").getValue()),
-							(String)(sessionForm.getField("role").getValue())
-							)
-					announcements.fillSessions()
-					this.close()
+					if(!editMode) {
+						sessionService.createSession(
+								(Date)(sessionForm.getField("time").getValue()),
+								(String)(sessionForm.getField("type").getValue()),
+								(String)(sessionForm.getField("location").getValue()),
+								new Integer(sessionForm.getField("maxPlayers").getValue()),
+								(String)(sessionForm.getField("system").getValue()),
+								(String)(sessionForm.getField("role").getValue())
+								)
+						if(announcements) {
+							announcements.fillSessions()
+						}
+						if(sessions) {
+							sessions.fillSessions()
+						}
+						this.close()
+					} else {
+						SessionItem s = (SessionItem)sessions.getMySessions().getValue()
+						sessionService.updateSession(
+								(Date)(sessionForm.getField("time").getValue()),
+								(String)(sessionForm.getField("type").getValue()),
+								(String)(sessionForm.getField("location").getValue()),
+								new Integer(sessionForm.getField("maxPlayers").getValue()),
+								(String)(sessionForm.getField("system").getValue()),
+								(Long)s.getId()
+								)
+						if(announcements) {
+							announcements.fillSessions()
+						}
+						if(sessions) {
+							sessions.fillSessions()
+						}
+						this.close()
+					}
 				}
 				break;
 			case cancel:

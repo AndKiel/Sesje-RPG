@@ -4,6 +4,7 @@ import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
 import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Label
+import com.vaadin.ui.Panel
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Button.ClickEvent
 
@@ -13,60 +14,113 @@ import rpgApp.main.IndexApplication
 class Notifications extends VerticalLayout {
 	private IndexApplication app
 
+	private Panel p1
+	private Panel p2
+	private VerticalLayout vl1
+	private VerticalLayout vl2
+	private List<Button> buttons = []
+
 	public Notifications(IndexApplication app) {
 		this.app = app
 		setMargin(true)
 		setSpacing(true)
+
+		p1 = new Panel("Invitations")
+		p2  = new Panel("Acceptations")
+		vl1 = p1.getContent()
+		vl2 = p2.getContent()
+		addComponent(p1)
+		addComponent(p2)
 	}
 
 	public void fillNotifications() {
-		removeAllComponents()
-		List<NotificationItem> notifications = app.notificationService.getAllNotifications()
-		if(notifications.size() == 0) {
-			VerticalLayout vl = new VerticalLayout()
-			Label l = new Label("<font size=4>NO NOTIFICATIONS</font>",Label.CONTENT_XHTML)
-			vl.addComponent(l)
-			vl.setComponentAlignment(l, Alignment.MIDDLE_CENTER)
-			addComponent(vl)
+		vl1.removeAllComponents()
+		vl2.removeAllComponents()
+		buttons.clear()
+		List<NotificationItem> invNotifications = app.notificationService.getInvitationNotifications()
+		if(invNotifications.size() == 0) {
+			Label l = new Label("<font size=3>You've got 0 invitations</font>",Label.CONTENT_XHTML)
+			vl1.addComponent(l)
+			vl1.setComponentAlignment(l, Alignment.MIDDLE_CENTER)
 		}
-		for(NotificationItem notif in notifications) {
+		for(NotificationItem notif in invNotifications) {
 			String role = notif.getRole() ? "Master" : "Player"
 
 			HorizontalLayout hl = new HorizontalLayout()
 			hl.setSpacing(true)
 			hl.setSizeFull()
-			// Invintation
-			if(notif.getType()) {
 
-				
-			} else { // Acceptation
-				Label l = new Label(notif.getSender()+" wants to join session nr "+notif.getSession()+" as a "+role)
-				hl.addComponent(l)
-				Button b1 = new Button("Accept")
-				b1.addListener(new Button.ClickListener() {
+			Label l = new Label("<b>"+notif.getSender()+"</b> invites you to join session <b>#"+notif.getSession()+"</b> as a "+role)
+			hl.addComponent(l)
+			buttons.add(new Button("Join"))
+			buttons.get(buttons.size()-1).addListener(new Button.ClickListener() {
+						public void buttonClick(ClickEvent event) {
+							app.sessionService.setParticipantActive(notif.getReceiver(),notif.getSession())
+							app.notificationService.deleteNotification(notif.getId())
+							app.notifications.setCaption("You've got: "+app.notificationService.getNotificationsCount()+" notifications")
+							this.fillNotifications()
+						}
+					}
+					)
+			hl.addComponent(buttons.get(buttons.size()-1))
+			buttons.add(new Button("Refuse"))
+			buttons.get(buttons.size()-1).addListener(new Button.ClickListener() {
+						public void buttonClick(ClickEvent event) {
+							app.sessionService.deleteParticipant(notif.getReceiver(),notif.getSession())
+							app.notificationService.deleteNotification(notif.getId())
+							app.notifications.setCaption("You've got: "+app.notificationService.getNotificationsCount()+" notifications")
+							this.fillNotifications()
+						}
+					}
+					)
+			hl.addComponent(buttons.get(buttons.size()-1))
+			hl.setExpandRatio(l, 1.0f)
+			hl.setComponentAlignment(l, Alignment.MIDDLE_CENTER)
+			vl1.addComponent(hl)
+
+		}
+		List<NotificationItem> accNotifications = app.notificationService.getAcceptationNotifications()
+		if(accNotifications.size() == 0) {
+			Label l = new Label("<font size=3>You've got 0 acceptation requests</font>",Label.CONTENT_XHTML)
+			vl2.addComponent(l)
+			vl2.setComponentAlignment(l, Alignment.MIDDLE_CENTER)
+		}
+		for(NotificationItem notif in accNotifications) {
+			String role = notif.getRole() ? "Master" : "Player"
+
+			HorizontalLayout hl = new HorizontalLayout()
+			hl.setSpacing(true)
+			hl.setSizeFull()
+
+			Label l = new Label("<b>"+notif.getSender()+"</b> wants to join session <b>#"+notif.getSession()+"</b> as a "+role)
+			hl.addComponent(l)
+			buttons.add(new Button("Accept"))
+			buttons.get(buttons.size()-1).addListener(new Button.ClickListener() {
 						public void buttonClick(ClickEvent event) {
 							app.sessionService.setParticipantActive(notif.getSender(),notif.getSession())
 							app.notificationService.deleteNotification(notif.getId())
+							app.notifications.setCaption("You've got: "+app.notificationService.getNotificationsCount()+" notifications")
 							this.fillNotifications()
 						}
 					}
 					)
-				hl.addComponent(b1)
-				Button b2 = new Button("Refuse")
-				b2.addListener(new Button.ClickListener() {
+			hl.addComponent(buttons.get(buttons.size()-1))
+			buttons.add(new Button("Refuse"))
+			buttons.get(buttons.size()-1).addListener(new Button.ClickListener() {
 						public void buttonClick(ClickEvent event) {
 							app.sessionService.deleteParticipant(notif.getSender(),notif.getSession())
 							app.notificationService.deleteNotification(notif.getId())
+							app.notifications.setCaption("You've got: "+app.notificationService.getNotificationsCount()+" notifications")
 							this.fillNotifications()
 						}
 					}
 					)
-				hl.addComponent(b2)
-				hl.setExpandRatio(l, 1.0f)
-				hl.setComponentAlignment(l, Alignment.MIDDLE_CENTER)
-				addComponent(hl)
-			}
-			
+			hl.addComponent(buttons.get(buttons.size()-1))
+			hl.setExpandRatio(l, 1.0f)
+			hl.setComponentAlignment(l, Alignment.MIDDLE_CENTER)
+			vl2.addComponent(hl)
 		}
+
+
 	}
 }

@@ -9,16 +9,25 @@ import rpgApp.windows.SessionJoin
 
 import com.vaadin.data.Item
 import com.vaadin.data.Property
+import com.vaadin.data.Container.Filter
 import com.vaadin.data.Property.ValueChangeEvent
+import com.vaadin.data.util.filter.Compare.Equal
+import com.vaadin.data.util.filter.Compare.GreaterOrEqual
+import com.vaadin.data.util.filter.Compare.LessOrEqual
+import com.vaadin.terminal.Resource
 import com.vaadin.terminal.ThemeResource
+import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
+import com.vaadin.ui.ComboBox
 import com.vaadin.ui.Component
+import com.vaadin.ui.Embedded
 import com.vaadin.ui.GridLayout
 import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Label
 import com.vaadin.ui.Panel
 import com.vaadin.ui.Table
 import com.vaadin.ui.VerticalLayout
+import com.vaadin.ui.AbstractSelect.Filtering
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Button.ClickListener
 import com.vaadin.ui.Table.ColumnGenerator
@@ -44,18 +53,106 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 	private Label master
 	private Label players
 
+	private ComboBox systemNames
+	private ComboBox plrs
+	private ComboBox plrs2
+	private ComboBox tp
+	private Button removeAllFilters
+
+	private Filter systemFilter
+	private Filter minPlayersFilter
+	private Filter maxPlayersFilter
+	private Filter typeFilter
+
 	public Announcements(IndexApplication app) {
 		this.app = app
 		this.sessionService = app.sessionService
 		dataSource = new SessionContainer(sessionService)
 
 		setMargin(true)
+		addComponent(createFilterBar())
 		addComponent(createHeader())
 		addComponent(createMessageTable())
 		Panel messagePanel = createMessagePanel()
 		addComponent(messagePanel)
 
 		setExpandRatio(messagePanel,1.0f)
+	}
+
+	private HorizontalLayout createFilterBar() {
+		HorizontalLayout hl = new HorizontalLayout()
+		hl.setSizeFull()
+		hl.setSpacing(true)
+		hl.setMargin(false, true , false, false)
+
+		systemNames = new ComboBox("System: ")
+		List<String> allNames = app.systemService.getAllSystemsNames()
+		systemNames.addItem("(none)")
+		allNames.each {
+			systemNames.addItem(it)
+		}
+		systemNames.setNullSelectionAllowed(false)
+		systemNames.setNewItemsAllowed(false)
+		systemNames.select("(none)")
+		systemNames.setImmediate(true)
+		systemNames.addListener((Property.ValueChangeListener) this)
+		systemNames.setWidth("100%")
+		systemNames.setFilteringMode(Filtering.FILTERINGMODE_CONTAINS)
+
+		plrs = new ComboBox("Min. players #: ")
+		plrs.addItem("(none)")
+		for(int i = 3; i < 10; i ++) {
+			plrs.addItem(i)
+		}
+		plrs.setNullSelectionAllowed(false)
+		plrs.setNewItemsAllowed(false)
+		plrs.select("(none)")
+		plrs.setImmediate(true)
+		plrs.addListener((Property.ValueChangeListener) this)
+		plrs.setWidth("100%")
+
+		plrs2 = new ComboBox("Max. players #: ")
+		plrs2.addItem("(none)")
+		for(int i = 3; i < 10; i ++) {
+			plrs2.addItem(i)
+		}
+		plrs2.setNullSelectionAllowed(false)
+		plrs2.setNewItemsAllowed(false)
+		plrs2.select("(none)")
+		plrs2.setImmediate(true)
+		plrs2.addListener((Property.ValueChangeListener) this)
+		plrs2.setWidth("100%")
+
+		tp = new ComboBox("Type: ")
+		tp.addItem("(none)")
+		tp.addItem("offline")
+		tp.addItem("online")
+		tp.setNullSelectionAllowed(false)
+		tp.setNewItemsAllowed(false)
+		tp.select("(none)")
+		tp.setImmediate(true)
+		tp.addListener((Property.ValueChangeListener) this)
+		tp.setWidth("100%")
+
+		removeAllFilters = new Button("Clear all filters")
+		removeAllFilters.addListener((ClickListener) this)
+
+		hl.addComponent(systemNames)
+		hl.addComponent(plrs)
+		hl.addComponent(plrs2)
+		hl.addComponent(tp)
+		Label l = new Label("")
+		hl.addComponent(l)
+		hl.addComponent(removeAllFilters)
+		hl.setExpandRatio(l,0.2f)
+		hl.setExpandRatio(systemNames,0.3f)
+		hl.setExpandRatio(plrs,0.1f)
+		hl.setExpandRatio(plrs2,0.1f)
+		hl.setExpandRatio(tp,0.1f)
+		hl.setExpandRatio(removeAllFilters, 0.2f)
+		hl.setComponentAlignment(removeAllFilters, Alignment.MIDDLE_RIGHT)
+
+		return hl
 	}
 
 	private HorizontalLayout createHeader() {
@@ -67,6 +164,8 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		join = new Button("Join")
 		join.addListener((ClickListener) this)
 		join.setVisible(false)
+		Label l = new Label("Joined")
+		Label l2 = new Label("Waiting for acceptation")
 		newSession = new Button("New Session")
 		newSession.addListener((ClickListener) this)
 		newSession.setIcon(new ThemeResource("icons/document-add.png"))
@@ -74,10 +173,29 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		refresh.addListener((ClickListener) this)
 		refresh.setIcon(new ThemeResource("icons/reload.png"))
 
+		Resource res = new ThemeResource("icons/member-color.png");
+		Embedded e = new Embedded(null, res);
+		e.setWidth("16px");
+		e.setHeight("16px");
+		Resource res2 = new ThemeResource("icons/waiting-color.png");
+		Embedded e2 = new Embedded(null, res2);
+		e2.setWidth("16px");
+		e2.setHeight("16px");
+
 		hl.addComponent(join)
+		hl.addComponent(e)
+		hl.addComponent(l)
+		hl.addComponent(e2)
+		hl.addComponent(l2)
 		hl.addComponent(newSession)
 		hl.addComponent(refresh)
-		hl.setExpandRatio(join, 1.0f)
+		hl.setExpandRatio(join, 0.6f)
+		hl.setComponentAlignment(e, Alignment.MIDDLE_CENTER)
+		hl.setComponentAlignment(e2, Alignment.MIDDLE_CENTER)
+		hl.setComponentAlignment(l, Alignment.MIDDLE_CENTER)
+		hl.setComponentAlignment(l2, Alignment.MIDDLE_CENTER)
+		hl.setExpandRatio(l,0.1f)
+		hl.setExpandRatio(l2,0.3f)
 
 		return hl
 	}
@@ -88,7 +206,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		sessions.setContainerDataSource(dataSource)
 		sessions.setVisibleColumns(dataSource.NATURAL_COL_ORDER)
 		sessions.setColumnHeaders(dataSource.COL_HEADERS_ENGLISH)
-		sessions.setPageLength(12)
+		sessions.setPageLength(11)
 		sessions.setSelectable(true)
 		sessions.setImmediate(true)
 		sessions.setNullSelectionAllowed(false);
@@ -196,6 +314,16 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		players.setValue("")
 	}
 
+	public void fillSystemNamesFilter() {
+		systemNames.removeAllItems()
+		List<String> allNames = app.systemService.getAllSystemsNames()
+		systemNames.addItem("(none)")
+		allNames.each {
+			systemNames.addItem(it)
+		}
+		systemNames.select("(none)")
+	}
+
 	public Table getSessions() {
 		return sessions
 	}
@@ -211,7 +339,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 			where.setValue("<b>Where: </b>"+s.getLocation())
 			owner.setValue("<b>Owner: </b>"+s.getOwner())
 			when.setValue("<b>When: </b>"+s.getTimeStamp().toString().substring(0, 16))
-			master.setValue("<font size=3><b>Master: </b><font color=#786D3C>"+sessionService.getMaster(s.getId())+"</font></font>")
+			master.setValue("<font size=3><b>Master: <font color=#786D3C>"+sessionService.getMaster(s.getId())+"</font></b></font>")
 			List<String> plrs = sessionService.getPlayers(s.getId())
 			int counter = 0
 			String txt = "<font size=3><b>Players: </b>"
@@ -230,6 +358,38 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 				join.setCaption("Leave")
 			} else {
 				join.setCaption("Join")
+			}
+		} else if(property == systemNames) {
+			if(systemFilter) {
+				dataSource.removeContainerFilter(systemFilter)
+			}
+			if(!systemNames.getValue().equals("(none)")) {
+				systemFilter = new Equal("system", systemNames.getValue().toString())
+				dataSource.addContainerFilter(systemFilter)
+			}
+		} else if(property == plrs) {
+			if(minPlayersFilter) {
+				dataSource.removeContainerFilter(minPlayersFilter)
+			}
+			if(!plrs.getValue().equals("(none)")) {
+				minPlayersFilter = new GreaterOrEqual("maxPlayers", plrs.getValue())
+				dataSource.addContainerFilter(minPlayersFilter)
+			}
+		} else if(property == plrs2) {
+			if(maxPlayersFilter) {
+				dataSource.removeContainerFilter(maxPlayersFilter)
+			}
+			if(!plrs2.getValue().equals("(none)")) {
+				maxPlayersFilter = new LessOrEqual("maxPlayers", plrs2.getValue())
+				dataSource.addContainerFilter(maxPlayersFilter)
+			}
+		} else if(property == tp) {
+			if(typeFilter) {
+				dataSource.removeContainerFilter(typeFilter)
+			}
+			if(!tp.getValue().equals("(none)")) {
+				typeFilter = new Equal("type", tp.getValue().toString())
+				dataSource.addContainerFilter(typeFilter)
 			}
 		}
 	}
@@ -253,10 +413,17 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 				}
 				break
 			case newSession:
-				app.getMainWindow().addWindow(new NewSessionWindow(app, this))
+				app.getMainWindow().addWindow(new NewSessionWindow(app, this, null, false))
 				break
 			case refresh:
 				fillSessions()
+				break
+			case removeAllFilters:
+				dataSource.removeAllContainerFilters()
+				systemNames.select("(none)")
+				plrs.select("(none)")
+				plrs2.select("(none)")
+				tp.select("(none)")
 				break
 		}
 	}

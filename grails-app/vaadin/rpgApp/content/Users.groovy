@@ -60,6 +60,7 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 					}
 					)
 			letter.setStyleName(BaseTheme.BUTTON_LINK)
+			letter.addStyleName("gold-link")
 			hl.addComponent(letter)
 		}
 		addComponent(hl)

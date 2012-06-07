@@ -57,7 +57,7 @@ class SystemService {
 				return
 			}
 		} else {
-			s.save(failOnError: true)
+			s.save(failOnError: true, flush: true)
 		}
 	}
 	

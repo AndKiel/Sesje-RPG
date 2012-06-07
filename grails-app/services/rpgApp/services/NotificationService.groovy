@@ -9,9 +9,23 @@ class NotificationService {
     def securityService
 	static transactional = true
 
-	List<NotificationItem> getAllNotifications() {
+	List<NotificationItem> getInvitationNotifications() {
 		User user  = securityService.getContextUser()
-		return Notification.findAllByReceiver(user).collect() {
+		return Notification.findAllByReceiverAndType(user, true).collect() {
+			new NotificationItem(
+				id: it.id,
+				sender: it.getSender().getNickname(),
+				receiver: it.getReceiver().getNickname(),
+				session: it.getSession().getId(),
+				role: it.getRole(),
+				type: it.getType()
+				)
+		}
+	}
+	
+	List<NotificationItem> getAcceptationNotifications() {
+		User user  = securityService.getContextUser()
+		return Notification.findAllByReceiverAndType(user, false).collect() {
 			new NotificationItem(
 				id: it.id,
 				sender: it.getSender().getNickname(),
@@ -28,5 +42,13 @@ class NotificationService {
 		if(n) {
 			n.delete()
 		}
+	}
+	
+	int getNotificationsCount() {
+		User contextUser = securityService.getContextUser()
+		if(contextUser == null) {
+			return 0
+		}
+		return Notification.countByReceiver(contextUser)
 	}
 }

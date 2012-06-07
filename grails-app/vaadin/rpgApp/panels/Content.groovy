@@ -22,7 +22,7 @@ import com.vaadin.ui.themes.Reindeer
 
 class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 	private IndexApplication app
-	
+
 	private TabSheet tabSheet
 	private HorizontalLayout startPage
 	private VerticalLayout systems
@@ -38,7 +38,7 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 
 		setWidth("1000px")
 		setHeight("630px")
-		
+
 		loginError = new Window.Notification("You must log in to enter this page", Window.Notification.TYPE_ERROR_MESSAGE);
 		loginError.setDelayMsec(100)
 
@@ -56,7 +56,7 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		tabSheet.addListener((TabSheet.SelectedTabChangeListener) this)
 
 		VerticalLayout panelLayout = getContent()
-		panelLayout.setMargin(false)		
+		panelLayout.setMargin(false)
 		panelLayout.addComponent(tabSheet)
 	}
 
@@ -64,12 +64,12 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		tabSheet.setSelectedTab(startPage)
 		startPage.refreshContent()
 	}
-	
+
 	public void goToMessages() {
 		tabSheet.setSelectedTab(myPage)
 		myPage.setMessagesSelection()
 	}
-	
+
 	public void goToNotifications() {
 		tabSheet.setSelectedTab(myPage)
 		myPage.setNotificationsSelection()
@@ -101,6 +101,7 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 					app.getMainWindow().showNotification(loginError);
 				} else {
 					announcements.fillSessions()
+					announcements.fillSystemNamesFilter()
 				}
 			}
 			if((tab.getCaption()).equals("Users")) {
@@ -110,6 +111,9 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 				} else {
 					users.fillUsers()
 				}
+			}
+			if((tab.getCaption()).equals("Start Page")) {
+				startPage.refreshContent()
 			}
 		}
 	}

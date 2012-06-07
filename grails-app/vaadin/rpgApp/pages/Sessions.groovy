@@ -4,6 +4,10 @@ import rpgApp.data.SessionContainer
 import rpgApp.data.SessionItem
 import rpgApp.main.IndexApplication
 import rpgApp.services.SessionService
+import rpgApp.windows.InvitationWindow
+import rpgApp.windows.KickWindow
+import rpgApp.windows.NewSessionWindow
+import rpgApp.windows.YesNoDialog
 
 import com.vaadin.data.Property
 import com.vaadin.data.Property.ValueChangeEvent
@@ -21,6 +25,7 @@ import com.vaadin.ui.TabSheet.SelectedTabChangeEvent
 import com.vaadin.ui.TabSheet.Tab
 import com.vaadin.ui.Table.ColumnGenerator
 import com.vaadin.ui.themes.Reindeer
+import com.vaadin.ui.Window.Notification
 
 class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListener, ClickListener, Property.ValueChangeListener{
 	private IndexApplication app
@@ -38,7 +43,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 	private Button leave
 	private Button leave2
 	private Button invite
-	private HorizontalLayout hl
+	private Button kick
 
 	private Label master
 	private Label players
@@ -98,20 +103,27 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 		VerticalLayout vl = new VerticalLayout()
 		vl.setMargin(true)
 		vl.setSpacing(true)
-		hl = new HorizontalLayout()
+		HorizontalLayout hl = new HorizontalLayout()
 		hl.setWidth("100%")
 		hl.setSpacing(true)
 
 		invite = new Button("Invite")
+		invite.addListener((ClickListener)this)
+		kick = new Button("Kick")
+		kick.addListener((ClickListener)this)
 		newSession = new Button("New session")
+		newSession.addListener((ClickListener)this)
 		editSession = new Button("Edit")
+		editSession.addListener((ClickListener)this)
 		deleteSession = new Button("Delete")
+		deleteSession.addListener((ClickListener)this)
 
 		hl.addComponent(invite)
+		hl.addComponent(kick)
 		hl.addComponent(newSession)
 		hl.addComponent(editSession)
 		hl.addComponent(deleteSession)
-		hl.setExpandRatio(invite, 1.0f)
+		hl.setExpandRatio(kick, 1.0f)
 
 		vl.addComponent(hl)
 		vl.addComponent(mySessions)
@@ -132,6 +144,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 		hl.setSpacing(true)
 
 		leave = new Button("Leave")
+		leave.addListener((ClickListener)this)
 
 		hl.addComponent(leave)
 
@@ -154,6 +167,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 		hl.setSpacing(true)
 
 		leave2 = new Button("Leave")
+		leave2.addListener((ClickListener)this)
 
 		hl.addComponent(leave2)
 
@@ -213,10 +227,20 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 		return sessions
 	}
 
-	public void fillSessions() {
-		hl.setVisible(false)
+	public Table getMySessions() {
+		return mySessions
 	}
-	
+
+	public void fillSessions() {
+		dataSource.fillWithMySessions()
+		master.setValue("")
+		players.setValue("")
+		invite.setVisible(false)
+		kick.setVisible(false)
+		editSession.setVisible(false)
+		deleteSession.setVisible(false)
+	}
+
 	public void selectedTabChange(SelectedTabChangeEvent event) {
 		TabSheet tabsheet = event.getTabSheet();
 		Tab tab = tabsheet.getTab(tabsheet.getSelectedTab());
@@ -225,7 +249,10 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 				dataSource.fillWithMySessions()
 				master.setValue("")
 				players.setValue("")
-				hl.setVisible(false)
+				invite.setVisible(false)
+				kick.setVisible(false)
+				editSession.setVisible(false)
+				deleteSession.setVisible(false)
 			}
 			else if((tab.getCaption()).equals("Joined session")) {
 				dataSource.fillWithJoinedSessions()
@@ -247,10 +274,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 		switch(source) {
 			case refresh:
 				if(tabSheet.getTab(tabSheet.getSelectedTab()).getCaption().equals("My sessions")) {
-					dataSource.fillWithMySessions()
-					master.setValue("")
-					players.setValue("")
-					hl.setVisible(false)
+					fillSessions()
 				} else if(tabSheet.getTab(tabSheet.getSelectedTab()).getCaption().equals("Joined session")) {
 					dataSource.fillWithJoinedSessions()
 					master2.setValue("")
@@ -263,6 +287,59 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 					leave2.setVisible(false)
 				}
 				break
+			case leave:
+				SessionItem s = (SessionItem)joinedSessions.getValue()
+				sessionService.playerLeave(s.getId())
+				app.getMainWindow().showNotification("You have left the session", Notification.TYPE_WARNING_MESSAGE)
+				dataSource.fillWithJoinedSessions()
+				master2.setValue("")
+				players2.setValue("")
+				leave.setVisible(false)
+				break
+			case leave2:
+				SessionItem s = (SessionItem)waitingSessions.getValue()
+				sessionService.playerLeave(s.getId())
+				app.getMainWindow().showNotification("You have left the session", Notification.TYPE_WARNING_MESSAGE)
+				dataSource.fillWithWaitingSessions()
+				master3.setValue("")
+				players3.setValue("")
+				leave2.setVisible(false)
+				break
+			case newSession:
+				app.getMainWindow().addWindow(new NewSessionWindow(app, null, this, false))
+				break
+			case editSession:
+				app.getMainWindow().addWindow(new NewSessionWindow(app, null, this, true))
+				break
+			case deleteSession:
+				app.getMainWindow().addWindow(new YesNoDialog("Session delete","Are you sure you want to delete this session?",
+				new YesNoDialog.Callback() {
+					public void onDialogResult(boolean answer) {
+						if(answer) {
+							SessionItem s = (SessionItem)mySessions.getValue()
+							sessionService.deleteSession(s.getId())
+							fillSessions()
+						}
+					}
+				}
+				))
+				break
+			case invite:
+				SessionItem s = (SessionItem)mySessions.getValue()
+				if(sessionService.participantsCount(s.getId()) == s.getMaxPlayers()) {
+					app.getMainWindow().showNotification("No slots for this session", Notification.TYPE_ERROR_MESSAGE)
+				} else {
+					app.getMainWindow().addWindow(new InvitationWindow(app, s, sessionService))
+				}
+				break
+			case kick:
+				SessionItem s = (SessionItem)mySessions.getValue()
+				if(sessionService.participantsCount(s.getId()) == 0) {
+					app.getMainWindow().showNotification("Session has no players", Notification.TYPE_ERROR_MESSAGE)
+				} else {
+					app.getMainWindow().addWindow(new KickWindow(app, this, s, sessionService))
+				}
+				break
 		}
 	}
 
@@ -271,7 +348,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 		if (property == mySessions) {
 			SessionItem s = (SessionItem)mySessions.getValue()
 
-			master.setValue("<font size=3><b>Master: </b><font color=#786D3C>"+sessionService.getMaster(s.getId())+"</font></font>")
+			master.setValue("<font size=3><b>Master: <font color=#786D3C>"+sessionService.getMaster(s.getId())+"</font></b></font>")
 			List<String> plrs = sessionService.getPlayers(s.getId())
 			int counter = 0
 			String txt = "<font size=3><b>Players: </b>"
@@ -284,13 +361,16 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 			}
 
 			players.setValue(txt)
-			
-			hl.setVisible(true)
+
+			invite.setVisible(true)
+			kick.setVisible(true)
+			editSession.setVisible(true)
+			deleteSession.setVisible(true)
 		}
 		else if (property == joinedSessions) {
 			SessionItem s = (SessionItem)joinedSessions.getValue()
 
-			master2.setValue("<font size=3><b>Master: </b><font color=#786D3C>"+sessionService.getMaster(s.getId())+"</font></font>")
+			master2.setValue("<font size=3><b>Master: <font color=#786D3C>"+sessionService.getMaster(s.getId())+"</font></b></font>")
 			List<String> plrs = sessionService.getPlayers(s.getId())
 			int counter = 0
 			String txt = "<font size=3><b>Players: </b>"
@@ -309,7 +389,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 		else if (property == waitingSessions) {
 			SessionItem s = (SessionItem)waitingSessions.getValue()
 
-			master3.setValue("<font size=3><b>Master: </b><font color=#786D3C>"+sessionService.getMaster(s.getId())+"</font></font>")
+			master3.setValue("<font size=3><b>Master: <font color=#786D3C>"+sessionService.getMaster(s.getId())+"</font></b></font>")
 			List<String> plrs = sessionService.getPlayers(s.getId())
 			int counter = 0
 			String txt = "<font size=3><b>Players: </b>"
@@ -326,5 +406,5 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 			leave2.setVisible(true)
 		}
 	}
-	
+
 }

@@ -17,7 +17,31 @@ class UserService {
 	def springSecurityService
 	
 	List<UserItem> getAllUsers() {
-		return User.findAll([sort: 'nickname', order:'desc']).collect {
+		return User.findAll([sort: 'nickname', order:'asc']).collect {
+			Set<Role> roles = it.getAuthorities()
+			Set<String> roleNames = []
+			for(role in roles) {
+				roleNames.add(role.getAuthority())
+			}
+			new UserItem(
+				login: it.login,
+				state: it.state,
+				roles: roleNames,
+				dateCreated: it.dateCreated,
+				nickname: it.nickname,
+				location: it.location,
+				birthday: it.birthday,
+				homepage: it.homepage
+				)
+		}
+	}
+	
+	List<UserItem> getLastUsers() {
+		int maximum = 6
+		if(User.count() < 6) {
+			maximum = User.count()
+		}
+		return User.findAll([sort: 'dateCreated', order:'desc', max: maximum]).collect {
 			Set<Role> roles = it.getAuthorities()
 			Set<String> roleNames = []
 			for(role in roles) {
@@ -57,7 +81,7 @@ class UserService {
 				return
 			}
 		} else {
-			u.save(failOnError: true)
+			u.save(failOnError: true, flush: true)
 		}
 
 		// Adding USER role to newly created user
@@ -88,7 +112,7 @@ class UserService {
 	}
 
 	List<String> getAllUsersNicknames() {
-		return User.findAll().collect {
+		return User.findAll([sort: 'nickname', order:'asc']).collect() {
 			new String(it.nickname)
 		}
 	}

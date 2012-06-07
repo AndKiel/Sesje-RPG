@@ -140,7 +140,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		} else if(source == notifications) {
 			content.goToNotifications()
 		} else if(source == refresh) {
-			notifications.setCaption("You've got: "+sessionService.getNotificationsCount()+" notifications")
+			notifications.setCaption("You've got: "+notificationService.getNotificationsCount()+" notifications")
 			unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
 		}
 	}
@@ -150,7 +150,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 			security.signIn(username, password)
 			isSigned = security.isSignedIn()
 			who.setCaption("Hello "+security.getContextNickname()+" !")
-			notifications.setCaption("You've got: "+sessionService.getNotificationsCount()+" notifications")
+			notifications.setCaption("You've got: "+notificationService.getNotificationsCount()+" notifications")
 			unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
 			content.selectStartPage()
 			refreshToolbar()
@@ -164,6 +164,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	boolean register(String login, String password, String nickname, String location, Date birthday, String homepage) {
 		try{
 			userService.createPerson(login, password, nickname, location, birthday, homepage)
+			content.selectStartPage()
 			return true
 		} catch(ValidationException e) {
 			getMainWindow().showNotification(e.message, Notification.TYPE_ERROR_MESSAGE);
@@ -193,7 +194,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		who.setVisible(isSigned)
 		who.setCaption("Hello "+security.getContextNickname()+" !")
 		notifications.setVisible(isSigned)
-		notifications.setCaption("You've got: "+sessionService.getNotificationsCount()+" notifications")
+		notifications.setCaption("You've got: "+notificationService.getNotificationsCount()+" notifications")
 		notifications.addListener((Button.ClickListener)this)
 		unreadMessages.setVisible(isSigned)
 		unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")

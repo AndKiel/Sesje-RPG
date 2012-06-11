@@ -6,6 +6,7 @@ import rpgApp.data.SessionItem
 import rpgApp.main.IndexApplication
 import rpgApp.pages.Sessions
 import rpgApp.services.SessionService
+import rpgApp.utils.ChatEntry
 
 import com.vaadin.data.Property
 import com.vaadin.data.Property.ValueChangeEvent
@@ -153,7 +154,8 @@ class NewSessionWindow extends Window implements Button.ClickListener, Property.
 			case create:
 				if(sessionForm.isValid()) {
 					if(!editMode) {
-						sessionService.createSession(
+						Integer sessionId
+						sessionId = sessionService.createSession(
 								(Date)(sessionForm.getField("time").getValue()),
 								(String)(sessionForm.getField("type").getValue()),
 								(String)(sessionForm.getField("location").getValue()),
@@ -161,6 +163,14 @@ class NewSessionWindow extends Window implements Button.ClickListener, Property.
 								(String)(sessionForm.getField("system").getValue()),
 								(String)(sessionForm.getField("role").getValue())
 								)
+
+						// Adding room
+						if(sessionForm.getField("type").getValue().equals("online")) {
+							List<ChatEntry> entries = new ArrayList<ChatEntry>()
+							app.chatEntries.add(entries)
+							app.roomIndexes.add(sessionId)
+						}
+
 						if(announcements) {
 							announcements.fillSessions()
 						}

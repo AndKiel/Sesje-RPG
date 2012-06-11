@@ -43,6 +43,7 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		loginError.setDelayMsec(100)
 
 		tabSheet = new TabSheet()
+		tabSheet.addStyleName(Reindeer.TABSHEET_BORDERLESS)
 		tabSheet.setHeight("625px")
 		tabSheet.setWidth("100%")
 

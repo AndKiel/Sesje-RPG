@@ -42,8 +42,10 @@ class SessionService {
 					id: it.id,
 					dateCreated: it.dateCreated,
 					timeStamp: it.timeStamp,
+					type: it.type,
 					location: it.location,
 					maxPlayers: it.maxPlayers,
+					owner: it.owner.nickname,
 					system: it.system.name,
 					)
 		}
@@ -114,7 +116,7 @@ class SessionService {
 		return waitingSessions
 	}
 
-	void createSession(Date ts, String type, String loc, Integer mP, String sysName, String role) {
+	Integer createSession(Date ts, String type, String loc, Integer mP, String sysName, String role) {
 		User owner = securityService.getContextUser()
 		RpgSystem system = RpgSystem.findByName(sysName)
 		Session s = new Session(
@@ -133,6 +135,8 @@ class SessionService {
 		} else if(role.equals("Player")) {
 			new Participant(user: owner, session: s, role: false, state: true).save(flush: true)
 		}
+		
+		return s.id
 	}
 
 	void updateSession(Date ts, String type, String loc, Integer mP, String sysName, Long id) {
@@ -165,6 +169,13 @@ class SessionService {
 		return 0
 	}
 
+	List<String> getParticipants(Integer id) {
+		Session sessionS = Session.get(id)
+		return Participant.findAllBySession(sessionS).collect() {
+			new String(it.getUser().getNickname()) 	
+		}
+	}
+	
 	Integer participantsCount(Integer id) {
 		Session sessionS = Session.get(id)
 		return Participant.countBySessionAndState(sessionS, true)

@@ -13,6 +13,8 @@ vaadin {
     productionMode = false
 
     googleAppEngineMode = false
+	
+//	widgetset = "com.SesjeRpg.ui.vaadin.SesjeRpgWidgetset"
 }
 
 environments {

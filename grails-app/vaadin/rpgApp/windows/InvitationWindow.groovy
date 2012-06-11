@@ -40,14 +40,11 @@ class InvitationWindow extends Window implements Button.ClickListener {
 			players.addItem(it)
 		}
 		// Removing players who are already in session
-		List<String> alreadyIn = sessionService.getPlayers(sessionItem.getId())
+		List<String> alreadyIn = sessionService.getParticipants(sessionItem.getId())
 		alreadyIn.each {
 			players.removeItem(it)
 		}
-		// Removing master already in session
-		if(!sessionService.getMaster(sessionItem.getId()).equals("<font size=2>(empty slot)</font>")) {
-			players.removeItem(sessionService.getMaster(sessionItem.getId()))
-		}
+
 		// Removing contextUser
 		players.removeItem(app.security.getContextNickname())
 		players.setNullSelectionAllowed(false)

@@ -235,10 +235,10 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 		dataSource.fillWithMySessions()
 		master.setValue("")
 		players.setValue("")
-		invite.setVisible(false)
-		kick.setVisible(false)
-		editSession.setVisible(false)
-		deleteSession.setVisible(false)
+		invite.setEnabled(false)
+		kick.setEnabled(false)
+		editSession.setEnabled(false)
+		deleteSession.setEnabled(false)
 	}
 
 	public void selectedTabChange(SelectedTabChangeEvent event) {
@@ -249,22 +249,22 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 				dataSource.fillWithMySessions()
 				master.setValue("")
 				players.setValue("")
-				invite.setVisible(false)
-				kick.setVisible(false)
-				editSession.setVisible(false)
-				deleteSession.setVisible(false)
+				invite.setEnabled(false)
+				kick.setEnabled(false)
+				editSession.setEnabled(false)
+				deleteSession.setEnabled(false)
 			}
 			else if((tab.getCaption()).equals("Joined session")) {
 				dataSource.fillWithJoinedSessions()
 				master2.setValue("")
 				players2.setValue("")
-				leave.setVisible(false)
+				leave.setEnabled(false)
 			}
 			else if((tab.getCaption()).equals("Waiting for acceptation")) {
 				dataSource.fillWithWaitingSessions()
 				master3.setValue("")
 				players3.setValue("")
-				leave2.setVisible(false)
+				leave2.setEnabled(false)
 			}
 		}
 	}
@@ -279,12 +279,12 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 					dataSource.fillWithJoinedSessions()
 					master2.setValue("")
 					players2.setValue("")
-					leave.setVisible(false)
+					leave.setEnabled(false)
 				} else if(tabSheet.getTab(tabSheet.getSelectedTab()).getCaption().equals("Waiting for acceptation")) {
 					dataSource.fillWithWaitingSessions()
 					master3.setValue("")
 					players3.setValue("")
-					leave2.setVisible(false)
+					leave2.setEnabled(false)
 				}
 				break
 			case leave:
@@ -294,7 +294,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 				dataSource.fillWithJoinedSessions()
 				master2.setValue("")
 				players2.setValue("")
-				leave.setVisible(false)
+				leave.setEnabled(false)
 				break
 			case leave2:
 				SessionItem s = (SessionItem)waitingSessions.getValue()
@@ -303,7 +303,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 				dataSource.fillWithWaitingSessions()
 				master3.setValue("")
 				players3.setValue("")
-				leave2.setVisible(false)
+				leave2.setEnabled(false)
 				break
 			case newSession:
 				app.getMainWindow().addWindow(new NewSessionWindow(app, null, this, false))
@@ -318,6 +318,14 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 						if(answer) {
 							SessionItem s = (SessionItem)mySessions.getValue()
 							sessionService.deleteSession(s.getId())
+
+							// Removing room
+							if(s.getType().equals("online")) {
+								int index = Collections.binarySearch(app.roomIndexes, s.getId())
+								app.chatEntries.remove(index)
+								app.roomIndexes.remove(index)
+							}
+
 							fillSessions()
 						}
 					}
@@ -362,10 +370,10 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 
 			players.setValue(txt)
 
-			invite.setVisible(true)
-			kick.setVisible(true)
-			editSession.setVisible(true)
-			deleteSession.setVisible(true)
+			invite.setEnabled(true)
+			kick.setEnabled(true)
+			editSession.setEnabled(true)
+			deleteSession.setEnabled(true)
 		}
 		else if (property == joinedSessions) {
 			SessionItem s = (SessionItem)joinedSessions.getValue()
@@ -384,7 +392,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 
 			players2.setValue(txt)
 
-			leave.setVisible(true)
+			leave.setEnabled(true)
 		}
 		else if (property == waitingSessions) {
 			SessionItem s = (SessionItem)waitingSessions.getValue()
@@ -403,7 +411,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 
 			players3.setValue(txt)
 
-			leave2.setVisible(true)
+			leave2.setEnabled(true)
 		}
 	}
 

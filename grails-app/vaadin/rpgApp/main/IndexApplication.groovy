@@ -15,6 +15,7 @@ import rpgApp.services.SecurityService;
 import rpgApp.services.SessionService
 import rpgApp.services.SystemService
 import rpgApp.services.UserService;
+import rpgApp.utils.ChatEntry
 import rpgApp.utils.UrlParameter
 import rpgApp.windows.LoginWindow;
 import rpgApp.windows.RegisterWindow;
@@ -44,13 +45,16 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	public Button notifications
 	public Button unreadMessages
 	public boolean isSigned
+	
+	public static final List<List<ChatEntry>> chatEntries = [[],[]]
+	public static final List<Integer> roomIndexes = [5,6]
 
 	private VerticalLayout layout	// Main window layout
 	private Panel main				// Main window panel
 	private Panel header
 	private Panel content
 	private Panel footer
-
+	
 	HttpServletResponse response
 
 	public SecurityService security = (SecurityService)getBean(SecurityService)

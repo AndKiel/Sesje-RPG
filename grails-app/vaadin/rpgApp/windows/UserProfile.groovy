@@ -35,8 +35,6 @@ class UserProfile extends Window implements Button.ClickListener {
 		this.app = app
 		this.userItem = userItem
 		setCaption("User info")
-		setModal(true)
-		setDraggable(false)
 		setResizable(false)
 		setWidth(500, Sizeable.UNITS_PIXELS)
 		center();

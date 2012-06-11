@@ -15,6 +15,35 @@
 
  .v-panel-content-footer-panel > div {
    background: url(img/footer.jpg);
+   color: white;
+}
+
+.v-panel-content-footer-panel {
+	background: transparent;
+}
+
+ .v-panel-content-diffrent > div {
+   background-color: #F2ECD3;
+}
+
+.v-panel-content-diffrent {
+	background-color: #F2ECD3;
+}
+
+ .v-panel-content-joined > div {
+    background-color: #D1C17B;
+}
+
+.v-panel-content-joined {
+	background: transparent;
+}
+
+ .v-panel-content-waiting > div {
+    background-color: #F2ECD3;
+}
+
+.v-panel-content-waiting {
+	background: transparent;
 }
 
  .v-panel-content-login-panel {
@@ -32,15 +61,6 @@
 
  .v-panel-content-login-panel > div {
    background: transparent;
-}
-
-.v-panel-content-footer-panel {
-	background: transparent;
-}
-
-.v-panel-content-footer-panel > div {
-	background-color: black;
-	color: white;
 }
 
 .v-panel-content-blabla {
@@ -88,10 +108,10 @@
 }
 
 .v-table-row.v-table-row-read {
-    background-color: #DCE7E8;
+    background-color: #F2ECD3;
  }
 .v-table-row-odd.v-table-row-read {
-	background-color: #DCE7E8;
+	background-color: #F2ECD3;
 }
 
 .v-table-row.v-table-row-notmember {
@@ -145,6 +165,11 @@
 .gold-link .v-button-caption
 {
 	color: #786D3C	
+}
+
+.black-link .v-button-caption
+{
+	color: black
 }
 
 .v-verticallayout-left75 .v-verticallayout-margin {

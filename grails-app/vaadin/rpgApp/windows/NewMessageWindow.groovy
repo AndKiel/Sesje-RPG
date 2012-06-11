@@ -34,9 +34,6 @@ class NewMessageWindow extends Window implements Button.ClickListener {
 		messageService = app.messageService
 		userService = app.userService
 		this.setCaption("New Message")
-		setModal(true)
-		setDraggable(false)
-		setResizable(false)
 
 		ComboBox addressee = new ComboBox("To: ")
 		List<String> allNicknames = userService.getAllUsersNicknames()

@@ -1,6 +1,7 @@
 package rpgApp.windows
 
 import rpgApp.content.Announcements
+import rpgApp.content.StartPage
 import rpgApp.data.SessionItem
 import rpgApp.main.IndexApplication
 import rpgApp.services.SessionService
@@ -14,15 +15,18 @@ import com.vaadin.ui.Window.Notification
 class SessionJoin extends Window implements Button.ClickListener {
 	private IndexApplication app
 	private Announcements ann
+	private StartPage startPage
 	private SessionItem sessionItem
 	private SessionService sessionService
 	private Button master
 	private Button player
 	private Button cancel
-	SessionJoin(IndexApplication app, Announcements ann, SessionItem sessionItem, SessionService sessionService) {
+	
+	SessionJoin(IndexApplication app, Announcements ann, StartPage startPage, SessionItem sessionItem, SessionService sessionService) {
 		super("Join session")
 		this.app = app
 		this.ann = ann
+		this.startPage = startPage
 		this.sessionItem = sessionItem
 		this.sessionService = sessionService
 		setCaption("Join session")
@@ -64,7 +68,12 @@ class SessionJoin extends Window implements Button.ClickListener {
 					sessionService.createParticipant(sessionItem.getId(), true, false)
 					app.getMainWindow().showNotification("You must wait for owner acceptation", Notification.TYPE_WARNING_MESSAGE)
 				}
-				ann.fillSessions()
+				if(ann) {
+					ann.fillSessions()
+				}
+				if(startPage) {
+					startPage.refreshContent()
+				}
 				this.close()
 				break
 			case player:
@@ -76,7 +85,12 @@ class SessionJoin extends Window implements Button.ClickListener {
 					sessionService.createParticipant(sessionItem.getId(), false, false)
 					app.getMainWindow().showNotification("You must wait for owner acceptation", Notification.TYPE_WARNING_MESSAGE)
 				}
-				ann.fillSessions()
+				if(ann) {
+					ann.fillSessions()
+				}
+				if(startPage) {
+					startPage.refreshContent()
+				}
 				this.close()
 				break
 			case cancel:

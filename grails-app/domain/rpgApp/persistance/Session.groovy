@@ -15,6 +15,7 @@ class Session {
 	static mapping = {
 		version false
 		table 'sessions'
+		id generator: 'increment'
 		owner column: 'owner'
 		system column: 'system'
 	}

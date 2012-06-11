@@ -19,6 +19,7 @@ import com.vaadin.ui.RichTextArea
 import com.vaadin.ui.TextField
 import com.vaadin.ui.Window
 import com.vaadin.ui.Window.Notification
+import com.vaadin.ui.themes.Reindeer
 
 public class NewSystemWindow extends Window implements Button.ClickListener {
 	private IndexApplication app

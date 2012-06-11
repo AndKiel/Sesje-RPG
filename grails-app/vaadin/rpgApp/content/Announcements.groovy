@@ -4,6 +4,7 @@ import rpgApp.data.SessionContainer
 import rpgApp.data.SessionItem
 import rpgApp.main.IndexApplication
 import rpgApp.services.SessionService
+import rpgApp.windows.ChatWindow
 import rpgApp.windows.NewSessionWindow
 import rpgApp.windows.SessionJoin
 
@@ -43,6 +44,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 	private Button refresh
 	private Table sessions
 	private Button join
+	private Button enterRoom
 
 	private Label system
 	private Label type
@@ -72,8 +74,8 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		setMargin(true)
 		addComponent(createFilterBar())
 		addComponent(createHeader())
-		addComponent(createMessageTable())
-		Panel messagePanel = createMessagePanel()
+		addComponent(createAnnouncementsTable())
+		Panel messagePanel = createAnnouncementsPanel()
 		addComponent(messagePanel)
 
 		setExpandRatio(messagePanel,1.0f)
@@ -163,7 +165,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 
 		join = new Button("Join")
 		join.addListener((ClickListener) this)
-		join.setVisible(false)
+		join.setEnabled(false)
 		Label l = new Label("Joined")
 		Label l2 = new Label("Waiting for acceptation")
 		newSession = new Button("New Session")
@@ -200,7 +202,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		return hl
 	}
 
-	private Table createMessageTable() {
+	private Table createAnnouncementsTable() {
 		sessions = new Table()
 		sessions.setSizeFull()
 		sessions.setContainerDataSource(dataSource)
@@ -267,12 +269,12 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		return sessions
 	}
 
-	private Panel createMessagePanel() {
+	private Panel createAnnouncementsPanel() {
 		Panel p = new Panel()
 		p.setStyleName(Reindeer.PANEL_LIGHT);
 		p.setSizeFull()
 
-		GridLayout gl = new GridLayout(3,6)
+		GridLayout gl = new GridLayout(4,6)
 		p.setContent(gl)
 		gl.setWidth("100%")
 		gl.setMargin(true)
@@ -287,14 +289,21 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		master = new Label("", Label.CONTENT_XHTML)
 		players = new Label("", Label.CONTENT_XHTML)
 
-		gl.addComponent(system)
-		gl.addComponent(where)
-		gl.addComponent(created)
-		gl.addComponent(type)
-		gl.addComponent(when)
-		gl.addComponent(owner)
+		enterRoom = new Button("Enter Room")
+		enterRoom.setStyleName(Reindeer.BUTTON_PRIMARY)
+		enterRoom.addListener((ClickListener) this)
+		enterRoom.setVisible(false)
+
+		gl.addComponent(system, 0,0,0,0)
+		gl.addComponent(where, 1,0,1,0)
+		gl.addComponent(created, 2,0,2,0)
+		gl.addComponent(enterRoom, 3,0,3,0)
+		gl.addComponent(type, 0,1,0,1)
+		gl.addComponent(when, 1,1,1,1)
+		gl.addComponent(owner, 2,1,2,1)
 		gl.addComponent(master, 0,4,2,4)
 		gl.addComponent(players, 0,5,2,5)
+		gl.setComponentAlignment(enterRoom, Alignment.MIDDLE_RIGHT)
 
 		return p
 	}
@@ -303,10 +312,11 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		// Refresh container
 		dataSource.fillContainer()
 
-		join.setVisible(false)
+		join.setEnabled(false)
 		system.setValue("")
 		type.setValue("")
 		created.setValue("")
+		enterRoom.setVisible(false)
 		where.setValue("")
 		owner.setValue("")
 		when.setValue("")
@@ -353,12 +363,22 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 
 			players.setValue(txt)
 
-			join.setVisible(true)
+			join.setEnabled(true)
 			if(sessionService.checkMembership(s.getId())) {
 				join.setCaption("Leave")
 			} else {
 				join.setCaption("Join")
 			}
+
+
+			enterRoom.setVisible(true)
+			if(s.getType().equals("online") && sessionService.checkMembership(s.getId()) == 1) {
+				enterRoom.setEnabled(true)
+			} else {
+				enterRoom.setEnabled(false)
+			}
+
+
 		} else if(property == systemNames) {
 			if(systemFilter) {
 				dataSource.removeContainerFilter(systemFilter)
@@ -403,7 +423,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 					if(sessionService.participantsCount(s.getId()) == s.getMaxPlayers()) {
 						app.getMainWindow().showNotification("No slots for this session", Notification.TYPE_ERROR_MESSAGE)
 					} else {
-						app.getMainWindow().addWindow(new SessionJoin(app, this, s, sessionService))
+						app.getMainWindow().addWindow(new SessionJoin(app, this, null, s, sessionService))
 					}
 				} else if(join.getCaption().equals("Leave")) {
 					SessionItem s = (SessionItem)sessions.getValue()
@@ -424,6 +444,10 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 				plrs.select("(none)")
 				plrs2.select("(none)")
 				tp.select("(none)")
+				break
+			case enterRoom:
+				SessionItem s = (SessionItem)sessions.getValue()
+				app.getMainWindow().addWindow(new ChatWindow(app, s))
 				break
 		}
 	}

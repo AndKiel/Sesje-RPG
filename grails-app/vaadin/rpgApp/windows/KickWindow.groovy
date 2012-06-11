@@ -51,6 +51,7 @@ class KickWindow extends Window implements Button.ClickListener {
 		players.setNullSelectionAllowed(false)
 		players.setNewItemsAllowed(false)
 		players.setWidth("100%")
+		players.focus()
 		players.setFilteringMode(Filtering.FILTERINGMODE_CONTAINS)
 		addComponent(players)
 

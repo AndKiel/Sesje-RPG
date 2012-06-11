@@ -75,6 +75,14 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		tabSheet.setSelectedTab(myPage)
 		myPage.setNotificationsSelection()
 	}
+	
+	public HorizontalSplitPanel getMyPage() {
+		return myPage
+	}
+	
+	public HorizontalLayout getStartPage() {
+		return startPage
+	}
 
 	public void selectedTabChange(SelectedTabChangeEvent event) {
 		TabSheet tabsheet = event.getTabSheet();

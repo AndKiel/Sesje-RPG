@@ -32,20 +32,8 @@ class Header extends Panel {
 		app.unreadMessages = new Button("")
 		app.unreadMessages.setStyleName(BaseTheme.BUTTON_LINK)
 		app.unreadMessages.addStyleName("white-link")
-		app.refresh = new Button("")
-		app.refresh.setStyleName(BaseTheme.BUTTON_LINK)
-		app.refresh.setIcon(new ThemeResource("icons/refresh.png"))
-		app.refresh.addStyleName("icon20")
-		app.refresh.setDescription("Refresh")
 		app.setLoginPanel()
 	
-		HorizontalLayout hl = new HorizontalLayout()
-		hl.setSpacing(true)
-		hl.addComponent(app.unreadMessages)
-		hl.addComponent(app.refresh)
-		hl.setComponentAlignment(app.unreadMessages, Alignment.MIDDLE_LEFT)
-		hl.setComponentAlignment(app.refresh, Alignment.MIDDLE_LEFT)
-		
 		headerLayout = new HorizontalLayout()
 		loginPanel = new Panel()
 		loginPanel.addStyleName("login-panel")
@@ -62,7 +50,7 @@ class Header extends Panel {
 		loginPanel.addComponent(app.register)
 		loginPanel.addComponent(app.who)
 		loginPanel.addComponent(app.notifications)
-		loginPanel.addComponent(hl)
+		loginPanel.addComponent(app.unreadMessages)
 		
 		setContent(headerLayout)
 	}

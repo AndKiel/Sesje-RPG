@@ -21,6 +21,8 @@ import rpgApp.windows.LoginWindow;
 import rpgApp.windows.RegisterWindow;
 
 
+import com.github.wolfie.refresher.Refresher
+import com.github.wolfie.refresher.Refresher.RefreshListener
 import com.vaadin.Application
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener
 import com.vaadin.ui.Alignment
@@ -41,7 +43,6 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	public Button logout
 	public Button register
 	public Label who
-	public Button refresh
 	public Button notifications
 	public Button unreadMessages
 	public boolean isSigned
@@ -64,6 +65,14 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	public SystemService systemService = (SystemService)getBean(SystemService)
 	public SessionService sessionService = (SessionService)getBean(SessionService)
 	public NotificationService notificationService = (NotificationService)getBean(NotificationService)
+	
+	
+	public class ContentRefreshListener implements RefreshListener {
+		public void refresh(final Refresher source) {
+			refreshContent()
+		}
+	}
+	
 
 	public void onRequestStart(HttpServletRequest request, HttpServletResponse response) {
 		String username = null
@@ -111,6 +120,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		layout = main.getContent()
 		layout.setWidth("100%")
 		
+		
 		// Main window layout settings
 		layout.addComponent(header = new Header(this))
 		layout.addComponent(content = new Content(this))
@@ -120,9 +130,22 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		layout.setComponentAlignment(footer, Alignment.MIDDLE_CENTER)
 		layout.setMargin(true, false, true, false)
 		layout.setSpacing(true)
+		
+		final Refresher contentRefresher = new Refresher();
+		contentRefresher.setRefreshInterval(5000);
+		contentRefresher.addListener(new ContentRefreshListener());
+		layout.addComponent(contentRefresher);
+	}
+	
+	
+	public void refreshContent() {
+		notifications.setCaption("You've got: "+notificationService.getNotificationsCount()+" notifications")
+		unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
+		content.getMyPage().getNotifications()
+		content.getStartPage().refreshContent()
 	}
 
-
+	
 	// Buttons clicks listner
 	public void buttonClick(Button.ClickEvent event) {
 		final Button source = event.getButton()
@@ -143,9 +166,6 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 			content.goToMessages()
 		} else if(source == notifications) {
 			content.goToNotifications()
-		} else if(source == refresh) {
-			notifications.setCaption("You've got: "+notificationService.getNotificationsCount()+" notifications")
-			unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
 		}
 	}
 
@@ -185,7 +205,6 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		who.setVisible(isSigned)
 		notifications.setVisible(isSigned)
 		unreadMessages.setVisible(isSigned)
-		refresh.setVisible(isSigned)
 	}
 
 	private void setLoginPanel() {
@@ -203,8 +222,6 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		unreadMessages.setVisible(isSigned)
 		unreadMessages.setCaption("You've got: "+messageService.getUnreadCount()+" new messages")
 		unreadMessages.addListener((Button.ClickListener)this)
-		refresh.setVisible(isSigned)
-		refresh.addListener((Button.ClickListener)this)
 	}
 
 	public void setLoginCookies(String username, String password, int maxAge) {

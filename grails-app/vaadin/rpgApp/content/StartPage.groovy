@@ -5,8 +5,10 @@ import rpgApp.data.UserItem
 import rpgApp.main.IndexApplication
 import rpgApp.persistance.Notification
 import rpgApp.windows.SessionJoin
+import rpgApp.windows.UserProfile
 
 import com.vaadin.terminal.ThemeResource
+import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
 import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Label
@@ -86,10 +88,25 @@ class StartPage extends HorizontalLayout {
 
 		// Last users
 		for(UserItem user in lastUsers) {
-			Label l = new Label("<b>"+user.getNickname()+"</b> from <b>"+user.getLocation()+"</b> has registered at: ", Label.CONTENT_XHTML)
+			HorizontalLayout hl = new HorizontalLayout()
+			Button b = new Button(user.getNickname())
+			b.setStyleName(Reindeer.BUTTON_LINK)
+			b.addStyleName("black-link")
+			UserItem u = user
+			b.addListener(new Button.ClickListener() {
+								public void buttonClick(ClickEvent event) {
+									app.getMainWindow().addWindow(new UserProfile(app,u))
+								}
+							}
+							)
+			Label l = new Label(" from <b>"+user.getLocation()+"</b> has registered at: ", Label.CONTENT_XHTML)
 			Label l2 = new Label("<b>"+user.getDateCreated().substring(0,10)+" <font color=#80760B>"+user.getDateCreated().substring(11,16)+"</font></b>", Label.CONTENT_XHTML)
 			Panel p = new Panel()
-			p.addComponent(l)
+			hl.addComponent(b)
+			hl.addComponent(l)
+			hl.setSpacing(true)
+			hl.setComponentAlignment(b, Alignment.MIDDLE_LEFT)
+			p.addComponent(hl)
 			p.addComponent(l2)
 			vl3.addComponent(p)
 		}

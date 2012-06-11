@@ -1,0 +1,2 @@
+# Module rpgApp.main.widgetset.ChatWidgetset
+# RPC service class, partial path of RPC policy file

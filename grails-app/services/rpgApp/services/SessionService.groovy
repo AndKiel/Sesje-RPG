@@ -30,7 +30,7 @@ class SessionService {
 					)
 		}
 	}
-	
+
 	List<SessionItem> getIncomingSessions() {
 		Date actualDate = new Date()
 		int maximum = 5
@@ -135,7 +135,7 @@ class SessionService {
 		} else if(role.equals("Player")) {
 			new Participant(user: owner, session: s, role: false, state: true).save(flush: true)
 		}
-		
+
 		return s.id
 	}
 
@@ -172,10 +172,10 @@ class SessionService {
 	List<String> getParticipants(Integer id) {
 		Session sessionS = Session.get(id)
 		return Participant.findAllBySession(sessionS).collect() {
-			new String(it.getUser().getNickname()) 	
+			new String(it.getUser().getNickname())
 		}
 	}
-	
+
 	Integer participantsCount(Integer id) {
 		Session sessionS = Session.get(id)
 		return Participant.countBySessionAndState(sessionS, true)
@@ -222,7 +222,7 @@ class SessionService {
 				).save(failOnError: true, flush: true)
 
 	}
-	
+
 	void createOtherParticipant(String user, Integer id, Boolean role, Boolean state) {
 		User u = User.findByNickname(user)
 		new Participant(

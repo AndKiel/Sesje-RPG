@@ -6,6 +6,8 @@ import rpgApp.data.SessionItem
 import rpgApp.main.IndexApplication
 import rpgApp.utils.ChatEntry
 
+import com.github.wolfie.refresher.Refresher
+import com.github.wolfie.refresher.Refresher.RefreshListener
 import com.vaadin.event.ShortcutAction.KeyCode
 import com.vaadin.ui.Alignment
 import com.vaadin.ui.Button
@@ -25,7 +27,10 @@ class ChatWindow extends Window implements Button.ClickListener {
 	private Panel chatLayout
 	private TextField chatInput
 	private Button send
-	private Button refresh
+	private Button showHistory
+	private Boolean historyFlag
+	private Date chatStart
+	private Date lastMessageDate
 
 	ChatWindow(IndexApplication app, SessionItem s) {
 		super("Chat")
@@ -40,6 +45,10 @@ class ChatWindow extends Window implements Button.ClickListener {
 		center()
 		getContent().setMargin(true)
 		getContent().setSpacing(true)
+
+		historyFlag = false
+		chatStart = new Date()
+		lastMessageDate = new Date()
 
 		VerticalLayout vl = this.getContent()
 		vl.setSizeFull()
@@ -56,19 +65,18 @@ class ChatWindow extends Window implements Button.ClickListener {
 		send.setClickShortcut(KeyCode.ENTER);
 		send.addStyleName("primary");
 		send.addListener((Button.ClickListener) this)
-		refresh = new Button("Refresh")
-		refresh.addListener((Button.ClickListener) this)
+		showHistory = new Button("Show history")
+		showHistory.addListener((Button.ClickListener) this)
 
 		HorizontalLayout footer = new HorizontalLayout()
 		footer.setSizeFull()
 		footer.setSpacing(true)
 		footer.addComponent(chatInput)
 		footer.addComponent(send)
-		footer.addComponent(refresh)
+		footer.addComponent(showHistory)
 		footer.setExpandRatio(chatInput, 1.0f)
 		footer.setComponentAlignment(chatInput, Alignment.MIDDLE_CENTER)
 		footer.setComponentAlignment(send, Alignment.MIDDLE_CENTER)
-		footer.setComponentAlignment(refresh, Alignment.MIDDLE_CENTER)
 
 		vl.addComponent(chatLayout)
 		Label grid = new Label("<hr/>", Label.CONTENT_XHTML)
@@ -78,8 +86,27 @@ class ChatWindow extends Window implements Button.ClickListener {
 		vl.setExpandRatio(chatLayout, 0.9f)
 		vl.setExpandRatio(grid, 0.05f)
 		vl.setExpandRatio(footer, 0.05f)
-		
-		refresh()
+
+		final Refresher chatRefresher = new Refresher();
+		chatRefresher.setRefreshInterval(500);
+		chatRefresher.addListener(new ChatRefreshListener());
+		addComponent(chatRefresher);
+
+		refreshChat()
+	}
+
+	public class ChatRefreshListener implements RefreshListener {
+		public void refresh(final Refresher source) {
+			int index = Collections.binarySearch(app.roomIndexes, sessionItem.getId())
+			List<ChatEntry> entries = app.chatEntries.get(index)
+			Date lastEntryDate = entries.get(entries.size()-1).getTimeStamp()
+			
+			if(lastMessageDate.compareTo(lastEntryDate) != 0) {
+				refreshChat()
+			}
+			
+			lastMessageDate = entries.get(entries.size()-1).getTimeStamp()
+		}
 	}
 
 	public void buttonClick(ClickEvent event) {
@@ -91,20 +118,46 @@ class ChatWindow extends Window implements Button.ClickListener {
 					ChatEntry entry = new ChatEntry(app.security.getContextNickname(), chatInput.getValue(), new Date())
 					app.chatEntries.get(index).add(entry)
 					chatInput.setValue("")
-					refresh()
+					refreshChat()
 				}
 				break
-			case refresh:
-				refresh()
+			case showHistory:
+				if(historyFlag) {
+					showHistory.setCaption("Show history")
+					historyFlag = false
+				} else {
+					showHistory.setCaption("Hide history")
+					historyFlag = true
+				}
+				refreshChat()
 				break
 		}
 	}
-	
-	void refresh() {
+
+	void refreshChat() {
+		boolean flag = true
+		
 		chatLayout.removeAllComponents()
 		int index = Collections.binarySearch(app.roomIndexes, sessionItem.getId())
 		List<ChatEntry> entries = app.chatEntries.get(index)
 		for(ChatEntry entry in entries) {
+			if(!historyFlag) {
+				if(chatStart.compareTo(entry.getTimeStamp()) > 0) {
+					continue
+				}
+			}
+			
+			if(historyFlag && flag && (chatStart.compareTo(entry.getTimeStamp()) < 0)) {
+				flag = false
+				Panel p = new Panel()
+				p.setStyleName("history")
+				Label history = new Label("--------------------------------------------------------------------------------------- HISTORY ---------------------------------------------------------------------------------------")
+				p.addComponent(history)
+				VerticalLayout vl = p.getContent()
+				vl.setMargin(false)
+				chatLayout.addComponent(p)
+			}
+			
 			if(entry.getNickname().equals(app.security.getContextNickname())) {
 				print(entry, false)
 			} else {
@@ -112,12 +165,12 @@ class ChatWindow extends Window implements Button.ClickListener {
 			}
 		}
 	}
-	
+
 	private void print(final ChatEntry entry, boolean diffrent) {
 		final Date timestamp = entry.getTimeStamp();
 		final String name = entry.getNickname();
 		final String message = entry.getMessage();
-		
+
 		final Panel p = new Panel()
 		if(diffrent) {
 			p.setStyleName("diffrent")
@@ -125,22 +178,22 @@ class ChatWindow extends Window implements Button.ClickListener {
 		final HorizontalLayout chatLine = new HorizontalLayout();
 		chatLine.setMargin(false, false, false, true)
 		p.setContent(chatLine)
-		
+
 		final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		final Label timeLabel = new Label("[ "+dateFormat.format(timestamp)+" ]");
 		timeLabel.setWidth("120px");
 		chatLine.addComponent(timeLabel);
-		
+
 		final Label nameLabel = new Label("<b>"+name + ": </b>", Label.CONTENT_XHTML);
 		nameLabel.setWidth("100px");
 		chatLine.addComponent(nameLabel);
-		
+
 		final Label messageLabel = new Label(message);
 		messageLabel.setWidth("550px")
 		chatLine.addComponent(messageLabel);
 		chatLine.setExpandRatio(messageLabel, 1);
-		
+
 		chatLayout.addComponent(p);
-		this.scrollIntoView(p);
-	  }
+		this.scrollIntoView(chatLine)
+	}
 }

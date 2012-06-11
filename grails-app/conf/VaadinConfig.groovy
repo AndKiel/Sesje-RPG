@@ -14,7 +14,7 @@ vaadin {
 
     googleAppEngineMode = false
 	
-//	widgetset = "com.SesjeRpg.ui.vaadin.SesjeRpgWidgetset"
+	widgetset = "rpgApp.main.widgetset.ChatWidgetset"
 }
 
 environments {

@@ -30,6 +30,14 @@
 	background-color: #F2ECD3;
 }
 
+ .v-panel-content-history > div {
+   background-color: #DB8888;
+}
+
+.v-panel-content-history {
+	background-color: #DB8888;
+}
+
  .v-panel-content-joined > div {
     background-color: #D1C17B;
 }
@@ -65,10 +73,6 @@
 
 .v-panel-content-blabla {
 	background: transparent;
-}
-
-.v-panel-content-blabla > div {
-	background-color: yellow;
 }
 
 .v-tabsheet-tabitemcell {
@@ -141,11 +145,6 @@
 	width:16px;
 }
 
-.icon20 .v-button-wrap>.v-icon{
-	height:20px;
-	width:20px;
-}
-
 .v-button-link span.v-button-caption,   /* Vaadin Buttons with the "link" style */
 .v-link a span  /* Vaadin Link objects */
 {
@@ -169,7 +168,9 @@
 
 .black-link .v-button-caption
 {
-	color: black
+	color: black;
+	font-weight: bold;
+	text-decoration: underline !important;
 }
 
 .v-verticallayout-left75 .v-verticallayout-margin {

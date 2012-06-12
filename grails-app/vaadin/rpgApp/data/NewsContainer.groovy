@@ -32,7 +32,7 @@ class NewsContainer extends BeanItemContainer<NewsItem> implements Serializable 
 
     boolean removeNews(NewsItem news) {
         try {
-            systemService.removeNews(news)
+            newsService.removeNews(news)
             return true
         } catch (Exception e) {
             println e

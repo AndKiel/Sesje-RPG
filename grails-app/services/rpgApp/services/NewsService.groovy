@@ -1,7 +1,6 @@
 package rpgApp.services
 
 import rpgApp.data.NewsItem
-import rpgApp.exeptions.ValidationException
 import rpgApp.persistance.News
 import rpgApp.persistance.User
 

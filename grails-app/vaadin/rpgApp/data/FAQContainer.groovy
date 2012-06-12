@@ -13,7 +13,7 @@ class FAQContainer extends BeanItemContainer<NewsItem> implements Serializable {
 
     public static final String[] COL_HEADERS_ENGLISH = [
 		"ID",
-		"Pytanie"
+		"Question"
     ];
 
     public FAQContainer(FAQService faqService) throws InstantiationException, IllegalAccessException {

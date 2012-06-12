@@ -1,7 +1,5 @@
 package rpgApp.content
 
-
-
 import com.vaadin.data.Property
 import com.vaadin.data.Property.ValueChangeEvent
 import com.vaadin.terminal.Resource

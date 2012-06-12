@@ -10,6 +10,7 @@ import rpgApp.panels.Footer
 import rpgApp.panels.Header
 import rpgApp.services.EmailService
 import rpgApp.services.MessageService
+import rpgApp.services.NewsService
 import rpgApp.services.NotificationService
 import rpgApp.services.SecurityService;
 import rpgApp.services.SessionService
@@ -62,6 +63,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 	public UserService userService = (UserService)getBean(UserService)
 	public EmailService emailService = (EmailService)getBean(EmailService)
 	public MessageService messageService = (MessageService)getBean(MessageService)
+        public NewsService newsService = (NewsService)getBean(NewsService)
 	public SystemService systemService = (SystemService)getBean(SystemService)
 	public SessionService sessionService = (SessionService)getBean(SessionService)
 	public NotificationService notificationService = (NotificationService)getBean(NotificationService)

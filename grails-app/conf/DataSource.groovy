@@ -25,16 +25,16 @@ environments {
 			dbCreate = "update"
 			url="jdbc:postgresql://localhost:5432/rpg_app"
 			driverClassName = "org.postgresql.Driver"
-			username = "rpg"
-			password = "rpg"
+			username = "postgres"
+			password = "postgres"
 		}
 	}
 	production {
 		dataSource {
 			dbCreate = "update"
 			url="jdbc:postgresql://localhost:5432/rpg_app"
-			username = "rpg"
-			password = "rpg"
+			username = "postgres"
+			password = "postgres"
 		}
 	}
 }

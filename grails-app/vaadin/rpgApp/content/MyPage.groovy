@@ -3,6 +3,7 @@ package rpgApp.content
 import rpgApp.main.IndexApplication
 import rpgApp.pages.Chars
 import rpgApp.pages.Messages
+import rpgApp.pages.News
 import rpgApp.pages.Notifications
 import rpgApp.pages.Profile
 import rpgApp.pages.Scenarios
@@ -25,6 +26,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 	private static final Object sessionsN = "Sessions"
 	private static final Object scenariosN = "Scenarios"
 	private static final Object charsN = "Character sheets"
+	private static final Object newsN = "News"
 
 	private VerticalLayout messages
 	private VerticalLayout profile
@@ -32,6 +34,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 	private VerticalLayout sessions
 	private VerticalLayout scenarios
 	private VerticalLayout chars
+        private VerticalLayout news
 
 	public MyPage(IndexApplication app) {
 		this.app = app
@@ -44,6 +47,12 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		menu.addItem(sessionsN)
 		menu.addItem(scenariosN)
 		menu.addItem(charsN)
+                
+                if(app.security.checkRole("Administrator"))
+                {
+                    menu.addItem(newsN)
+                }
+        
 		menu.setNullSelectionAllowed(false)
 		menu.setMultiSelect(false)
 		menu.addListener((ItemClickListener) this)
@@ -70,7 +79,9 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 				setSecondComponent(getScenarios())
 			} else if(charsN.equals(itemId)) {
 				setSecondComponent(getChars())
-			}
+			} else if(newsN.equals(itemId)) {
+                            setSecondComponent(getNews())
+                        }
 		}
 	}
 
@@ -121,6 +132,13 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		}
 		return chars
 	}
+        
+    private VerticalLayout getNews() {
+        if(news == null) {
+            news = new News(app)
+        }
+        return news
+    }
 
 	public void setStartSelection() {
 		menu.select(profileN)

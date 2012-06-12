@@ -6,6 +6,7 @@ import rpgApp.pages.Messages
 import rpgApp.pages.News
 import rpgApp.pages.Notifications
 import rpgApp.pages.Profile
+import rpgApp.pages.FAQ
 import rpgApp.pages.Scenarios
 import rpgApp.pages.Sessions
 import rpgApp.utils.TreeItemStyleGenerator
@@ -27,6 +28,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 	private static final Object scenariosN = "Scenarios"
 	private static final Object charsN = "Character sheets"
 	private static final Object newsN = "News"
+	private static final Object faqN = "FAQ"
 
 	private VerticalLayout messages
 	private VerticalLayout profile
@@ -35,6 +37,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 	private VerticalLayout scenarios
 	private VerticalLayout chars
         private VerticalLayout news
+        private VerticalLayout faq
 
 	public MyPage(IndexApplication app) {
 		this.app = app
@@ -51,6 +54,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
                 if(app.security.checkRole("Administrator"))
                 {
                     menu.addItem(newsN)
+                    menu.addItem(faqN)
                 }
         
 		menu.setNullSelectionAllowed(false)
@@ -81,6 +85,8 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 				setSecondComponent(getChars())
 			} else if(newsN.equals(itemId)) {
                             setSecondComponent(getNews())
+                        } else if(faqN.equals(itemId)) {
+                            setSecondComponent(getFAQ())
                         }
 		}
 	}
@@ -138,6 +144,12 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
             news = new News(app)
         }
         return news
+    }
+    
+    private VerticalLayout getFAQ() {
+        if(faq == null) {
+            faq = new FAQ(app)
+        }
     }
 
 	public void setStartSelection() {

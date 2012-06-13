@@ -22,6 +22,7 @@ import rpgApp.data.FAQContainer
 import rpgApp.data.FAQItem
 import rpgApp.main.IndexApplication
 import rpgApp.services.FAQService
+import rpgApp.windows.YesNoDialog
 
 class FAQ extends VerticalLayout implements Property.ValueChangeListener, ClickListener {
     private IndexApplication app
@@ -134,7 +135,16 @@ class FAQ extends VerticalLayout implements Property.ValueChangeListener, ClickL
             // TODO: EditFAQWindow
             break
             case deleteFAQ:
-            // TODO: FAQ Deletion
+            app.getMainWindow().addWindow(new YesNoDialog("FAQ delete","Are you sure you want to delete this question?",
+                    new YesNoDialog.Callback() {
+                        public void onDialogResult(boolean answer) {
+                            if(answer) {
+                                FAQItem f = (FAQItem)faqTable.getValue()
+                                dataSource.removeFAQ(f)
+                                fillFAQ()
+                            }
+                        }
+                    }))
             break
         }
     }

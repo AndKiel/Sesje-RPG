@@ -38,7 +38,7 @@ class FAQService {
     }
     
     void removeFAQ(FAQItem faq){
-        FAQ f = FAQ.get(news.getId())
+        FAQ f = FAQ.get(faq.getId())
         if(f)
         {
             f.delete()

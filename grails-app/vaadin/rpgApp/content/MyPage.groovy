@@ -13,11 +13,11 @@ import rpgApp.utils.TreeItemStyleGenerator
 
 import com.vaadin.event.ItemClickEvent
 import com.vaadin.event.ItemClickEvent.ItemClickListener
-import com.vaadin.ui.HorizontalSplitPanel
+import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Tree
 import com.vaadin.ui.VerticalLayout
 
-class MyPage extends HorizontalSplitPanel implements ItemClickListener {
+class MyPage extends HorizontalLayout implements ItemClickListener {
 	private IndexApplication app
 
 	private Tree menu
@@ -30,6 +30,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 	private static final Object newsN = "News"
 	private static final Object faqN = "FAQ"
 
+	private VerticalLayout rightLayout
 	private VerticalLayout messages
 	private VerticalLayout profile
 	private VerticalLayout notifications
@@ -41,7 +42,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 
 	public MyPage(IndexApplication app) {
 		this.app = app
-		setHeight("600px")
+		setWidth("100%")
 		
 		menu = new Tree()
 		menu.setItemStyleGenerator(new TreeItemStyleGenerator())
@@ -52,40 +53,45 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		menu.addItem(scenariosN)
 		menu.addItem(charsN)
 
-		if(app.security.checkRole("Administrator"))
-		{
-			menu.addItem(newsN)
-			menu.addItem(faqN)
-		}
-
 		menu.setNullSelectionAllowed(false)
 		menu.setMultiSelect(false)
 		menu.addListener((ItemClickListener) this)
 		menu.select(profileN)
-		setFirstComponent(menu)
-		setSplitPosition(15)
-		setLocked(true)
+		addComponent(menu)
+		rightLayout = new VerticalLayout()
+		rightLayout.addStyleName("blabla")
+		addComponent(rightLayout)
+		setExpandRatio(menu, 0.05f)
+		setExpandRatio(rightLayout, 0.95f)
 	}
 
 	public void itemClick(ItemClickEvent event) {
 		Object itemId = event.getItemId()
 		if(itemId != null) {
 			if(profileN.equals(itemId)) {
-				setSecondComponent(getProfile())
+				rightLayout.removeAllComponents()
+				rightLayout.addComponent(getProfile())
 			} else if(messagesN.equals(itemId)) {
-				setSecondComponent(getMessages())
+				rightLayout.removeAllComponents()
+				rightLayout.addComponent(getMessages())
 			} else if(notificationsN.equals(itemId)) {
-				setSecondComponent(getNotifications())
+				rightLayout.removeAllComponents()
+				rightLayout.addComponent(getNotifications())
 			} else if(sessionsN.equals(itemId)) {
-				setSecondComponent(getSessions())
+				rightLayout.removeAllComponents()
+				rightLayout.addComponent(getSessions())
 			} else if(scenariosN.equals(itemId)) {
-				setSecondComponent(getScenarios())
+				rightLayout.removeAllComponents()
+				rightLayout.addComponent(getScenarios())
 			} else if(charsN.equals(itemId)) {
-				setSecondComponent(getChars())
+				rightLayout.removeAllComponents()
+				rightLayout.addComponent(getChars())
 			} else if(newsN.equals(itemId)) {
-				setSecondComponent(getNews())
+				rightLayout.removeAllComponents()
+				rightLayout.addComponent(getNews())
 			} else if(faqN.equals(itemId)) {
-				setSecondComponent(getFAQ())
+				rightLayout.removeAllComponents()
+				rightLayout.addComponent(getFAQ())
 			}
 		}
 	}
@@ -156,16 +162,31 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 
 	public void setStartSelection() {
 		menu.select(profileN)
-		setSecondComponent(getProfile())
+		rightLayout.removeAllComponents()
+		rightLayout.addComponent(getProfile())
+		
+		menu.removeItem(newsN)
+		menu.removeItem(faqN)
+		if(app.security.checkRole("Administrator") || app.security.checkRole("Moderator"))
+		{
+			menu.addItem(newsN)
+		}
+		if(app.security.checkRole("Administrator"))
+		{
+			menu.addItem(faqN)
+		}
+
 	}
 
 	public void setMessagesSelection() {
 		menu.select(messagesN)
-		setSecondComponent(getMessages())
+		rightLayout.removeAllComponents()
+		rightLayout.addComponent(getMessages())
 	}
 
 	public void setNotificationsSelection() {
 		menu.select(notificationsN)
-		setSecondComponent(getNotifications())
+		rightLayout.removeAllComponents()
+		rightLayout.addComponent(getNotifications())
 	}
 }

@@ -74,7 +74,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 		tabSheet.setStyleName(Reindeer.TABSHEET_SMALL)
 		tabSheet.addStyleName("sessions")
 		tabSheet.addListener((TabSheet.SelectedTabChangeListener) this)
-		tabSheet.setSizeFull()
+		tabSheet.setWidth("100%")
 		tabSheet.addTab(tab1 ,"My sessions")
 		tabSheet.addTab(tab2 ,"Joined session")
 		tabSheet.addTab(tab3 ,"Waiting for acceptation")
@@ -183,7 +183,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 
 	Table createTable() {
 		Table sessions = new Table()
-		sessions.setSizeFull()
+		sessions.setWidth("100%")
 		sessions.setContainerDataSource(dataSource)
 		sessions.setVisibleColumns(dataSource.NATURAL_COL_ORDER)
 		sessions.setColumnHeaders(dataSource.COL_HEADERS_ENGLISH)

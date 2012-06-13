@@ -28,7 +28,7 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 	private VerticalLayout systems
 	private VerticalLayout announcements
 	private VerticalLayout users
-	private HorizontalSplitPanel myPage
+	private HorizontalLayout myPage
 	private VerticalLayout about
 	private VerticalLayout faq
 	private Window.Notification loginError
@@ -76,7 +76,7 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		myPage.setNotificationsSelection()
 	}
 	
-	public HorizontalSplitPanel getMyPage() {
+	public HorizontalLayout getMyPage() {
 		return myPage
 	}
 	

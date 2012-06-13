@@ -59,7 +59,7 @@ class News extends VerticalLayout implements Property.ValueChangeListener, Click
     private HorizontalLayout createHeader() {
         HorizontalLayout hl = new HorizontalLayout()
         hl.setSpacing(true)
-        hl.setMargin(true)
+        hl.setMargin(true, false, true, true)
         hl.setWidth("100%")
 
 		Label l = new Label("")
@@ -121,10 +121,9 @@ class News extends VerticalLayout implements Property.ValueChangeListener, Click
     private Panel createNewsInfo(){
         Panel p = new Panel()
         p.setStyleName(Reindeer.PANEL_LIGHT);
-//        p.setSizeFull()
 
         VerticalLayout vl = new VerticalLayout()
-        vl.setSizeFull()
+        vl.setWidth("100%")
         vl.setMargin(true)
         vl.setSpacing(true)
 

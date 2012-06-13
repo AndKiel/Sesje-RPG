@@ -59,7 +59,7 @@ class FAQ extends VerticalLayout implements Property.ValueChangeListener, ClickL
     private HorizontalLayout createHeader() {
         HorizontalLayout hl = new HorizontalLayout()
         hl.setSpacing(true)
-        hl.setMargin(true)
+        hl.setMargin(true, false, true, true)
         hl.setWidth("100%")
 
 		Label l = new Label("")

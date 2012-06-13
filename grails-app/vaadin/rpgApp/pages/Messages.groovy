@@ -50,6 +50,7 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 
 	public Messages(IndexApplication app) {
 		this.app = app
+		this.setMargin(true)
 		messageService = app.messageService
 		userService = app.userService
 		dataSource = new MessageContainer(messageService)
@@ -65,8 +66,8 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 
 	private HorizontalLayout createHeader() {
 		HorizontalLayout hl = new HorizontalLayout()
-		hl.setSizeFull()
-		hl.setMargin(true)
+		hl.setWidth("100%")
+		hl.setMargin(false, false, true, false)
 		hl.setSpacing(true)
 
 		onlyUnread = new CheckBox("Show only unread")
@@ -94,7 +95,7 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 
 	private Table createMessageTable() {
 		messages = new Table()
-		messages.setSizeFull()
+		messages.setWidth("100%")
 		messages.setContainerDataSource(dataSource)
 		messages.setVisibleColumns(dataSource.NATURAL_COL_ORDER)
 		messages.setColumnHeaders(dataSource.COL_HEADERS_ENGLISH)
@@ -145,7 +146,7 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 
 	private HorizontalLayout createDeleteBar() {
 		HorizontalLayout hl = new HorizontalLayout()
-		hl.setSizeFull()
+		hl.setWidth("100%")
 		hl.setMargin(true, true, false, true)
 
 		time = new Label("", Label.CONTENT_XHTML)
@@ -168,7 +169,7 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 	private Panel createMessagePanel() {
 		Panel p = new Panel()
 		p.setStyleName(Reindeer.PANEL_LIGHT);
-		p.setSizeFull()
+		p.setWidth("100%")
 
 		VerticalLayout panelLayout = p.getContent()
 		panelLayout.setSizeUndefined()
@@ -178,6 +179,7 @@ class Messages extends VerticalLayout implements Property.ValueChangeListener, C
 		from = new Label("", Label.CONTENT_XHTML)
 		grid = new Label("", Label.CONTENT_XHTML)
 		messageContent = new Label("", Label.CONTENT_XHTML)
+		messageContent.setWidth("750px")
 
 		panelLayout.addComponent(topic)
 		panelLayout.addComponent(from)

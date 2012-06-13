@@ -50,7 +50,7 @@ class Notifications extends VerticalLayout {
 
 			HorizontalLayout hl = new HorizontalLayout()
 			hl.setSpacing(true)
-			hl.setSizeFull()
+			hl.setWidth("100%")
 
 			Label l = new Label("<b>"+notif.getSender()+"</b> invites you to join session <b>#"+notif.getSession()+"</b> as a "+role, ,Label.CONTENT_XHTML)
 			hl.addComponent(l)
@@ -98,7 +98,7 @@ class Notifications extends VerticalLayout {
 
 			HorizontalLayout hl = new HorizontalLayout()
 			hl.setSpacing(true)
-			hl.setSizeFull()
+			hl.setWidth("100%")
 
 			Label l = new Label("<b>"+notif.getSender()+"</b> wants to join session <b>#"+notif.getSession()+"</b> as a "+role,Label.CONTENT_XHTML)
 			hl.addComponent(l)

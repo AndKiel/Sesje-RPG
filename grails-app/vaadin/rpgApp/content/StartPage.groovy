@@ -57,6 +57,9 @@ class StartPage extends HorizontalLayout {
         addComponent(newsPanel)
         addComponent(announcementsPanel)
         addComponent(usersPanel)
+		setExpandRatio(newsPanel, 0.4f)
+		setExpandRatio(announcementsPanel,0.3f)
+		setExpandRatio(usersPanel, 0.3f)
 
         refreshContent()
     }

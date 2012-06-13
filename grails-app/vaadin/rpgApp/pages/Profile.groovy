@@ -94,7 +94,6 @@ class Profile extends VerticalLayout implements Button.ClickListener {
 			location.addItem(it)
 		}
 		location.setNewItemsAllowed(false)
-		location.setWidth("100%")
 		profileForm.addField("location", location)
 
 		birthday = new PopupDateField()
@@ -105,8 +104,8 @@ class Profile extends VerticalLayout implements Button.ClickListener {
 		profileForm.addField("birthday", birthday)
 
 		homepage = new TextField("Homepage: ")
+		homepage.setWidth("300px")
 		homepage.addValidator(new StringLengthValidator("Homepage must be less than 40 signs", 0, 40, true))
-		homepage.setWidth("100%")
 		homepage.setNullRepresentation("")
 		profileForm.addField("homepage", homepage)
 
@@ -132,7 +131,6 @@ class Profile extends VerticalLayout implements Button.ClickListener {
 		// Adding form footer
 		HorizontalLayout footer = new HorizontalLayout();
 		footer.setSpacing(true);
-		footer.setWidth(100, Sizeable.UNITS_PERCENTAGE)
 		footer.addComponent(edit);
 		footer.setComponentAlignment(edit, Alignment.MIDDLE_LEFT)
 		footer.addComponent(save);

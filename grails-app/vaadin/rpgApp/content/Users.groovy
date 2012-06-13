@@ -40,7 +40,6 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 
 	public Users(IndexApplication app) {
 		this.app = app
-		setSizeFull()
 		setMargin(true)
 		setSpacing(true)
 

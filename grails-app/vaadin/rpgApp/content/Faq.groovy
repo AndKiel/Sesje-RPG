@@ -12,7 +12,7 @@ class Faq extends VerticalLayout {
 	
     public Faq(IndexApplication app) {
         this.app = app
-        setMargin(true, true, false, true)
+        setMargin(true)
         setSpacing(true)
 		
         refreshFaq()

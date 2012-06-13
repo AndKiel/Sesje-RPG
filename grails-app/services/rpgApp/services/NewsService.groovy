@@ -9,7 +9,7 @@ class NewsService {
     static transactional = true
     
     List<NewsItem> getAllNews(){
-        return News.findAll([sort: 'dateCreated', order: 'dsc']).collect{
+        return News.findAll([sort: 'dateCreated', order: 'desc']).collect{
             new NewsItem(
                 id: it.id,
                 dateCreated: it.dateCreated,
@@ -26,7 +26,7 @@ class NewsService {
         {
             maximum = News.count();
         }
-        return News.findAll([sort: 'dateCreated', order: 'dsc', max: maximum]).collect{
+        return News.findAll([sort: 'dateCreated', order: 'desc', max: maximum]).collect{
             new NewsItem(
                 id: it.id,
                 dateCreated: it.dateCreated,

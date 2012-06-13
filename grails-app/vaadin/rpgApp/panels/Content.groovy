@@ -37,14 +37,14 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		this.app = app
 
 		setWidth("1000px")
-		setHeight("630px")
+//		setHeight("630px")
 
 		loginError = new Window.Notification("You must log in to enter this page", Window.Notification.TYPE_ERROR_MESSAGE);
 		loginError.setDelayMsec(100)
 
 		tabSheet = new TabSheet()
 		tabSheet.addStyleName(Reindeer.TABSHEET_BORDERLESS)
-		tabSheet.setHeight("625px")
+//		tabSheet.setHeight("625px")
 		tabSheet.setWidth("100%")
 
 		tabSheet.addTab(startPage = new StartPage(app), "Start Page");

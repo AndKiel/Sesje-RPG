@@ -40,7 +40,6 @@ class FAQ extends VerticalLayout implements Property.ValueChangeListener, ClickL
 	
     public FAQ(IndexApplication app) {
         this.app = app
-        setSizeFull()
         setMargin(true)
         setSpacing(true)
         

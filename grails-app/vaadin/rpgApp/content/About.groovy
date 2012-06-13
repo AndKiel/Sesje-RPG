@@ -10,6 +10,7 @@ class About extends VerticalLayout {
 	
 	public About(IndexApplication app) {
 		this.app = app
+		setMargin(true)
 		
 		addComponent(new Label("About in construction..."));
 	}

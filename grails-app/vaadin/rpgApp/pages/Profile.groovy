@@ -50,8 +50,7 @@ class Profile extends VerticalLayout implements Button.ClickListener {
 		setSpacing(true)
 		setMargin(true)
 		addStyleName("left75")
-		setWidth("60%")
-
+		
 		// Creating profile info labels
 		GridLayout gl = new GridLayout(2,5)
 		gl.setSpacing(true)

@@ -36,12 +36,13 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 	private VerticalLayout sessions
 	private VerticalLayout scenarios
 	private VerticalLayout chars
-        private VerticalLayout news
-        private VerticalLayout faq
+	private VerticalLayout news
+	private VerticalLayout faq
 
 	public MyPage(IndexApplication app) {
 		this.app = app
-
+		setHeight("600px")
+		
 		menu = new Tree()
 		menu.setItemStyleGenerator(new TreeItemStyleGenerator())
 		menu.addItem(profileN)
@@ -50,22 +51,20 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		menu.addItem(sessionsN)
 		menu.addItem(scenariosN)
 		menu.addItem(charsN)
-                
-                if(app.security.checkRole("Administrator"))
-                {
-                    menu.addItem(newsN)
-                    menu.addItem(faqN)
-                }
-        
+
+		if(app.security.checkRole("Administrator"))
+		{
+			menu.addItem(newsN)
+			menu.addItem(faqN)
+		}
+
 		menu.setNullSelectionAllowed(false)
 		menu.setMultiSelect(false)
 		menu.addListener((ItemClickListener) this)
 		menu.select(profileN)
-
 		setFirstComponent(menu)
 		setSplitPosition(15)
 		setLocked(true)
-
 	}
 
 	public void itemClick(ItemClickEvent event) {
@@ -84,10 +83,10 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 			} else if(charsN.equals(itemId)) {
 				setSecondComponent(getChars())
 			} else if(newsN.equals(itemId)) {
-                            setSecondComponent(getNews())
-                        } else if(faqN.equals(itemId)) {
-                            setSecondComponent(getFAQ())
-                        }
+				setSecondComponent(getNews())
+			} else if(faqN.equals(itemId)) {
+				setSecondComponent(getFAQ())
+			}
 		}
 	}
 
@@ -116,7 +115,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		notifications.fillNotifications()
 		return notifications
 	}
-	
+
 	private VerticalLayout getSessions() {
 		if(sessions == null) {
 			sessions = new Sessions(app)
@@ -124,7 +123,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		sessions.fillSessions()
 		return sessions
 	}
-	
+
 	private VerticalLayout getScenarios() {
 		if(scenarios == null) {
 			scenarios = new Scenarios(app)
@@ -138,22 +137,22 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		}
 		return chars
 	}
-        
-    private VerticalLayout getNews() {
-        if(news == null) {
-            news = new News(app)
-        }
-        news.fillNews()
-        return news
-    }
-    
-    private VerticalLayout getFAQ() {
-        if(faq == null) {
-            faq = new FAQ(app)
-        }
-        faq.fillFAQ()
-        return faq
-    }
+
+	private VerticalLayout getNews() {
+		if(news == null) {
+			news = new News(app)
+		}
+		news.fillNews()
+		return news
+	}
+
+	private VerticalLayout getFAQ() {
+		if(faq == null) {
+			faq = new FAQ(app)
+		}
+		faq.fillFAQ()
+		return faq
+	}
 
 	public void setStartSelection() {
 		menu.select(profileN)
@@ -164,7 +163,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
 		menu.select(messagesN)
 		setSecondComponent(getMessages())
 	}
-	
+
 	public void setNotificationsSelection() {
 		menu.select(notificationsN)
 		setSecondComponent(getNotifications())

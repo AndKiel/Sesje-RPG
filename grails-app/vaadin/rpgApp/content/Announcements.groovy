@@ -208,7 +208,7 @@ class Announcements extends VerticalLayout implements Property.ValueChangeListen
 		sessions.setContainerDataSource(dataSource)
 		sessions.setVisibleColumns(dataSource.NATURAL_COL_ORDER)
 		sessions.setColumnHeaders(dataSource.COL_HEADERS_ENGLISH)
-		sessions.setPageLength(11)
+		sessions.setPageLength(20)
 		sessions.setSelectable(true)
 		sessions.setImmediate(true)
 		sessions.setNullSelectionAllowed(false);

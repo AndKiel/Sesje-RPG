@@ -47,7 +47,6 @@ class Systems extends VerticalLayout implements Property.ValueChangeListener, Cl
 
 	public Systems(IndexApplication app) {
 		this.app = app
-		setSizeFull()
 		setMargin(true)
 		setSpacing(true)
 

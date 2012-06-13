@@ -39,7 +39,6 @@ class News extends VerticalLayout implements Property.ValueChangeListener, Click
 
     public News(IndexApplication app) {
         this.app = app
-        setSizeFull()
         setMargin(true)
         setSpacing(true)
         

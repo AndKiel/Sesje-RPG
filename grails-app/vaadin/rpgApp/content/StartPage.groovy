@@ -22,52 +22,50 @@ import com.vaadin.ui.themes.Reindeer
 class StartPage extends HorizontalLayout {
     private IndexApplication app
 
-    private Panel p1
-    private Panel p2
-    private Panel p3
-    private VerticalLayout vl1
-    private VerticalLayout vl2
-    private VerticalLayout vl3
+    private Panel newsPanel
+    private Panel announcementsPanel
+    private Panel usersPanel
+    private VerticalLayout newsLayout
+    private VerticalLayout announcementsLayout
+    private VerticalLayout usersLayout
 
     public StartPage(IndexApplication app) {
         this.app = app
-        setMargin(true, true, false, true)
-        setSpacing(true)
+        setMargin(true)
         setWidth("100%")
-        setHeight("100%")
 
-        p1 = new Panel("News")
-        p1.setStyleName(Reindeer.PANEL_LIGHT)
-        p1.setIcon(new ThemeResource("icons/news-icon.png"))
-        p2 = new Panel("Incoming sessions")
-        p2.setStyleName(Reindeer.PANEL_LIGHT)
-        p2.setIcon(new ThemeResource("icons/announcement-icon.png"))
-        p3 = new Panel("New users")
-        p3.setStyleName(Reindeer.PANEL_LIGHT)
-        p3.setIcon(new ThemeResource("icons/users-icon.png"))
+        newsPanel = new Panel("News")
+        newsPanel.setStyleName(Reindeer.PANEL_LIGHT)
+        newsPanel.setIcon(new ThemeResource("icons/news-icon.png"))
+        announcementsPanel = new Panel("Incoming sessions")
+        announcementsPanel.setStyleName(Reindeer.PANEL_LIGHT)
+        announcementsPanel.setIcon(new ThemeResource("icons/announcement-icon.png"))
+        usersPanel = new Panel("New users")
+        usersPanel.setStyleName(Reindeer.PANEL_LIGHT)
+        usersPanel.setIcon(new ThemeResource("icons/users-icon.png"))
 
-        vl1 = p1.getContent()
-        vl1.setMargin(true, true, false ,false )
-        vl1.setSpacing(true)
-        vl2 = p2.getContent()
-        vl2.setMargin(true, true, false ,false )
-        vl2.setSpacing(true)
-        vl3 = p3.getContent()
-        vl3.setMargin(true, true, false ,false )
-        vl3.setSpacing(true)
+        newsLayout = newsPanel.getContent()
+        newsLayout.setMargin(true, true, false ,false )
+        newsLayout.setSpacing(true)
+        announcementsLayout = announcementsPanel.getContent()
+        announcementsLayout.setMargin(true, true, false ,false )
+        announcementsLayout.setSpacing(true)
+        usersLayout = usersPanel.getContent()
+        usersLayout.setMargin(true, true, false ,false )
+        usersLayout.setSpacing(true)
 
-        addComponent(p1)
-        addComponent(p2)
-        addComponent(p3)
+        addComponent(newsPanel)
+        addComponent(announcementsPanel)
+        addComponent(usersPanel)
 
         refreshContent()
     }
 
 
     public void refreshContent() {
-        vl1.removeAllComponents()
-        vl2.removeAllComponents()
-        vl3.removeAllComponents()
+        newsLayout.removeAllComponents()
+        announcementsLayout.removeAllComponents()
+        usersLayout.removeAllComponents()
         List<NewsItem> latestNews = app.newsService.getLatestNews()
         List<UserItem> lastUsers = app.userService.getLastUsers()
         List<SessionItem> incomingSessions = app.sessionService.getIncomingSessions()
@@ -80,7 +78,7 @@ class StartPage extends HorizontalLayout {
             p.addComponent(new Label(news.getContent(), Label.CONTENT_XHTML))
 			p.addComponent(new Label("<hr/>", Label.CONTENT_XHTML))
             p.addComponent(new Label("<b>"+news.getAuthor()+"</b>, "+news.getDateCreated().toString().substring(0,16), Label.CONTENT_XHTML))
-            vl1.addComponent(p)
+            newsLayout.addComponent(p)
         }
         
         // Last users
@@ -105,7 +103,7 @@ class StartPage extends HorizontalLayout {
             hl.setComponentAlignment(b, Alignment.MIDDLE_LEFT)
             p.addComponent(hl)
             p.addComponent(l2)
-            vl3.addComponent(p)
+            usersLayout.addComponent(p)
         }
 
         // Incoming sessions
@@ -166,13 +164,13 @@ class StartPage extends HorizontalLayout {
                 p.addComponent(l)
                 p.addComponent(l2)
                 p.addComponent(h)
-                vl2.addComponent(p)
+                announcementsLayout.addComponent(p)
             }
         } else {
             Label l = new Label("You must log in to see incoming announcements", Label.CONTENT_XHTML)
             Panel p = new Panel()
             p.addComponent(l)
-            vl2.addComponent(p)
+            announcementsLayout.addComponent(p)
         }
     }
 }

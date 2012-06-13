@@ -20,6 +20,7 @@ import rpgApp.data.NewsContainer
 import rpgApp.data.NewsItem
 import rpgApp.main.IndexApplication
 import rpgApp.services.NewsService
+import rpgApp.windows.NewNewsWindow
 import rpgApp.windows.YesNoDialog
 
 class News extends VerticalLayout implements Property.ValueChangeListener, ClickListener {
@@ -138,10 +139,10 @@ class News extends VerticalLayout implements Property.ValueChangeListener, Click
         final Button source = clickEvent.getButton()
         switch(clickEvent.source){
             case addNews:
-            // TODO: NewNewsWindow
+            app.getMainWindow().addWindow(new NewNewsWindow(app, false, this))
             break
             case editNews:
-            // TODO: EditNewsWindow
+            app.getMainWindow().addWindow(new NewNewsWindow(app, true, this))
             break
             case deleteNews:
             app.getMainWindow().addWindow(new YesNoDialog("News delete","Are you sure you want to delete this news?",

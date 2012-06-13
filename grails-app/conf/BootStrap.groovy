@@ -1,3 +1,4 @@
+import rpgApp.persistance.FAQ
 import rpgApp.persistance.News
 import rpgApp.persistance.Participant
 import rpgApp.persistance.Role
@@ -43,8 +44,11 @@ class BootStrap {
         Session ses6 = new Session(type: "online", location: "online", maxPlayers: 7, timeStamp: new Date(2012-1900, 6, 31, 15,00), owner: marek, system: s2).save(failOnError: true)
         Session ses7 = new Session(type: "offline", location: "Kraków", maxPlayers: 3, timeStamp: new Date(2012-1900, 6, 30, 17,30), owner: marek, system: s1).save(failOnError: true)
 
-        News news1 = new News(title: "Website Start", content: "Today at long last website start", author: marek).save()
-        News news2 = new News(title: "Updates", content: "First updates", author: marek).save()
+        new News(title: "Website Start", content: "Today at long last website start", author: marek).save()
+        new News(title: "Updates", content: "First updates", author: marek).save()
+        
+        new FAQ(question: "Jaki jest sens życia?", answer: "42").save()
+        new FAQ(question: "O'rly?", answer: "Ya'rly").save()
     }
         
     def destroy = {

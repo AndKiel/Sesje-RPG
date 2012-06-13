@@ -151,6 +151,8 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
         if(faq == null) {
             faq = new FAQ(app)
         }
+        faq.fillFAQ()
+        return faq
     }
 
 	public void setStartSelection() {

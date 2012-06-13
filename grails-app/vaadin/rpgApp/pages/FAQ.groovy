@@ -22,6 +22,7 @@ import rpgApp.data.FAQContainer
 import rpgApp.data.FAQItem
 import rpgApp.main.IndexApplication
 import rpgApp.services.FAQService
+import rpgApp.windows.NewFAQWindow
 import rpgApp.windows.YesNoDialog
 
 class FAQ extends VerticalLayout implements Property.ValueChangeListener, ClickListener {
@@ -129,10 +130,10 @@ class FAQ extends VerticalLayout implements Property.ValueChangeListener, ClickL
         final Button source = clickEvent.getButton()
         switch(clickEvent.source){
             case addFAQ:
-            // TODO: NewFAQWindow
+            app.getMainWindow().addWindow(new NewFAQWindow(app, false, this))
             break
             case editFAQ:
-            // TODO: EditFAQWindow
+            app.getMainWindow().addWindow(new NewFAQWindow(app, true, this))
             break
             case deleteFAQ:
             app.getMainWindow().addWindow(new YesNoDialog("FAQ delete","Are you sure you want to delete this question?",

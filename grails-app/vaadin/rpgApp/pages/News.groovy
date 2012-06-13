@@ -151,7 +151,7 @@ class News extends VerticalLayout implements Property.ValueChangeListener, Click
     public void valueChange(ValueChangeEvent event) {
         Property property = event.getProperty()
         if(property == newsTable) {
-            NewsItem n = (NewsItem)news.getValue()
+            NewsItem n = (NewsItem)newsTable.getValue()
             title.setValue("<b>Title: </b>"+n.getTitle())
             date.setValue("<b>Date: </b>"+n.getDateCreated())
             author.setValue("<b>Author: </b>"+n.getAuthor())

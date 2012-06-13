@@ -25,7 +25,7 @@ class NewsItem implements Serializable {
     public void setTitle(String title) {
         this.title = title;
     }
-    public String getContenet() {
+    public String getContent() {
         return content;
     }
     public void setContent(String content) {

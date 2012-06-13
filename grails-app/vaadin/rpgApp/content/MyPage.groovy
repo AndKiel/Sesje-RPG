@@ -143,6 +143,7 @@ class MyPage extends HorizontalSplitPanel implements ItemClickListener {
         if(news == null) {
             news = new News(app)
         }
+        news.fillNews()
         return news
     }
     

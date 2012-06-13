@@ -15,7 +15,7 @@ class NewsService {
                 dateCreated: it.dateCreated,
                 title: it.title,
                 content: it.content,
-                author: it.author
+                author: it.author.nickname
             )
         }
     }
@@ -32,7 +32,7 @@ class NewsService {
                 dateCreated: it.dateCreated,
                 title: it.title,
                 content: it.content,
-                author: it.author
+                author: it.author.nickname
             )
         }
     }
@@ -44,7 +44,7 @@ class NewsService {
             dateCreated: n.dateCreated,
             title: n.title,
             content: n.content,
-            author: n.author
+            author: n.author.nickname
         )
     }
     

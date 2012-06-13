@@ -2,10 +2,9 @@ package rpgApp.pages
 
 import com.vaadin.data.Property
 import com.vaadin.data.Property.ValueChangeEvent
-import com.vaadin.terminal.Resource
 import com.vaadin.terminal.ThemeResource
 import com.vaadin.ui.Button
-import com.vaadin.ui.Embedded
+import com.vaadin.ui.Component
 import com.vaadin.ui.HorizontalLayout
 import com.vaadin.ui.Label
 import com.vaadin.ui.Panel
@@ -13,7 +12,7 @@ import com.vaadin.ui.Table
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Button.ClickListener
-import com.vaadin.ui.themes.BaseTheme
+import com.vaadin.ui.Table.ColumnGenerator
 import com.vaadin.ui.themes.Reindeer
 
 import rpgApp.data.NewsContainer
@@ -61,9 +60,10 @@ class News extends VerticalLayout implements Property.ValueChangeListener, Click
     private HorizontalLayout createHeader() {
         HorizontalLayout hl = new HorizontalLayout()
         hl.setSpacing(true)
-        hl.setMargin(true, true, false, true)
+        hl.setMargin(true)
         hl.setWidth("100%")
 
+		Label l = new Label("")
         addNews = new Button("Add news")
         addNews.addListener((ClickListener) this)
         addNews.setIcon(new ThemeResource("icons/folder-add.png"))
@@ -74,9 +74,11 @@ class News extends VerticalLayout implements Property.ValueChangeListener, Click
         deleteNews.addListener((ClickListener) this)
         deleteNews.setIcon(new ThemeResource("icons/folder-delete.png"))
 
+		hl.addComponent(l)
         hl.addComponent(addNews)
         hl.addComponent(editNews)
         hl.addComponent(deleteNews)
+		hl.setExpandRatio(l, 1.0f)
 
         return hl
     }
@@ -94,14 +96,25 @@ class News extends VerticalLayout implements Property.ValueChangeListener, Click
         newsTable.addListener((Property.ValueChangeListener) this)
         newsTable.setStyleName(Reindeer.TABLE_STRONG)
 
+        // Formating Date string in Date column
+        newsTable.addGeneratedColumn("dateCreated", new ColumnGenerator() {
+        	public Component generateCell(Table source, Object itemId, Object columnId) {
+        		NewsItem n = (NewsItem) itemId;
+        		String d = n.getDateCreated().toString().substring(0, 16)
+        				Label l = new Label(d);
+        		return l;
+        	}
+        });
+	
         newsTable.setColumnAlignment("id",Table.ALIGN_CENTER);
         newsTable.setColumnAlignment("title",Table.ALIGN_CENTER);
         newsTable.setColumnAlignment("dateCreated",Table.ALIGN_CENTER);
         newsTable.setColumnAlignment("author",Table.ALIGN_CENTER);
-        newsTable.setColumnExpandRatio("id", 1)
-        newsTable.setColumnExpandRatio("title", 3)
-        newsTable.setColumnExpandRatio("dateCreated", 1)
-        newsTable.setColumnExpandRatio("author", 1)
+        newsTable.setColumnExpandRatio("id", 0.5f)
+        newsTable.setColumnExpandRatio("title", 6)
+        newsTable.setColumnExpandRatio("dateCreated", 2)
+        newsTable.setColumnExpandRatio("author", 2)
+		
 
         return newsTable
     }
@@ -109,7 +122,7 @@ class News extends VerticalLayout implements Property.ValueChangeListener, Click
     private Panel createNewsInfo(){
         Panel p = new Panel()
         p.setStyleName(Reindeer.PANEL_LIGHT);
-        p.setSizeFull()
+//        p.setSizeFull()
 
         VerticalLayout vl = new VerticalLayout()
         vl.setSizeFull()
@@ -164,7 +177,7 @@ class News extends VerticalLayout implements Property.ValueChangeListener, Click
         if(property == newsTable) {
             NewsItem n = (NewsItem)newsTable.getValue()
             title.setValue("<b>Title: </b>"+n.getTitle())
-            date.setValue("<b>Date: </b>"+n.getDateCreated())
+            date.setValue("<b>Date: </b>"+n.getDateCreated().toString().substring(0,16))
             author.setValue("<b>Author: </b>"+n.getAuthor())
             content.setValue("<b>Content: </b>"+n.getContent())
         }

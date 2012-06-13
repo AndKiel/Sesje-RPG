@@ -8,6 +8,7 @@ class FAQ {
     static mapping = {
         version false
         table 'faq'
+		id generator: 'increment'
         question column: 'question'
         answer column: 'answer'
     }

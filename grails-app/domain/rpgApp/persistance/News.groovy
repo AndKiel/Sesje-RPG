@@ -10,6 +10,7 @@ class News {
     static mapping = {
         version false
         table 'news'
+		id generator: 'increment'
         title column: 'title'
         content column: 'content'
         author column: 'author'

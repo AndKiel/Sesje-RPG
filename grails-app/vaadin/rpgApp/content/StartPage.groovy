@@ -76,8 +76,10 @@ class StartPage extends HorizontalLayout {
         for(NewsItem news in latestNews){
             Panel p = new Panel()
             p.addComponent(new Label("<b>"+news.getTitle()+"</b>", Label.CONTENT_XHTML))
+			p.addComponent(new Label("<hr/>", Label.CONTENT_XHTML))
             p.addComponent(new Label(news.getContent(), Label.CONTENT_XHTML))
-            p.addComponent(new Label(news.getAuthor()+", "+news.getDateCreated(), Label.CONTENT_XHTML))
+			p.addComponent(new Label("<hr/>", Label.CONTENT_XHTML))
+            p.addComponent(new Label("<b>"+news.getAuthor()+"</b>, "+news.getDateCreated().toString().substring(0,16), Label.CONTENT_XHTML))
             vl1.addComponent(p)
         }
         

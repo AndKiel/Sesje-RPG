@@ -14,18 +14,22 @@ class Faq extends VerticalLayout {
         this.app = app
         setMargin(true, true, false, true)
         setSpacing(true)
-        setWidth("100%")
-        setHeight("100%")
 		
-        addComponent(new Label("<b>Frequently Asked Questions</b>", Label.CONTENT_XHTML));
-        
-        List<FAQItem> questions = app.faqService.getAllFAQ()
-        for(FAQItem faq in questions)
-        {
-            Panel p = new Panel()
-            p.addComponent(new Label("<b>"+faq.getQuestion()+"</b>", Label.CONTENT_XHTML))
-            p.addComponent(new Label(faq.getAnswer(), Label.CONTENT_XHTML))
-            addComponent(p)
-        }
+        refreshFaq()
     }
+	
+	public void refreshFaq() {
+		this.removeAllComponents()
+		addComponent(new Label("<b>Frequently Asked Questions</b>", Label.CONTENT_XHTML));
+		List<FAQItem> questions = app.faqService.getAllFAQ()
+		int i = 0
+		for(FAQItem faq in questions)
+		{
+			i++
+			Panel p = new Panel()
+			p.addComponent(new Label("<b>"+i+". "+faq.getQuestion()+"</b>", Label.CONTENT_XHTML))
+			p.addComponent(new Label(faq.getAnswer(), Label.CONTENT_XHTML))
+			addComponent(p)
+		}
+	}
 }

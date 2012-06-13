@@ -60,9 +60,10 @@ class FAQ extends VerticalLayout implements Property.ValueChangeListener, ClickL
     private HorizontalLayout createHeader() {
         HorizontalLayout hl = new HorizontalLayout()
         hl.setSpacing(true)
-        hl.setMargin(true, true, false, true)
+        hl.setMargin(true)
         hl.setWidth("100%")
 
+		Label l = new Label("")
         addFAQ = new Button("Add question")
         addFAQ.addListener((ClickListener) this)
         addFAQ.setIcon(new ThemeResource("icons/folder-add.png"))
@@ -73,9 +74,11 @@ class FAQ extends VerticalLayout implements Property.ValueChangeListener, ClickL
         deleteFAQ.addListener((ClickListener) this)
         deleteFAQ.setIcon(new ThemeResource("icons/folder-delete.png"))
 
+		hl.addComponent(l)
         hl.addComponent(addFAQ)
         hl.addComponent(editFAQ)
         hl.addComponent(deleteFAQ)
+		hl.setExpandRatio(l, 1.0f)
 
         return hl
     }
@@ -95,8 +98,7 @@ class FAQ extends VerticalLayout implements Property.ValueChangeListener, ClickL
 
         faqTable.setColumnAlignment("id",Table.ALIGN_CENTER);
         faqTable.setColumnAlignment("question",Table.ALIGN_LEFT);
-        faqTable.setColumnExpandRatio("id", 1)
-        faqTable.setColumnExpandRatio("question", 4)
+        faqTable.setColumnExpandRatio("question", 1)
 
         return faqTable
     }
@@ -104,7 +106,6 @@ class FAQ extends VerticalLayout implements Property.ValueChangeListener, ClickL
     private Panel createFAQInfo(){
         Panel p = new Panel()
         p.setStyleName(Reindeer.PANEL_LIGHT);
-        p.setSizeFull()
 
         VerticalLayout vl = new VerticalLayout()
         vl.setSizeFull()

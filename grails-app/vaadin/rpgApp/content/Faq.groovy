@@ -1,16 +1,31 @@
 package rpgApp.content
 
+import rpgApp.data.FAQItem
 import rpgApp.main.IndexApplication
 
 import com.vaadin.ui.Label
+import com.vaadin.ui.Panel
 import com.vaadin.ui.VerticalLayout
 
 class Faq extends VerticalLayout {
-	private IndexApplication app
+    private IndexApplication app
 	
-	public Faq(IndexApplication app) {
-		this.app = app
+    public Faq(IndexApplication app) {
+        this.app = app
+        setMargin(true, true, false, true)
+        setSpacing(true)
+        setWidth("100%")
+        setHeight("100%")
 		
-		addComponent(new Label("FAQ in construction..."));
-	}
+        addComponent(new Label("<b>Frequently Asked Questions</b>", Label.CONTENT_XHTML));
+        
+        List<FAQItem> questions = app.faqService.getAllFAQ()
+        for(FAQItem faq in questions)
+        {
+            Panel p = new Panel()
+            p.addComponent(new Label("<b>"+faq.getQuestion()+"</b>", Label.CONTENT_XHTML))
+            p.addComponent(new Label(faq.getAnswer(), Label.CONTENT_XHTML))
+            addComponent(p)
+        }
+    }
 }

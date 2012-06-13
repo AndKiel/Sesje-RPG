@@ -17,7 +17,7 @@ class News {
     
     static constraints = {
         title(nullable: false)
-        content(nullable: false)
+        content(maxSize: 5000, nullable: false)
         author()
     }
     

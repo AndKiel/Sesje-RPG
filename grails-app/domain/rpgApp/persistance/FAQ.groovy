@@ -14,7 +14,7 @@ class FAQ {
 
     static constraints = {
         question(nullable: false)
-        answer(nullable: false)
+        answer(maxSize: 5000, nullable: false)
     }
 
     String toString(){

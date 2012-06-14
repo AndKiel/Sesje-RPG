@@ -112,7 +112,180 @@ Baza danych jest w drugiej postaci normalnej, ponieważ jest w pierwszej postaci
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\clearpage
 \section{Projektowanie operacji na danych}
 \label{sec:operacje}
 
-Lorem ipsum.
+\begin{itemize}
+\item rejestracja nowego użytkownika
+\begin{lstlisting}[language=SQL]
+INSERT INTO users (login, pass_md5, nickname) VALUES (login_value, pass_md5_value, nickname_value);
+\end{lstlisting}
+
+\item aktywacja konta użytkownika
+\begin{lstlisting}[language=SQL]
+UPDATE users SET state = 'A' WHERE login = login_value;
+\end{lstlisting}
+
+\item logowanie użytkownika na stronę
+\begin{lstlisting}[language=SQL]
+EXISTS (SELECT login, pass_md5 FROM users WHERE login = login_value AND pass_md5 = pass_md5_value);
+\end{lstlisting}
+
+\item zmiana lub resetowanie hasła użytkownika
+\begin{lstlisting}[language=SQL]
+UPDATE users SET pass_md5 = new_pass_md5 WHERE login = login_value;
+\end{lstlisting}
+
+\item edycja danych konta użytkownika
+\begin{lstlisting}[language=SQL]
+UPDATE users SET location = new_location, birthday = new_birthday, homepage = new_homapage, show_chars = tru_fal_value1, show_scenarios = tru_fal_value2, comment_notify = tru_fal_value3, session_notify = tru_fal_value4, message_notify = tru_fal_value5 WHERE login = login_value;
+\end{lstlisting}
+
+\item pobieranie listy użytkowników
+\begin{lstlisting}[language=SQL]
+SELECT nickname, location, birthday, homepage FROM users;
+\end{lstlisting}
+
+\item banowanie konta użytkownika
+\begin{lstlisting}[language=SQL]
+UPDATE users SET state = 'B' WHERE login = login_value;
+\end{lstlisting}
+
+\item pobieranie prywatnych wiadomości przez użytkownika
+\begin{lstlisting}[language=SQL]
+SELECT sender, time_stamp, topic, content, was_read FROM messages WHERE addressee = current_user;
+\end{lstlisting}
+
+\item wysyłanie prywatnej wiadomości użytkownikowi
+\begin{lstlisting}[language=SQL]
+INSERT INTO messages (addressee, sender, topic, content) VALUES (user_id, current_user, topic_value, content_value);
+\end{lstlisting}
+
+\item usuwanie prywatnej wiadomości przez użytkownika
+\begin{lstlisting}[language=SQL]
+DELETE FROM messages WHERE id = msg_id;
+\end{lstlisting}
+
+\item pobieranie komentarzy wystawionych przez użytkownika
+\begin{lstlisting}[language=SQL]
+SELECT commentee, grade, comment, time_stamp FROM comments WHERE comentator = user_id;
+\end{lstlisting}
+
+\item pobieranie komentarzy dotyczących użytkownika
+\begin{lstlisting}[language=SQL]
+SELECT comentator, grade, comment, time_stamp FROM comments WHERE commentee = user_id;
+\end{lstlisting}
+
+\item wystawianie komentarza
+\begin{lstlisting}[language=SQL]
+INSET INTO comments (comentator, commentee, grade, comment) VALUES (current_user, user_id, grade_value, comment_value);
+\end{lstlisting}
+
+\item edycja komentarza
+\begin{lstlisting}[language=SQL]
+UPDATE comments SET grade = new_grade, comment = new_comment WHERE id = comment_id;
+\end{lstlisting}
+
+\item usunięcie komentarza
+\begin{lstlisting}[language=SQL]
+DELETE FROM comments WHERE id = comment_id;
+\end{lstlisting}
+
+\item pobieranie wszystkich kart postaci danego użytkownika
+\begin{lstlisting}[language=SQL]
+SELECT system, xml_data FROM char_sheets WHERE owner = user_id;
+\end{lstlisting}
+
+\item tworzenie karty postaci przez użytkownika
+\begin{lstlisting}[language=SQL]
+INSERT INTO char_sheets (owner, system, xml_data) VALUES (current_user, system_id, xml_data_value);
+\end{lstlisting}
+
+\item edycja karty postaci przez użytkownika
+\begin{lstlisting}[language=SQL]
+UPDATE char_sheets SET system = new_system, xml_data = new_xml_data WHERE id = char_sheet_id;
+\end{lstlisting}
+
+\item usuwanie karty postaci przez użytkownika
+\begin{lstlisting}[language=SQL]
+DELETE FROM char_sheets WHERE id = char_sheet_id;
+\end{lstlisting}
+
+\item pobieranie wszystkich scenariuszy danego użytkownika
+\begin{lstlisting}[language=SQL]
+SELECT system, type, players_count, content FROM scenarios WHERE owner = user_id;
+\end{lstlisting}
+
+\clearpage
+\item tworzenie scenariusza przez użytkownika
+\begin{lstlisting}[language=SQL]
+INSERT INTO scenarios (owner, system, type, players_count, content) VALUES (current_user, system_id, type_value, players_count_value, content_value);
+\end{lstlisting}
+
+\item edycja scenariusza przez użytkownika
+\begin{lstlisting}[language=SQL]
+UPDATE scenarios SET system = new_system, type = new_type, players_count = new_players_count, content = new_content WHERE id = scenario_id;
+\end{lstlisting}
+
+\item usuwanie scenariusza prez użytkownika
+\begin{lstlisting}[language=SQL]
+DELETE FROM scenarios WHERE id = scenario_id;
+\end{lstlisting}
+
+\item pobieranie listy systemów RPG
+\begin{lstlisting}[language=SQL]
+SELECT id, name, description, genre, designer, publisher, year FROM rpg_systems;
+\end{lstlisting}
+
+\item dodawanie systemu RPG
+\begin{lstlisting}[language=SQL]
+INSERT INTO rpg_systems (name, description, genre, designer, publisher, year) VALUES (name_value, description_value, genre_value, designer_value, publisher_value, year_value);
+\end{lstlisting}
+
+\item edycja systemu RPG
+\begin{lstlisting}[language=SQL]
+UPDATE rpg_systems SET name = new_name, description = new_description, genre = new_genre, designer = new_designer, publisher = new_publisher, year = new_year WHERE id = rpg_system_id;
+\end{lstlisting}
+
+\item usuwanie systemu RPG
+\begin{lstlisting}[language=SQL]
+DELETE FROM rpg_systems WHERE id = rpg_system_id;
+\end{lstlisting}
+
+\item pobieranie listy ogłoszeń (sesji)
+\begin{lstlisting}[language=SQL]
+SELECT id, system, owner, time_stamp, type, location FROM sessions;
+\end{lstlisting}
+
+\item pobieranie listy ogłoszeń (sesji) użytkownika
+\begin{lstlisting}[language=SQL]
+SELECT id, system, time_stamp, type, location FROM sessions WHERE owner = current_user;
+\end{lstlisting}
+
+\clearpage
+\item tworzenie ogłoszenia (sesji)
+\begin{lstlisting}[language=SQL]
+INSERT INTO sessions (system, owner, time_stamp, type, location) VALUES (system_id, current_user, when, ses_type, where);
+\end{lstlisting}
+
+\item usuwanie ogłoszenia (sesji)
+\begin{lstlisting}[language=SQL]
+DELETE FROM sessions WHERE id = session_id;
+\end{lstlisting}
+
+\item odpowiadanie na ogłoszenie (dołączanie do sesji)
+\begin{lstlisting}[language=SQL]
+INSERT INTO participants (session, user, role) VALUES (session_id, current_user, session_role);
+\end{lstlisting}
+
+\item akceptacja odpowiedzi na ogłoszenie
+\begin{lstlisting}[language=SQL]
+UPDATE participants SET state = true WHERE session = session_id, user = user_id;
+\end{lstlisting}
+
+\item odrzucenie odpowiedzi na ogłoszenie lub rezygnacja przez odpowiadającego
+\begin{lstlisting}[language=SQL]
+DELETE FROM participants WHERE session = session_id, user = user_id;
+\end{lstlisting}
+\end{itemize}

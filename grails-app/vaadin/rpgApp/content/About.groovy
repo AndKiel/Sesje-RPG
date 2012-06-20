@@ -68,12 +68,12 @@ class About extends VerticalLayout implements ClickListener {
 
     public void buttonClick(ClickEvent clickEvent) {
         final Button source = clickEvent.getButton()
+        AboutItem a = aboutService.getAbout(1)
         switch(clickEvent.source){
             case edit:
             removeAllComponents()
             addComponent(aboutForm)
 
-            AboutItem a = aboutService.getAbout(1)
             aboutForm.getField("rta").setValue(a.getContent())
 
             break
@@ -82,7 +82,7 @@ class About extends VerticalLayout implements ClickListener {
             {
                 aboutService.updateAbout(
                     (String)(aboutForm.getField("rta").getValue()),
-                    (Integer)"1"
+                    a.getId()
                 )
                 refreshAbout()
             }

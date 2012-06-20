@@ -134,6 +134,7 @@ class MyPage extends HorizontalLayout implements ItemClickListener {
 		if(scenarios == null) {
 			scenarios = new Scenarios(app)
 		}
+                scenarios.fillScenarios()
 		return scenarios
 	}
 

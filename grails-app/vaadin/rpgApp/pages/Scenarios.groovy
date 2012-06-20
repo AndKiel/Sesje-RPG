@@ -12,13 +12,13 @@ import com.vaadin.ui.Table
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Button.ClickListener
-import com.vaadin.ui.Table.ColumnGenerator
 import com.vaadin.ui.themes.Reindeer
 
 import rpgApp.data.ScenarioContainer
 import rpgApp.data.ScenarioItem
 import rpgApp.main.IndexApplication
 import rpgApp.services.ScenarioService
+import rpgApp.windows.NewScenarioWindow
 import rpgApp.windows.YesNoDialog
 
 class Scenarios extends VerticalLayout implements Property.ValueChangeListener, ClickListener {
@@ -30,7 +30,13 @@ class Scenarios extends VerticalLayout implements Property.ValueChangeListener, 
     private Button addScenario
     private Button editScenario
     private Button deleteScenario
-	
+
+    private Label name
+    private Label type
+    private Label playersCount
+    private Label system
+    private Label content
+
     public Scenarios(IndexApplication app) {
         this.app = app
         setMargin(true)
@@ -114,7 +120,17 @@ class Scenarios extends VerticalLayout implements Property.ValueChangeListener, 
 
         p.setContent(vl)
         
-        // TODO: scenarioPanel
+        name = new Label("", Label.CONTENT_XHTML)
+        type = new Label("", Label.CONTENT_XHTML)
+        playersCount = new Label("", Label.CONTENT_XHTML)
+        system = new Label("", Label.CONTENT_XHTML)
+        content = new Label("", Label.CONTENT_XHTML)
+        
+        vl.addComponent(name)
+        vl.addComponent(type)
+        vl.addComponent(playersCount)
+        vl.addComponent(system)
+        vl.addComponent(content)
         
         return p
     }
@@ -127,12 +143,10 @@ class Scenarios extends VerticalLayout implements Property.ValueChangeListener, 
         final Button source = clickEvent.getButton()
         switch(clickEvent.source){
             case addScenario:
-            // TODO: newScenarioWindow
-            // app.getMainWindow().addWindow(new NewScenarioWindow(app, false, this))
+            app.getMainWindow().addWindow(new NewScenarioWindow(app, false, this))
             break
             case editScenario:
-            // TODO: newScenarioWindow
-            // app.getMainWindow().addWindow(new NewScenarioWindow(app, true, this))
+            app.getMainWindow().addWindow(new NewScenarioWindow(app, true, this))
             break
             case deleteScenario:
             app.getMainWindow().addWindow(new YesNoDialog("Scenario delete","Are you sure you want to delete this scenario?",
@@ -141,7 +155,7 @@ class Scenarios extends VerticalLayout implements Property.ValueChangeListener, 
                             if(answer) {
                                 ScenarioItem n = (ScenarioItem)scenarioTable.getValue()
                                 dataSource.removeScenario(n)
-                                fillScenario()
+                                fillScenarios()
                             }
                         }
                     }))
@@ -153,10 +167,22 @@ class Scenarios extends VerticalLayout implements Property.ValueChangeListener, 
         Property property = event.getProperty()
         if(property == scenarioTable) {
             ScenarioItem n = (ScenarioItem)scenarioTable.getValue()
-            title.setValue("<b>Title: </b>"+n.getTitle())
-            date.setValue("<b>Date: </b>"+n.getDateCreated().toString().substring(0,16))
-            author.setValue("<b>Author: </b>"+n.getAuthor())
-            content.setValue("<b>Content: </b>"+n.getContent())
+            if(n != null)
+            {
+                name.setValue("<b>Name: </b>"+n.getName())
+                type.setValue("<b>Type: </b>"+n.getType())
+                playersCount.setValue("<b>Players count: </b>"+n.getPlayersCount())
+                system.setValue("<b>System: </b>"+n.getSystem())
+                content.setValue("<b>Content: </b>"+n.getContent())
+            }
+            else
+            {
+                name.setValue("")
+                type.setValue("")
+                playersCount.setValue("")
+                system.setValue("")
+                content.setValue("")
+            }
         }
     }
 }

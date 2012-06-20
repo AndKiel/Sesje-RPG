@@ -44,15 +44,15 @@ class ScenarioService {
             type: t,
             playersCount: pC,
             content: c,
-            owner: a,
+            owner: u,
             system: sys
         )
         s.save(failOnError: true, flush: true)
     }
     
-    void updateScenario(String n, String t, String pC, String c, String rpg, Long id){
+    void updateScenario(String n, String t, Integer pC, String c, String rpg, Long id){
         RpgSystem sys = RpgSystem.findByName(rpg)
-        Scenario.executeUpdate('UPDATE Scenario SET name=:name, type=:type, playersCount=:playersCount, content=:content, system=:system WHERE id=:scenarioID', [name: n, type: t, playersCount: pc, content: c, system: sys, scenarioID: id])
+        Scenario.executeUpdate('UPDATE Scenario SET name=:name, type=:type, playersCount=:playersCount, content=:content, system=:system WHERE id=:scenarioID', [name: n, type: t, playersCount: pC, content: c, system: sys, scenarioID: id])
     }
     
     void removeScenario(ScenarioItem scenario){

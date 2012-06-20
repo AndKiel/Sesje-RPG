@@ -13,6 +13,7 @@ import rpgApp.services.FAQService
 import rpgApp.services.MessageService
 import rpgApp.services.NewsService
 import rpgApp.services.NotificationService
+import rpgApp.services.ScenarioService
 import rpgApp.services.SecurityService;
 import rpgApp.services.SessionService
 import rpgApp.services.SystemService
@@ -66,6 +67,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
         public FAQService faqService = (FAQService)getBean(FAQService)
 	public MessageService messageService = (MessageService)getBean(MessageService)
         public NewsService newsService = (NewsService)getBean(NewsService)
+        public ScenarioService scenarioService = (ScenarioService)getBean(ScenarioService)
 	public SystemService systemService = (SystemService)getBean(SystemService)
 	public SessionService sessionService = (SessionService)getBean(SessionService)
 	public NotificationService notificationService = (NotificationService)getBean(NotificationService)

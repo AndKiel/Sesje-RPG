@@ -38,7 +38,7 @@
 
  .v-panel-content-footer-panel > div {
    background: url(img/footer.jpg);
-   color: white;
+   color: #c9ccce;
 }
 
 /*.v-table-body {
@@ -58,7 +58,10 @@ background: #3e4044 !important;
 
 }*/
 
-
+.v-window-contents {
+    color: #c9ccce;
+    background: #3e4044;
+}
 
 
 .v-panel-content-footer-panel {
@@ -85,6 +88,8 @@ background: #3e4044 !important;
 
  .v-panel-content-joined > div {
     background-color: #D1C17B;
+    text-shadow: none;
+        color: gray
 }
 
 .v-panel-content-joined {
@@ -104,7 +109,7 @@ background: #3e4044 !important;
     /* Fallback for web browsers that doesn't support RGBa */
 	background: rgb(255, 255, 255);
 	/* RGBa with 0.6 opacity */
-	background: rgba(100,100,100, 0.4);
+	background: rgba(100,100,100, 0.6);
     border: none;
     -webkit-border-radius: 20px;
 	-moz-border-radius: 20px;
@@ -195,9 +200,13 @@ background: #3e4044 !important;
 
 .v-table-row.v-table-row-member {
     background-color: #D1C17B;
+    text-shadow: none;
+    color: gray
  }
 .v-table-row-odd.v-table-row-member {
 	background-color: #D1C17B;
+        text-shadow: none;
+        color: gray
 }
 
 .v-table-row.v-table-row-waiting {
@@ -248,7 +257,7 @@ background: #3e4044 !important;
 }
 
 .blabla {
-    border-left: #D1D1D1 solid 1px;
+    border-left: #3e4044 solid 1px;
 }
 
 
@@ -263,3 +272,6 @@ background: #3e4044 !important;
     border-top: 3px solid rgb(0, 0, 0);
     height: 1px;
 }*/
+.v-csslayout-black {
+  background: transparent;
+}

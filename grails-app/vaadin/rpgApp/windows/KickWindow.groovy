@@ -7,6 +7,7 @@ import com.vaadin.ui.Window
 import com.vaadin.ui.AbstractSelect.Filtering
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Window.Notification
+import com.vaadin.ui.themes.Reindeer
 
 import rpgApp.data.SessionItem
 import rpgApp.main.IndexApplication
@@ -25,6 +26,7 @@ class KickWindow extends Window implements Button.ClickListener {
 	KickWindow(IndexApplication app, Sessions sessions, SessionItem sessionItem, SessionService sessionService) {
 		super("Invitation")
 		this.app = app
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		this.sessions = sessions
 		this.sessionItem = sessionItem
 		this.sessionService = sessionService

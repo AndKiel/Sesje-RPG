@@ -35,6 +35,7 @@ public class NewScenarioWindow extends Window implements Button.ClickListener {
     NewScenarioWindow(IndexApplication app, boolean editMode, Scenarios scenarios) {
         super("New scenario")
         this.app = app
+        this.setStyleName(Reindeer.WINDOW_BLACK)
         this.scenarios = scenarios
         this.editMode = editMode
         scenarioService = app.scenarioService

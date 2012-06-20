@@ -15,6 +15,7 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Window
 import com.vaadin.ui.Button.ClickEvent
+import com.vaadin.ui.themes.Reindeer
 
 class UserProfile extends Window implements Button.ClickListener {
 	private IndexApplication app
@@ -33,6 +34,7 @@ class UserProfile extends Window implements Button.ClickListener {
 	UserProfile(IndexApplication app, UserItem userItem) {
 		super("User info")
 		this.app = app
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		this.userItem = userItem
 		setCaption("User info")
 		setResizable(false)

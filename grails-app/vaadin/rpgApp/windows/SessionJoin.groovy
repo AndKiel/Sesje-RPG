@@ -11,6 +11,7 @@ import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Button
 import com.vaadin.ui.Window
 import com.vaadin.ui.Window.Notification
+import com.vaadin.ui.themes.Reindeer
 
 class SessionJoin extends Window implements Button.ClickListener {
 	private IndexApplication app
@@ -25,6 +26,7 @@ class SessionJoin extends Window implements Button.ClickListener {
 	SessionJoin(IndexApplication app, Announcements ann, StartPage startPage, SessionItem sessionItem, SessionService sessionService) {
 		super("Join session")
 		this.app = app
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		this.ann = ann
 		this.startPage = startPage
 		this.sessionItem = sessionItem

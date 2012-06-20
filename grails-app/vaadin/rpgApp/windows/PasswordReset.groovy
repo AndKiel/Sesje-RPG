@@ -16,6 +16,7 @@ import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Window
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Window.Notification
+import com.vaadin.ui.themes.Reindeer
 
 class PasswordReset extends Window implements Button.ClickListener {
 	private UserService userService
@@ -30,6 +31,7 @@ class PasswordReset extends Window implements Button.ClickListener {
 		// Window settings
 		super("Forgotten password")
 		this.app = app
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		userService = app.userService
 		this.setCaption("Forgotten password")
 		setModal(true)

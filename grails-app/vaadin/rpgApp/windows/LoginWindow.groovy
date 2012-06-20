@@ -15,6 +15,7 @@ import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.event.ShortcutAction.KeyCode
 import com.vaadin.terminal.Sizeable
 import com.vaadin.terminal.ThemeResource
+import com.vaadin.ui.themes.Reindeer
 
 class LoginWindow extends Window implements Button.ClickListener {
 	private IndexApplication app
@@ -33,7 +34,7 @@ class LoginWindow extends Window implements Button.ClickListener {
 		setModal(true)
 		setDraggable(false)
 		setResizable(false)
-
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		// Creating login form
 		loginForm = new Form()
 		TextField loginField = new TextField("Email: ")
@@ -53,13 +54,14 @@ class LoginWindow extends Window implements Button.ClickListener {
 		login = new Button("Login", (Button.ClickListener)this)
 		login.setClickShortcut(KeyCode.ENTER);
 		login.addStyleName("primary");
+                //login.setStyleName(Reindeer.LAYOUT_BLACK);
 		login.setIcon(new ThemeResource("icons/ok.png"))
-
+                
 		cancel = new Button("Cancel", (Button.ClickListener)this)
 		cancel.setIcon(new ThemeResource("icons/cancel.png"))
 
 		forgotPassword = new Button("Forgotten password? Click here", (Button.ClickListener)this)
-		forgotPassword.setStyleName(BaseTheme.BUTTON_LINK)
+		forgotPassword.setStyleName(Reindeer.BUTTON_LINK)
 
 		// Creating login form footer
 		GridLayout footer = new GridLayout(2,3);
@@ -73,7 +75,7 @@ class LoginWindow extends Window implements Button.ClickListener {
 		footer.setComponentAlignment(cancel, Alignment.MIDDLE_CENTER)
 		footer.addComponent(forgotPassword, 0, 2, 1, 2);
 		footer.setComponentAlignment(forgotPassword, Alignment.MIDDLE_CENTER)
-
+                
 
 		loginForm.setFooter(footer)
 		loginForm.setWidth("100%")

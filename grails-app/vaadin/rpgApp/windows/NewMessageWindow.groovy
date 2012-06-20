@@ -18,6 +18,7 @@ import com.vaadin.ui.TextField
 import com.vaadin.ui.Window
 import com.vaadin.ui.AbstractSelect.Filtering
 import com.vaadin.ui.Button.ClickEvent
+import com.vaadin.ui.themes.Reindeer
 
 class NewMessageWindow extends Window implements Button.ClickListener {
 	private IndexApplication app
@@ -31,6 +32,7 @@ class NewMessageWindow extends Window implements Button.ClickListener {
 	NewMessageWindow(IndexApplication app, String receiver) {
 		super("New Message")
 		this.app = app
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		messageService = app.messageService
 		userService = app.userService
 		this.setCaption("New Message")

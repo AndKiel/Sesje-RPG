@@ -141,6 +141,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 		contentRefresher.setRefreshInterval(5000);
 		contentRefresher.addListener(new ContentRefreshListener());
 		layout.addComponent(contentRefresher);
+                layout.setStyleName(Reindeer.LAYOUT_BLACK);
 	}
 	
 	

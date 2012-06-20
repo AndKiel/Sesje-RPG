@@ -55,7 +55,7 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 		tabSheet.addTab(about = new About(app), "About")
 		tabSheet.addTab(faq = new Faq(app), "FAQ")
 		tabSheet.addListener((TabSheet.SelectedTabChangeListener) this)
-
+                tabSheet.setStyleName(Reindeer.TABSHEET_MINIMAL)
 		VerticalLayout panelLayout = getContent()
 		panelLayout.setMargin(false)
 		panelLayout.addComponent(tabSheet)

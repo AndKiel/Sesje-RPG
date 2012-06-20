@@ -78,6 +78,7 @@ class Sessions extends VerticalLayout implements TabSheet.SelectedTabChangeListe
 		tabSheet.addTab(tab1 ,"My sessions")
 		tabSheet.addTab(tab2 ,"Joined session")
 		tabSheet.addTab(tab3 ,"Waiting for acceptation")
+                tabSheet.setStyleName(Reindeer.TABSHEET_MINIMAL)
 		addComponent(createActionBar())
 		addComponent(tabSheet)
 	}

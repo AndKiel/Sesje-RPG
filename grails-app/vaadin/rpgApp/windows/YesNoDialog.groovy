@@ -9,6 +9,7 @@ import com.vaadin.ui.Label
 import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Window
 import com.vaadin.ui.Button.ClickEvent
+import com.vaadin.ui.themes.Reindeer
 
 public class YesNoDialog extends Window implements Button.ClickListener {
 	private Callback callback;
@@ -24,7 +25,7 @@ public class YesNoDialog extends Window implements Button.ClickListener {
 		setDraggable(false)
 
 		this.callback = callback;
-
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		if (question != null) {
 			addComponent(new Label(question));
 		}

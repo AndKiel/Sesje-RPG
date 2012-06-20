@@ -32,6 +32,7 @@ public class NewNewsWindow extends Window implements Button.ClickListener {
     NewNewsWindow(IndexApplication app, boolean editMode, News news) {
         super("New news")
         this.app = app
+        this.setStyleName(Reindeer.WINDOW_BLACK)
         this.news = news
         this.editMode = editMode
         newsService = app.newsService

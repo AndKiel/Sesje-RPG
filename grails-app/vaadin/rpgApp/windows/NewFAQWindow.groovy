@@ -32,6 +32,7 @@ public class NewFAQWindow extends Window implements Button.ClickListener {
     NewFAQWindow(IndexApplication app, boolean editMode, FAQ faq) {
         super("New FAQ")
         this.app = app
+        this.setStyleName(Reindeer.WINDOW_BLACK)
         this.faq = faq
         this.editMode = editMode
         faqService = app.faqService

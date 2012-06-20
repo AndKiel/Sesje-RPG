@@ -24,6 +24,7 @@ import com.vaadin.ui.TextField
 import com.vaadin.ui.Window
 import com.vaadin.ui.AbstractSelect.Filtering
 import com.vaadin.ui.Button.ClickEvent
+import com.vaadin.ui.themes.Reindeer
 
 class NewSessionWindow extends Window implements Button.ClickListener, Property.ValueChangeListener {
 	private IndexApplication app
@@ -40,6 +41,7 @@ class NewSessionWindow extends Window implements Button.ClickListener, Property.
 	NewSessionWindow(IndexApplication app, Announcements announcements, Sessions sessions, boolean editMode) {
 		super("New Session")
 		this.app = app
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		this.announcements = announcements
 		this.sessions = sessions
 		this.editMode = editMode

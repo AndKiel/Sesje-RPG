@@ -35,6 +35,7 @@ class ChatWindow extends Window implements Button.ClickListener {
 	ChatWindow(IndexApplication app, SessionItem s) {
 		super("Chat")
 		this.app = app
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		this.sessionItem = s
 		setCaption("Chat #"+s.getId()+" - "+s.getSystem())
 		setWidth("900px")

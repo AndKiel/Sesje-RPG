@@ -20,6 +20,7 @@ import com.vaadin.ui.TextField
 import com.vaadin.ui.Window
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.Window.Notification
+import com.vaadin.ui.themes.Reindeer
 
 class RegisterWindow extends Window implements Button.ClickListener {
 	private EmailService emailService
@@ -33,6 +34,7 @@ class RegisterWindow extends Window implements Button.ClickListener {
 		// Window settings
 		super("Registration")
 		this.app = app
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		emailService = app.emailService
 		this.setCaption("Registration")
 		setModal(true)

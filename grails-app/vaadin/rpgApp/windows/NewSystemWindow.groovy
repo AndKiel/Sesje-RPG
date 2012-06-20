@@ -34,6 +34,7 @@ public class NewSystemWindow extends Window implements Button.ClickListener {
 	NewSystemWindow(IndexApplication app, boolean editMode, Systems systems) {
 		super("New RPG System")
 		this.app = app
+                this.setStyleName(Reindeer.WINDOW_BLACK)
 		this.systems = systems
 		this.editMode = editMode
 		systemService = app.systemService

@@ -8,6 +8,7 @@ import rpgApp.exeptions.ValidationException
 import rpgApp.panels.Content
 import rpgApp.panels.Footer
 import rpgApp.panels.Header
+import rpgApp.services.AboutService
 import rpgApp.services.EmailService
 import rpgApp.services.FAQService
 import rpgApp.services.MessageService
@@ -63,6 +64,7 @@ class IndexApplication extends Application implements ClickListener, HttpServlet
 
 	public SecurityService security = (SecurityService)getBean(SecurityService)
 	public UserService userService = (UserService)getBean(UserService)
+	public AboutService aboutService = (AboutService)getBean(AboutService)
 	public EmailService emailService = (EmailService)getBean(EmailService)
         public FAQService faqService = (FAQService)getBean(FAQService)
 	public MessageService messageService = (MessageService)getBean(MessageService)

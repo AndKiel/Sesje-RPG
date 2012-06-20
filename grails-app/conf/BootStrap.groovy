@@ -1,3 +1,4 @@
+import rpgApp.persistance.About
 import rpgApp.persistance.FAQ
 import rpgApp.persistance.News
 import rpgApp.persistance.Participant
@@ -49,6 +50,8 @@ class BootStrap {
         
         new FAQ(question: "Jaki jest sens życia?", answer: "42").save()
         new FAQ(question: "O'rly?", answer: "Ya'rly").save()
+        
+        new About(content: "<b>About not set.</b>").save()
     }
         
     def destroy = {

@@ -23,7 +23,7 @@
     border: #3e4044 solid 1px;
 }
 
- .v-panel-content-header-panel {
+.v-panel-content-header-panel {
     background: transparent;
     border: #3e4044 solid 1px;
 }
@@ -32,13 +32,13 @@
     border: #3e4044;
 }*/
 
- .v-panel-content-header-panel > div {
-   background: url(img/logo.jpg);
+.v-panel-content-header-panel > div {
+    background: url(img/logo.jpg);
 }
 
- .v-panel-content-footer-panel > div {
-   background: url(img/footer.jpg);
-   color: #c9ccce;
+.v-panel-content-footer-panel > div {
+    background: url(img/footer.jpg);
+    color: #c9ccce;
 }
 
 /*.v-table-body {
@@ -65,64 +65,72 @@ background: #3e4044 !important;
 
 
 .v-panel-content-footer-panel {
-	background: transparent;
-        border: #3e4044 solid 1px;
+    background: transparent;
+    border: #3e4044 solid 1px;
 }
 
- .v-panel-content-diffrent > div {
-   background-color: #F2ECD3;
+.v-panel-content-diffrent > div {
+    background-color: #3e4044;
+/*    color: #423216;*/
 }
 
 .v-panel-content-diffrent {
-	background-color: #F2ECD3;
+    background-color: #3e4044;
+/*    color: #423216;*/
 }
 
- .v-panel-content-history > div {
-   background-color: #DB8888;
+.v-panel-content-history > div {
+    background-color: #c9ccce;
+    text-shadow: none;
+    color: #423216;
 }
 
 
 .v-panel-content-history {
-	background-color: #DB8888;
+    background-color: #c9ccce;
 }
 
- .v-panel-content-joined > div {
+.v-panel-content-joined > div {
     background-color: #D1C17B;
     text-shadow: none;
-        color: gray
+    color: #423216;
 }
 
 .v-panel-content-joined {
-	background: transparent;
+    background: transparent;
+}
+.v-panel-content-joined .black-link .v-button-caption{
+    color: #423216;
 }
 
- .v-panel-content-waiting > div {
+.v-panel-content-waiting > div {
     background-color: #F2ECD3;
+    color: #423216;
 }
 
 .v-panel-content-waiting {
-	background: transparent;
+    background: transparent;
 }
 
- .v-panel-content-login-panel {
+.v-panel-content-login-panel {
     background: transparent;
     /* Fallback for web browsers that doesn't support RGBa */
-	background: rgb(255, 255, 255);
-	/* RGBa with 0.6 opacity */
-	background: rgba(100,100,100, 0.6);
+    background: rgb(255, 255, 255);
+    /* RGBa with 0.6 opacity */
+    background: rgba(100,100,100, 0.6);
     border: none;
     -webkit-border-radius: 20px;
-	-moz-border-radius: 20px;
-	border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
     color: white;
 }
 
- .v-panel-content-login-panel > div {
-   background: transparent;
+.v-panel-content-login-panel > div {
+    background: transparent;
 }
 
 .v-panel-content-blabla {
-	background: transparent;
+    background: transparent;
 }
 
 .v-tabsheet-tabitemcell {
@@ -146,7 +154,7 @@ background: #3e4044 !important;
 }*/
 
 .v-tree {
-	padding-top: 15px;
+    padding-top: 15px;
     padding-left: 10px;
 }
 
@@ -156,28 +164,28 @@ background: #3e4044 !important;
 }
 
 .v-table-row.v-table-row-unread {
-	font-weight: bold; 
+    font-weight: bold; 
     background-color: #3e4044;
- }
- 
+}
+
 .v-table-row-odd.v-table-row-unread {
-	font-weight: bold; 
-	background-color: #3e4044;
+    font-weight: bold; 
+    background-color: #3e4044;
 }
 
 .v-table-row.v-table-row-read {
     background-color: #F2ECD3;
- }
+}
 .v-table-row-odd.v-table-row-read {
-	background-color: #F2ECD3;
+    background-color: #F2ECD3;
 }
 
 .v-table-row.v-table-row-notmember {
     background-color: #3e4044;
- }
- 
+}
+
 .v-table-row-odd.v-table-row-notmember {
-	background-color: #3e4044;
+    background-color: #3e4044;
 }
 
 /*.v-table-row.v-table-row-systemstable {
@@ -185,40 +193,44 @@ background: #3e4044 !important;
  }
  
 .v-table-row-odd.v-table-row-systemstable {
-	background-color: #1e2022;
+        background-color: #1e2022;
 }*/
 
 .v-table-row.v-table-row {
-   background-color: #3e4044;
- }
+    background-color: #3e4044;
+}
 
 
 .v-table-row-odd.v-table-row{
-       background-color: #3e4044;
+    background-color: #3e4044;
 }
 
 
 .v-table-row.v-table-row-member {
     background-color: #D1C17B;
     text-shadow: none;
-    color: gray
- }
+    color: #423216
+}
 .v-table-row-odd.v-table-row-member {
-	background-color: #D1C17B;
-        text-shadow: none;
-        color: gray
+    background-color: #D1C17B;
+    text-shadow: none;
+    color: #423216
 }
 
 .v-table-row.v-table-row-waiting {
     background-color: #F2ECD3;
- }
+    text-shadow: none;
+    color: #423216
+}
 .v-table-row-odd.v-table-row-waiting{
-	background-color: #F2ECD3;
+    background-color: #F2ECD3;
+    text-shadow: none;
+    color: #423216
 }
 
 .v-button .v-button-wrap>.v-icon{
-	height:16px;
-	width:16px;
+    height:16px;
+    width:16px;
 }
 
 .v-button-link span.v-button-caption,   /* Vaadin Buttons with the "link" style */
@@ -234,26 +246,26 @@ background: #3e4044 !important;
 
 .white-link .v-button-caption
 {
-	color: white
+    color: white
 }
 
 .gold-link .v-button-caption
 {
-	color: #786D3C	
+    color: #786D3C	
 }
 
 .black-link .v-button-caption
 {
-	color: #3e4044;
-	font-weight: bold;
-	text-decoration: underline !important;
+    color: #c9ccce;
+    font-weight: bold;
+    text-decoration: underline !important;
 }
 
 .v-verticallayout-left75 .v-verticallayout-margin {
-	padding-left:   75px;
-	padding-right:  25px;
-	padding-top:    25px;
- 	padding-bottom: 25px;
+    padding-left:   75px;
+    padding-right:  25px;
+    padding-top:    25px;
+    padding-bottom: 25px;
 }
 
 .blabla {
@@ -273,5 +285,5 @@ background: #3e4044 !important;
     height: 1px;
 }*/
 .v-csslayout-black {
-  background: transparent;
+    background: transparent;
 }

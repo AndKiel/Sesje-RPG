@@ -93,7 +93,7 @@ class UserProfile extends Window implements Button.ClickListener {
 		} else {
 			s = ""
 		}
-		homepage = new Label("<b>Homepage: </b><a href="+s+">"+s+"</a>")
+		homepage = new Label("<b>Homepage: </b><a href="+s+" style=\"color: #c9ccce\""+">"+s+"</a>")
 		homepage.setContentMode(Label.CONTENT_XHTML)
 		ok = new Button("Ok")
 		ok.setClickShortcut(KeyCode.ENTER);

@@ -42,6 +42,7 @@ Ostatnim wykorzystywanym przez nas udogodnieniem GORM'a było automatyczne datow
 \subsection{Logowanie}
 \label{sec:login}
 Na rysunku \ref{fig:login} przedstawione zostało okno logowania. Użytkownik podaje swój login i hasło oraz wybiera, czy chce, aby dane były zapamiętane w plikach cookies, co umożliwi pozostanie zalogowanym po ponownym włączeniu strony lub jej odświeżeniu. W przypadku gdy użytkownik zapomniał hasła, może kliknąć łącze \emph{Forgotten password? Click here} i ponownie wpisać adres e-mail, na który zarejestrowane jest konto. Dzięki temu system zresetuje hasło na losowy ciąg znaków i wyśle je do użytkownika.
+\clearpage
 
 \begin{figure}[h!]
 \centering
@@ -50,16 +51,19 @@ Na rysunku \ref{fig:login} przedstawione zostało okno logowania. Użytkownik po
 \label{fig:login}
 \end{figure}
 
+
+
 \subsection{Strona startowa}
 \label{sec:start_page}
 
 Po zalogowaniu na stronie startowej pojawiają się informacje o nadchodzących sesjach. Na rysunku \ref{fig:start_page_joined} ciemniejszym kolorem oznaczone są sesje, do których użytkownik w pełni dołączył, jaśniejszym --- oczekujące na akceptację przez założyciela ogłoszenia. Dla zalogowanych użytkowników możliwa jest nawigacja do kolejnych podstron --- zakładek.
 \begin{figure}[h!]	
 \centering
-\includegraphics[width=0.9\textwidth]{./img/interfejsy/start_page_joined}
+\includegraphics[width=0.7\textwidth]{./img/interfejsy/start_page_joined}
 \caption{Strona startowa zalogowanego użytkownika}
 \label{fig:start_page_joined}
 \end{figure}
+\clearpage
 
 \subsection{Lista systemów}
 \label{sec:systems}
@@ -75,7 +79,7 @@ Wybranie zakładki \emph{Systems} powoduje przejście do listy systemów RPG zap
 \subsection{Ogłoszenia}
 \label{sec:sessions}
 Zakładka \emph{Announcements} stanowi główny cel serwisu --- ogłoszenia o odbywających się sesjach (rys. \ref{fig:sessions}).  Znajduje się tutaj tabela z kluczowymi informacjami oraz rozwinięcie dostępne po zaznaczeniu wybranej pozycji. Sesje oznaczane są takimi samymi kolorami jak na stronie startowej. Po wybraniu sesji i naciśnięciu przycisku \emph{Join} pojawia się okno wyboru pozycji w~trakcie sesji (rys. \ref{fig:join_session}). Można dołączyć jako Mistrz Gry (\emph{Master}) lub jako Gracz (\emph{Player}). W~przypadku gdy dołączający użytkownik nie jest założycielem ogłoszenia, po wyborze pozycji wysyłana jest wiadomość z prośbą o akceptację do osoby odpowiedzialnej za sesję. 
-
+\clearpage
 \begin{figure}[h!]
 \centering
 \includegraphics[width=0.9\textwidth]{./img/interfejsy/sessions}
@@ -152,7 +156,7 @@ Osoba z odpowiednimi uprawnieniami może edytować niektóre elementy serwisu --
 \label{sec:chat}
 
 W przypadku sesji online aktywny staje się przycisk \emph{Enter Room}. Umożliwia on wejście do pokoju z chatem z innymi uczestnikami sesji. Poza typową funkcjonalnością rozmawiania istnieje przycisk \emph{Shot history} wyświetlający wiadomości napisane przed dołączeniem danego użytkownika do kanału (przed otwarciem okna rozmowy) oraz przycisk \emph{Throw a dice} symulujący rzut kością k12, czyli losujący liczbę z zakresu 1--12. W przyszłości dodane będą rzuty parametryzowane --- wybór ilości kości (rzutów) i ich ilość ścian.
-
+\clearpage
 \begin{figure}[h!]	
 \centering
 \includegraphics[width=0.9\textwidth]{./img/interfejsy/chat}

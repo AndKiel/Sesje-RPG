@@ -18,6 +18,7 @@ import com.vaadin.ui.VerticalLayout
 import com.vaadin.ui.Button.ClickEvent
 import com.vaadin.ui.themes.BaseTheme
 import com.vaadin.ui.themes.Reindeer
+import com.vaadin.ui.Window.Notification
 
 class StartPage extends HorizontalLayout {
     private IndexApplication app

@@ -28,14 +28,17 @@ class ChatWindow extends Window implements Button.ClickListener {
 	private TextField chatInput
 	private Button send
 	private Button showHistory
+	private Button throwDice
 	private Boolean historyFlag
 	private Date chatStart
 	private Date lastMessageDate
+	
+	Random rand = new Random(System.currentTimeMillis())
 
 	ChatWindow(IndexApplication app, SessionItem s) {
 		super("Chat")
 		this.app = app
-                this.setStyleName(Reindeer.WINDOW_BLACK)
+		this.setStyleName(Reindeer.WINDOW_BLACK)
 		this.sessionItem = s
 		setCaption("Chat #"+s.getId()+" - "+s.getSystem())
 		setWidth("900px")
@@ -68,6 +71,8 @@ class ChatWindow extends Window implements Button.ClickListener {
 		send.addListener((Button.ClickListener) this)
 		showHistory = new Button("Show history")
 		showHistory.addListener((Button.ClickListener) this)
+		throwDice = new Button("Throw a dice")
+		throwDice.addListener((Button.ClickListener) this)
 
 		HorizontalLayout footer = new HorizontalLayout()
 		footer.setSizeFull()
@@ -75,6 +80,7 @@ class ChatWindow extends Window implements Button.ClickListener {
 		footer.addComponent(chatInput)
 		footer.addComponent(send)
 		footer.addComponent(showHistory)
+		footer.addComponent(throwDice)
 		footer.setExpandRatio(chatInput, 1.0f)
 		footer.setComponentAlignment(chatInput, Alignment.MIDDLE_CENTER)
 		footer.setComponentAlignment(send, Alignment.MIDDLE_CENTER)
@@ -100,13 +106,18 @@ class ChatWindow extends Window implements Button.ClickListener {
 		public void refresh(final Refresher source) {
 			int index = Collections.binarySearch(app.roomIndexes, sessionItem.getId())
 			List<ChatEntry> entries = app.chatEntries.get(index)
-			Date lastEntryDate = entries.get(entries.size()-1).getTimeStamp()
-			
-			if(lastMessageDate.compareTo(lastEntryDate) != 0) {
-				refreshChat()
+			Date lastEntryDate
+			if(entries.size() > 0) {
+				lastEntryDate = entries.get(entries.size()-1).getTimeStamp()
+
+				if(lastMessageDate.compareTo(lastEntryDate) != 0) {
+					refreshChat()
+				}
+
+				lastMessageDate = entries.get(entries.size()-1).getTimeStamp()
+			} else {
+				lastMessageDate = new Date()
 			}
-			
-			lastMessageDate = entries.get(entries.size()-1).getTimeStamp()
 		}
 	}
 
@@ -132,12 +143,21 @@ class ChatWindow extends Window implements Button.ClickListener {
 				}
 				refreshChat()
 				break
+			case throwDice:
+				// Dice range
+				int n = 11
+				int roll = rand.nextInt(n)+2
+			
+				int index = Collections.binarySearch(app.roomIndexes, sessionItem.getId())
+				ChatEntry entry = new ChatEntry(app.security.getContextNickname(), "Throws "+roll+" on a dices", new Date())
+				app.chatEntries.get(index).add(entry)
+				break
 		}
 	}
 
 	void refreshChat() {
 		boolean flag = true
-		
+
 		chatLayout.removeAllComponents()
 		int index = Collections.binarySearch(app.roomIndexes, sessionItem.getId())
 		List<ChatEntry> entries = app.chatEntries.get(index)
@@ -147,7 +167,7 @@ class ChatWindow extends Window implements Button.ClickListener {
 					continue
 				}
 			}
-			
+
 			if(historyFlag && flag && (chatStart.compareTo(entry.getTimeStamp()) < 0)) {
 				flag = false
 				Panel p = new Panel()
@@ -158,7 +178,7 @@ class ChatWindow extends Window implements Button.ClickListener {
 				vl.setMargin(false)
 				chatLayout.addComponent(p)
 			}
-			
+
 			if(entry.getNickname().equals(app.security.getContextNickname())) {
 				print(entry, false)
 			} else {

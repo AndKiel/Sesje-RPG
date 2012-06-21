@@ -4,14 +4,34 @@
 \section{Wykorzystane technologie}
 \label{sec:technologie}
 
-% TODO grails, vaadin, posgreSQL - opisy, uzasadnienie?
+W naszym projekcie głównymi technologiami, które użyliśmy są: Grails (Back-end), Vaadin (Front-end) oraz Postgresql (Baza danych). Głównym kryterium podczas wyboru technologii była dla nas prostota ich nauki oraz użycia, ponieważ wcześniej mieliśmy mały kontakt z tworzeniem aplikacji webowych. Wybór bazy danych nie było kluczowy ponieważ znając język zapytań SQL praktycznie moglibyśmy operować na każdej bazie, natomiast wybór tej konkretnej był podyktowany jej znajomością przez wszystkich członków zespołu. 
+
+Dużo więcej czasu poświęciliśmy na wybór odpowiednich frameworków do back i front endu. Po przeczytaniu paru opisów i możliwości danych narzędzi pierwszy wybór padł na framework "Grails", który nie jako wywodzi się z Ruby on Rails (w tym wypadku Groovy on Rails). Twórcy Grails zamiast budować własną warstwę komunikacji z bazą danych czy zupełnie nowy silnik szablonowego wyświetlania stron oparli się na technologiach istniejących od dłuższego czasu, sprawdzonych w systemach produkcyjnych. 
+
+Dzięki takiej strukturze Grails nie zmusza do wdrażania nowych serwerów. Aplikacje pisane przy użyciu frameworka można wdrażać przy użyciu tradycyjnych plików *.war (na przykład na Tomcata). Dodatkowo prostota tego narzędzia objawia się w konfiguracji wszystkich plików potrzebnych do deploy'u strony. Użytkownicy innych frameworków mogą być przyzwyczajeni do topornej konfiguracji plików *.xml w początkowej fazie tworzenia projektu , natomiast Grails już przy pierwszym utworzeniu projektu dostarcza nam pełną konfigurację dzięki której naszą stronę możemy prawie od razu wrzucić na serwer. Dodatkowo wprowadzanie zmian konfiguracyjnych w późniejszej fazie jest bardzo proste dzięki ich podziałowi na konkretne, łatwo konfigurowalne pliki *.groovy. 
+
+\begin{figure}
+\centering
+\includegraphics[width=0.5\textwidth]{./img/grails_stack}
+\caption{Elementy składowe Grails}
+\label{fig:grails-stack}
+\end{figure}
+
+Ponieważ grails jako warstwę widoku oferuje GSP (Groovy server pages), gdzie żeby stworzyć "coś ładnego" trzeba wykazać się sporą znajomością HTML/CSS/AJAX postanowiliśmy znaleźć prosty framework zapewniający ładny wygląd wizualny strony. Wybraliśmy framework VAADIN, który koncepcyjnie można przyrównać do Swing'a w Javie. Jest on bogaty w różnego rodzaju gotowe komponenty, których umieszczenie na stronie jest bardzo proste. Warstwa kontrolerów w przypadku użycia tego narzędzia musiała zostać zastąpiona odpowiednią obsługą event'ów, ponieważ Vaadin jest oparty na "Event-based programming". 
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section{Implementacja bazy danych}
 \label{sec:impldb}
 
-% TODO o Grails + GORM + ??? że cuda się dzieją same i działa? czy nie?
+Kolejnym atutem Grails'a jest prostota implementacji bazy danych w oparciu o ORM (Object-Relational Mapping). Podstawową składową Grails, umożliwiającą wygodną komunikację z danymi przechowywanymi w bazie jest GORM (Grails ORM). Jest on warstwą abstrakcji ponad Hibernate, czyli wykorzystuje wszystkiego jego zalety  a dodatkowo oferuje nam wiele bardzo przydatnych funkcjonalności. 
+
+Główną zaletą GORM'a jest duża wygoda pracy oraz przejrzystość tworzonego kodu. Aby stworzyć prostą tabelę w bazie danych wystarczy utworzyć nową klasę domenową, która w wyglądzie bardzo przypomina zwykłą klasę Javy. Dodatkowo mamy do dyspozycji bardzo intuicyjne określanie ograniczeń dla konkretnych kolumn oraz kilka gotowych algorytmów tworzenia kluczy (pola ID). 
+
+Tworzenie relacji między tabelami jest również bardzo proste ponieważ wystarczy użyć predefiniowanych zmiennych 'hasMany' oraz 'belongsTo' w odpowiednich klasach domenowych. Podczas tworzenia projektu bardzo pomocny okazał się dostęp do danych oferowany przez GORM'a, który w sposób dynamiczny tworzy funkcje dostępu do danych. Na przykład jeżeli stworzymy sobie klasę (tabelę) 'Book' z polem 'Author' to automatycznie zostaje wygenerowany szereg funkcji dostępu do danych w bazie danych typu : Dom.findAllByDateCreatedAndAuthor(date, author). Więc tak naprawdę znajomość SQL'a była w tym projekcie praktycznie nie wymagana.
+
+Ostatnim wykorzystywanym przez nas udogodnieniem GORM'a było automatyczne datowanie. Wystarczyło w klasie domenowej stworzyć pola o nazwach 'dateCreated' lub 'lastModyfied' a GORM sam troszczył się o adekwatne uzupełnianie tych pól.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -108,37 +128,13 @@ Zakładka \emph{My Page} zawiera profil zalogowanego użytkownika. Może tutaj p
 \subsection{FAQ}
 \label{sec:faq}
 
-\begin{figure}[htb]	
-\centering
-\includegraphics[width=0.9\textwidth]{./img/interfejsy/faq}
-\caption{FAQ}
-\label{fig:faq}
-
-\end{figure}
-Ostatnią zakładką, przedstawioną na rysunku \ref{fig:faq} są najczęściej zadawane pytania - \emph{FAQ}. Administrator systemu dodaje pozycje ze swojej strony profilowej.
-
 \subsection{Edytowanie}
 \label{sec:edit}
-Osoba z odpowiednimi uprawnieniami może edytować niektóre elementy serwisu --- systemy RPG, wiadomości, FAQ itp. Każdy z tych formularzy wygląda podobnie, edytować można wszystkie dane uzupełniane przy tworzeniu. Przykład edycji systemu RPG znajduje się na rysunku \ref{fig:edit}.
-
-\begin{figure}[htb]	
-\centering
-\includegraphics[width=0.9\textwidth]{./img/interfejsy/edit}
-\caption{FAQ}
-\label{fig:edit}
-\end{figure}
 
 \subsection{Chat}
 \label{sec:chat}
 
-W przypadku sesji online aktywny staje się przycisk \emph{Enter Room}. Umożliwia on wejście do pokoju z chatem z innymi uczestnikami sesji. Poza typową funkcjonalnością rozmawiania istnieje przycisk \emph{Shot history} wyświetlający wiadomości napisane przed dołączeniem danego użytkownika do kanału (przed otwarciem okna rozmowy) oraz przycisk \emph{Throw a dice} symulujący rzut kością k12, czyli losujący liczbę z zakresu 1--12. W przyszłości dodane będą rzuty parametryzowane --- wybór ilości kości (rzutów) i ich ilość ścian.
-
-\begin{figure}[htb]	
-\centering
-\includegraphics[width=0.9\textwidth]{./img/interfejsy/chat}
-\caption{Chat}
-\label{fig:faq}
-\end{figure}
+%obrazek chatu zrobić
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

@@ -87,7 +87,7 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 		showDetails = new Button("Show details")
 		showDetails.addListener((ClickListener) this)
 		showDetails.setIcon(new ThemeResource("icons/details.png"))
-		activate = new Button("Disactivate account")
+		activate = new Button("Deactivate account")
 		activate.addListener((ClickListener) this)
 		activate.setIcon(new ThemeResource("icons/lock.png"))
 		showAll = new Button("Show all")
@@ -155,7 +155,7 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 		if(property == users) {
 			UserItem u = (UserItem)users.getValue()
 			if(u.getState()) {
-				activate.setCaption("Disactivate account")
+				activate.setCaption("Deactivate account")
 			} else {
 				activate.setCaption("Activate account")
 			}
@@ -175,11 +175,11 @@ class Users extends VerticalLayout implements Property.ValueChangeListener, Clic
 						if(answer) {
 							UserItem u = (UserItem)users.getValue()
 							if(u.isAdmin()) {
-								app.getMainWindow().showNotification("You cannot disactivate administrator account !",  Notification.TYPE_ERROR_MESSAGE)
+								app.getMainWindow().showNotification("You cannot deactivate administrator account !",  Notification.TYPE_ERROR_MESSAGE)
 							} else {
 								u.setState(!u.getState())
 								if(u.getState()) {
-									activate.setCaption("Disactivate account")
+									activate.setCaption("Deactivate account")
 								} else {
 									activate.setCaption("Activate account")
 								}

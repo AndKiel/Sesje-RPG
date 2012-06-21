@@ -10,7 +10,8 @@ class ScenarioService {
     static transactional = true
     
     List<ScenarioItem> getAllScenarios(){
-        return Scenario.findAll([sort: 'name', order: 'asc']).collect{
+        User user  = securityService.getContextUser()
+        return Scenario.findAllByOwner(user, [sort: 'name', order: 'asc']).collect{
             new ScenarioItem(
                 id: it.id,
                 name: it.name,

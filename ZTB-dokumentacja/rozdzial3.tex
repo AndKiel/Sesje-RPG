@@ -167,7 +167,12 @@
 \section{Różnice pomiędzy projektem oraz implementacją}
 \label{sec:roznice}
 
-% TODO wszelkie różnice, zmiany
+\begin{itemize}
+\item Wykorzystane technologie wymusiły na nas modyfikację bazy danych w celu utworzenia poprawnego mechanizmu logowania i autoryzacji. Należało w tym celu utworzyć tabelę ,,roles'' (przechowującą role) oraz ,,users\_roles'' (wiążącą role z użytkownikami).
+\item Nie zostały zaimplementowane wszystkie wymagania i funkcjonalności, brak m.in. mechanizmów dotyczących tworzenia kart postaci czy też systemu oceniania innych użytkowników uczestniczących w sesjach.
+\item W trakcie implementacji wynikły braki i błędy popełnione na etapie planowania i projektowania. Zostały dodane m.in. tak podstawowe funkcjonalności jak system newsów, dział z~informacjami o witrynie oraz FAQ i system powiadomień dotyczący sesji RPG, których to nie uwzględniał ani projekt konceptualny, ani projekt logiczny. W związku z~tym w bazie danych musiały powstać kolejne nowe tabele.
+\item Z powodu wybranych technologii nie został bezpośrednio wykorzystany projekt bazy danych w języku postgreSQL ani zaprojektowane operacje na danych (szczegóły implementacji bazy danych z użyciem mechanizmu GORM zostały opisane w rozdziale \ref{sec:impldb}).
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

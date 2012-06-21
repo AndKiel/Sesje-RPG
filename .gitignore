@@ -28,7 +28,9 @@
 
 # documentation
 /ZTB-dokumentacja/*.aux
+/ZTB-dokumentacja/*.lof
 /ZTB-dokumentacja/*.log
+/ZTB-dokumentacja/*.lot
 /ZTB-dokumentacja/*.out
 /ZTB-dokumentacja/*.pdf
 /ZTB-dokumentacja/*.synctex.gz

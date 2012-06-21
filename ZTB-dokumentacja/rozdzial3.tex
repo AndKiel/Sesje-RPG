@@ -15,13 +15,13 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\section{Przykładowe interfejsy użytkownika}
+\section{Wybrane interfejsy użytkownika}
 \label{sec:interfejsy}
 
 % TODO screeny z jakimiś opisami, ogólny wygląd strony?
 \subsection{Logowanie}
 \label{sec:login}
-Na rysunku \ref{fig:login} przedstawione zostało okno logowania. Użytkownik podaje swój login i hasło oraz wybiera, czy chce aby dane były zapamiętane w plikach cookies, co umożliwi pozostanie zalogowanym po ponownym włączeniu strony lub jej odświeżeniu. W przypadku gdy użytkownik zapomniał hasła, może nacisnąć przycisk \emph{Forgotten password? Click here} i ponownie wpisać adres e-mail, na który zarejestrowane jest konto. Dzięki temu system zresetuje hasło na losowy ciąg znaków i wyśle je do użytkownika.
+Na rysunku \ref{fig:login} przedstawione zostało okno logowania. Użytkownik podaje swój login i hasło oraz wybiera, czy chce, aby dane były zapamiętane w plikach cookies, co umożliwi pozostanie zalogowanym po ponownym włączeniu strony lub jej odświeżeniu. W przypadku gdy użytkownik zapomniał hasła, może kliknąć łącze \emph{Forgotten password? Click here} i ponownie wpisać adres e-mail, na który zarejestrowane jest konto. Dzięki temu system zresetuje hasło na losowy ciąg znaków i wyśle je do użytkownika.
 
 \begin{figure}[h!]	
 \centering
@@ -33,7 +33,7 @@ Na rysunku \ref{fig:login} przedstawione zostało okno logowania. Użytkownik po
 \subsection{Strona startowa}
 \label{sec:start_page}
 
-Po zalogowaniu, na stronie startowej pojawiają się informacje o nadchodzących sesjach. Na rysunku \ref{fig:start_page_joined} ciemniejszym kolorem oznaczone są sesje, do których użytkownik w pełni dołączył, jaśniejszym --- oczekujące na akceptację przez założyciela ogłoszenia. Dla zalogowanych użytkowników możliwa jest nawigacja do kolejnych podstron --- zakładek.
+Po zalogowaniu na stronie startowej pojawiają się informacje o nadchodzących sesjach. Na rysunku \ref{fig:start_page_joined} ciemniejszym kolorem oznaczone są sesje, do których użytkownik w pełni dołączył, jaśniejszym --- oczekujące na akceptację przez założyciela ogłoszenia. Dla zalogowanych użytkowników możliwa jest nawigacja do kolejnych podstron --- zakładek.
 \begin{figure}[htb]	
 \centering
 \includegraphics[width=0.9\textwidth]{./img/interfejsy/start_page_joined}
@@ -43,7 +43,7 @@ Po zalogowaniu, na stronie startowej pojawiają się informacje o nadchodzących
 
 \subsection{Lista systemów}
 \label{sec:systems}
-Wybranie zakładki \emph{Systems} powoduje przejście do listy systemów RPG zapisanych w bazie serwisu. Składa się ona z tabeli systemów z podziałem na gatunki i rok wydania oraz opisu wybranej pozycji znajdującego się poniżej. Listę można filtrować względem pierwszej litery z nazwy lub wyświetlać wszystkie. Jeśli zalogowany użytkownik jest administratorem lub moderatorem, widoczne stają się przyciski \emph{New system}, \emph{Edit} i \emph{Delete} kolejno do dodawania nowego systemu, edycji istniejącego oraz usuwania. Całość przedstawia rysunek \ref{fig:systems}.
+Wybranie zakładki \emph{Systems} powoduje przejście do listy systemów RPG zapisanych w bazie serwisu. Składa się ona z tabeli systemów z podziałem na gatunki i rok wydania oraz opisu wybranej pozycji znajdującego się poniżej. Listę można filtrować względem pierwszej litery nazwy lub wyświetlać wszystko. Jeśli zalogowany użytkownik jest administratorem lub moderatorem, widoczne stają się przyciski \emph{New system}, \emph{Edit} i \emph{Delete} służące kolejno do dodawania nowego systemu, edycji istniejącego oraz usuwania. Całość przedstawia rysunek \ref{fig:systems}.
 
 \begin{figure}[htb]	
 \centering
@@ -54,7 +54,7 @@ Wybranie zakładki \emph{Systems} powoduje przejście do listy systemów RPG zap
 
 \subsection{Ogłoszenia}
 \label{sec:sessions}
-Zakładka \emph{Announcements} stanowi główny cel serwisu --- ogłoszenia o odbywających się sesjach (res. \ref{fig:sessions}).  Znajduje się tutaj tabela z kluczowymi informacjami oraz rozwinięcie dostępne po zaznaczeniu wybranej pozycji. Sesje oznaczane są takimi samymi kolorami jak na stronie startowej. Po wybraniu sesji i naciśnięciu przycisku \emph{Join} pojawia się okno wyboru pozycji w trakcie sesji (rys. \ref{fig:join_session}). Można dołączyć jako Mistrz Gry (\emph{Master}) lub jako Gracz (\emph{Player}). W przypadku, gdy dołączający użytkownik nie jest założycielem ogłoszenia, po wyborze pozycji wysyłana jest wiadomość z prośbą o akceptację do osoby odpowiedzialnej za sesję. 
+Zakładka \emph{Announcements} stanowi główny cel serwisu --- ogłoszenia o odbywających się sesjach (rys. \ref{fig:sessions}).  Znajduje się tutaj tabela z kluczowymi informacjami oraz rozwinięcie dostępne po zaznaczeniu wybranej pozycji. Sesje oznaczane są takimi samymi kolorami jak na stronie startowej. Po wybraniu sesji i naciśnięciu przycisku \emph{Join} pojawia się okno wyboru pozycji w~trakcie sesji (rys. \ref{fig:join_session}). Można dołączyć jako Mistrz Gry (\emph{Master}) lub jako Gracz (\emph{Player}). W~przypadku gdy dołączający użytkownik nie jest założycielem ogłoszenia, po wyborze pozycji wysyłana jest wiadomość z prośbą o akceptację do osoby odpowiedzialnej za sesję. 
 
 \begin{figure}[htb]	
 \centering
@@ -85,7 +85,7 @@ Po naciśnięciu przycisku \emph{New Session} pojawia się okno tworzenia nowej 
 
 \subsection{Lista użytkowników}
 \label{sec:users_detail}
-Zakładka \emph{Users} (rys. \ref{fig:users_details} to lista użytkowników zamierająca pseudonim, datę dołączenia kraj pochodzenia oraz status konta (aktywne, nieaktywne). Użytkownicy mogą wyświetlić szczegóły profilu po wybraniu danej osoby i naciśnięciu \emph{Show details}. Gdy zalogowany jest administrator lub moderator widoczny jest również przycisk \emph{Deactivate account} służący do banowania użytkowników. 
+Zakładka \emph{Users} (rys. \ref{fig:users_details} to lista użytkowników zamierająca pseudonim, datę dołączenia, kraj pochodzenia oraz status konta (aktywne, nieaktywne). Użytkownicy mogą wyświetlić szczegóły profilu po wybraniu danej osoby i naciśnięciu \emph{Show details}. Gdy zalogowany jest administrator lub moderator, widoczny jest również przycisk \emph{Deactivate account} służący do banowania użytkowników. 
 
 \begin{figure}[htb]	
 \centering

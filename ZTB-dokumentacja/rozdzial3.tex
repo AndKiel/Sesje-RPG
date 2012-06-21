@@ -4,11 +4,11 @@
 \section{Wykorzystane technologie}
 \label{sec:technologie}
 
-W naszym projekcie głównymi technologiami, które zostały użyte są: Grails (back-end), Vaadin (front-end) oraz PostgreSQL (baza danych). Głównym kryterium podczas wyboru technologii była dla nas prostota ich nauki oraz użycia, ponieważ wcześniej mieliśmy mały kontakt z tworzeniem aplikacji webowych. Wybór bazy danych nie było kluczowy, ponieważ znając język zapytań SQL praktycznie moglibyśmy operować na każdej bazie, natomiast wybór tej konkretnej był podyktowany jej znajomością przez wszystkich członków zespołu. 
+\hspace{15pt}W naszym projekcie głównymi technologiami, które zostały użyte są: Grails (back-end), Vaadin (front-end) oraz PostgreSQL (baza danych). Głównym kryterium podczas wyboru technologii była dla nas prostota ich nauki oraz użycia, ponieważ wcześniej mieliśmy mały kontakt z tworzeniem aplikacji webowych. Wybór bazy danych nie było kluczowy, ponieważ znając język zapytań SQL praktycznie moglibyśmy operować na każdej bazie, natomiast wybór tej konkretnej był podyktowany jej znajomością przez wszystkich członków zespołu. 
 
-Dużo więcej czasu poświęciliśmy na wybór odpowiednich frameworków do back- i front-endu. Po przeczytaniu paru opisów i możliwości danych narzędzi pierwszy wybór padł na framework ,,Grails'', który niejako wywodzi się z Ruby on Rails (w tym wypadku Groovy on Rails). Twórcy Grails zamiast budować własną warstwę komunikacji z bazą danych czy zupełnie nowy silnik szablonowego wyświetlania stron oparli się na technologiach istniejących od dłuższego czasu i sprawdzonych w systemach produkcyjnych. 
+\hspace{15pt}Dużo więcej czasu poświęciliśmy na wybór odpowiednich frameworków do back- i front-endu. Po przeczytaniu paru opisów i możliwości danych narzędzi pierwszy wybór padł na framework ,,Grails'', który niejako wywodzi się z Ruby on Rails (w tym wypadku Groovy on Rails). Twórcy Grails zamiast budować własną warstwę komunikacji z bazą danych czy zupełnie nowy silnik szablonowego wyświetlania stron oparli się na technologiach istniejących od dłuższego czasu i sprawdzonych w systemach produkcyjnych. 
 
-Dzięki takiej strukturze Grails nie zmusza do wdrażania nowych serwerów. Aplikacje pisane przy użyciu frameworka można wdrażać przy użyciu tradycyjnych plików *.war (na przykład na Tomcata). Dodatkowo prostota tego narzędzia objawia się w konfiguracji wszystkich plików potrzebnych do deploy'u strony. Użytkownicy innych frameworków mogą być przyzwyczajeni do topornej konfiguracji plików *.xml w początkowej fazie tworzenia projektu , natomiast Grails już przy pierwszym utworzeniu projektu dostarcza nam pełną konfigurację, dzięki której naszą stronę możemy prawie od razu wrzucić na serwer. Dodatkowo wprowadzanie zmian konfiguracyjnych w późniejszej fazie jest bardzo proste dzięki ich podziałowi na konkretne, łatwo konfigurowalne pliki *.groovy. 
+\hspace{15pt}Dzięki takiej strukturze Grails nie zmusza do wdrażania nowych serwerów. Aplikacje pisane przy użyciu frameworka można wdrażać przy użyciu tradycyjnych plików *.war (na przykład na Tomcata). Dodatkowo prostota tego narzędzia objawia się w konfiguracji wszystkich plików potrzebnych do deploy'u strony. Użytkownicy innych frameworków mogą być przyzwyczajeni do topornej konfiguracji plików *.xml w początkowej fazie tworzenia projektu , natomiast Grails już przy pierwszym utworzeniu projektu dostarcza nam pełną konfigurację, dzięki której naszą stronę możemy prawie od razu wrzucić na serwer. Dodatkowo wprowadzanie zmian konfiguracyjnych w późniejszej fazie jest bardzo proste dzięki ich podziałowi na konkretne, łatwo konfigurowalne pliki *.groovy. 
 
 \begin{figure}[h!]
 \begin{center}
@@ -18,7 +18,7 @@ Dzięki takiej strukturze Grails nie zmusza do wdrażania nowych serwerów. Apli
 \end{center}
 \end{figure}
 
-\indent Ponieważ grails jako warstwę widoku oferuje GSP (Groovy server pages), gdzie żeby stworzyć ,,coś ładnego'' trzeba wykazać się sporą znajomością technologii HTML/CSS/AJAX, postanowiliśmy znaleźć prosty framework zapewniający ładny wygląd wizualny strony. Wybraliśmy framework VAADIN, który koncepcyjnie można przyrównać do Swinga w Javie. Jest on bogaty w różnego rodzaju gotowe komponenty, których umieszczenie na stronie jest bardzo proste. Warstwa kontrolerów w przypadku użycia tego narzędzia musiała zostać zastąpiona odpowiednią obsługą zdarzeń, ponieważ Vaadin jest oparty na ,,event-based programming''. 
+\hspace{15pt}Ponieważ grails jako warstwę widoku oferuje GSP (Groovy server pages), gdzie żeby stworzyć ,,coś ładnego'' trzeba wykazać się sporą znajomością technologii HTML/CSS/AJAX, postanowiliśmy znaleźć prosty framework zapewniający ładny wygląd wizualny strony. Wybraliśmy framework VAADIN, który koncepcyjnie można przyrównać do Swinga w Javie. Jest on bogaty w różnego rodzaju gotowe komponenty, których umieszczenie na stronie jest bardzo proste. Warstwa kontrolerów w przypadku użycia tego narzędzia musiała zostać zastąpiona odpowiednią obsługą zdarzeń, ponieważ Vaadin jest oparty na ,,event-based programming''. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -26,13 +26,13 @@ Dzięki takiej strukturze Grails nie zmusza do wdrażania nowych serwerów. Apli
 \section{Implementacja bazy danych}
 \label{sec:impldb}
 
-Kolejnym atutem Grailsa jest prostota implementacji bazy danych w oparciu o ORM (Object-Relational Mapping). Podstawową składową Grails, umożliwiającą wygodną komunikację z danymi przechowywanymi w bazie, jest GORM (Grails ORM). Jest on warstwą abstrakcji ponad Hibernate, czyli wykorzystuje wszystkiego jego zalety, dodatkowo oferując nam wiele bardzo przydatnych funkcjonalności. 
+\hspace{15pt}Kolejnym atutem Grailsa jest prostota implementacji bazy danych w oparciu o ORM (Object-Relational Mapping). Podstawową składową Grails, umożliwiającą wygodną komunikację z danymi przechowywanymi w bazie, jest GORM (Grails ORM). Jest on warstwą abstrakcji ponad Hibernate, czyli wykorzystuje wszystkiego jego zalety, dodatkowo oferując nam wiele bardzo przydatnych funkcjonalności. 
 
-Główną zaletą GORM-a jest duża wygoda pracy oraz przejrzystość tworzonego kodu. Aby stworzyć prostą tabelę w bazie danych, wystarczy utworzyć nową klasę domenową, która w wyglądzie bardzo przypomina zwykłą klasę Javy. Dodatkowo mamy do dyspozycji bardzo intuicyjne określanie ograniczeń dla konkretnych kolumn oraz kilka gotowych algorytmów tworzenia kluczy (pola ID). 
+\hspace{15pt}Główną zaletą GORM-a jest duża wygoda pracy oraz przejrzystość tworzonego kodu. Aby stworzyć prostą tabelę w bazie danych, wystarczy utworzyć nową klasę domenową, która w wyglądzie bardzo przypomina zwykłą klasę Javy. Dodatkowo mamy do dyspozycji bardzo intuicyjne określanie ograniczeń dla konkretnych kolumn oraz kilka gotowych algorytmów tworzenia kluczy (pola ID). 
 
-Tworzenie relacji między tabelami jest również bardzo proste ponieważ wystarczy użyć predefiniowanych zmiennych ,,hasMany'' oraz ,,belongsTo'' w odpowiednich klasach domenowych. Podczas tworzenia projektu bardzo pomocny okazał się dostęp do danych oferowany przez GORM, który w sposób dynamiczny tworzy funkcje dostępu do danych. Na przykład jeżeli stworzymy sobie klasę (tabelę) ,,Book'' z polem ,,Author'' to automatycznie zostaje wygenerowany szereg funkcji dostępu do danych w bazie danych typu : Dom. findAllByDateCreatedAndAuthor(date, author). Więc tak naprawdę znajomość języka SQL była w tym projekcie praktycznie zbędna.
+\hspace{15pt}Tworzenie relacji między tabelami jest również bardzo proste ponieważ wystarczy użyć predefiniowanych zmiennych ,,hasMany'' oraz ,,belongsTo'' w odpowiednich klasach domenowych. Podczas tworzenia projektu bardzo pomocny okazał się dostęp do danych oferowany przez GORM, który w sposób dynamiczny tworzy funkcje dostępu do danych. Na przykład jeżeli stworzymy sobie klasę (tabelę) ,,Book'' z polem ,,Author'' to automatycznie zostaje wygenerowany szereg funkcji dostępu do danych w bazie danych typu : Dom. findAllByDateCreatedAndAuthor(date, author). Więc tak naprawdę znajomość języka SQL była w tym projekcie praktycznie zbędna.
 
-Ostatnim wykorzystywanym przez nas udogodnieniem GORM-a było automatyczne datowanie. Wystarczyło w klasie domenowej stworzyć pola o nazwach ,,dateCreated'' lub ,,lastModyfied'', a GORM sam troszczył się o adekwatne uzupełnianie tych pól.
+\hspace{15pt}Ostatnim wykorzystywanym przez nas udogodnieniem GORM-a było automatyczne datowanie. Wystarczyło w klasie domenowej stworzyć pola o nazwach ,,dateCreated'' lub ,,lastModyfied'', a GORM sam troszczył się o adekwatne uzupełnianie tych pól.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -158,6 +158,7 @@ Aplikację webową opracowaną w ramach niniejszego projektu można rozwijać w 
 \item rozdzielenie profilu na stronie użytkownika na: podgląd profilu, dane profilu oraz ustawienia konta/prywatności,
 \item dodanie możliwości nadawania uprawnień moderatora użytkownikom przez administrację serwisu,
 \item dodanie większej ilości funkcji społecznościowych, np. listy znajomych,
+\item powiązanie użytkowników oraz sesji offline z danymi geograficznymi (późniejsza możliwość wyszukiwania sesji w pobliżu miejsca pobytu danego użytkownika),
 \item optymalizacja kodu witryny.
 \end{itemize}
 

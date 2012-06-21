@@ -192,4 +192,16 @@
 \section{Wnioski}
 \label{sec:doswiadczenia}
 
-% TODO wnioski
+Podsumowując pracę nad projektem: 
+
+\begin{itemize}
+\item Komunikacja w zespole przebiegała bardzo sprawnie (Google groups, komunikatory) co pozwalało na szybkie rozwiązywanie pojawiających się problemów
+\item Jako systemu kontroli wersji użyliśmy narzędzia Git, natomiast repozytorium zostało założone w serwisie GitHub. Połączenie to pozwoliło nam na bardzo sprawne i wygodne zarządzanie kodem
+\item Wybór technologii okazał się bardzo trafiony. Oba frameworki okazały się proste w nauce, zrozumieniu i użytkowaniu (dla osób zaczynających przygodę z aplikacjami webowymi) a także bardzo bogate w funkcjonalności
+\item Sądzimy, że Grails jest frameworkiem, który może zyskać sporą popularność w najbliższym czasie ponieważ jest bardzo dobrze udokumentowany; zawiera ogromną bazę pluginów (na bieżąco tworzonych przez użytkowników) których instalacja ogranicza się do wpisania jednej komendy; korzysta z GORM'a, który jest prosty, intuicyjny ale zarazem bardzo potężny (ponieważ oferuje nam wszystko to z czego mogliśmy korzystać w Hibernate); stworzenie aplikacji typu 'Hello World', konfiguracja bazy danych, generacja pliku .war oraz deploy jest bardzo prosta dzięki czemu łatwo zrozumieć mechanizmy działania a potem odpowiednio dodawać kolejne funkcjonalności
+\item Framework Vaadin również jest bardzo prosty w zrozumieniu i oferuje wykorzystanie szerokiej palety gotowych komponentów. Wg nas świetnie nadaje się do małych, nie koniecznie nastawionych na skalowalność projektów, które potrzebują przejrzystego i bardzo ładnego interfejsu użytkownika.
+\item Minusem połączenia Grails+Vaadin była konieczność zrezygnowania z pełnego modelu MVC, ponieważ Vaadin oparty jest na obsłudze zdarzeń i nie ma jako takich kontrolerów (zamiast tego ma listenery). Dodatkowo Vaadin operuje tylko na jednym URL'u przez co w niektórych wypadkach trzeba było dopisywać odpowiednie klasy odpowiedzialne za przekazywanie i odczytywanie parametrów z URL. Gdyby używać samego Grails'a i jego widoków (GSP) oraz kontrolerów, wtedy każda strona miała by swój osobny URL i podpięty do niego odpowiedni kontroler. 
+\item Połączenie Grails+Vaadin okazało się na tyle niecodziennie, że ciężko było znaleźć dobre źródło supportu przy pojawiających się błędach/problemach
+\item Mieliśmy spore problemy przy instalacji tak zwanych Widgetsetów, które miały być wykonywane po stronie klienta (np. refresher czatu). Trzeba było zbudować odpowiedni skrypt ANT który umożliwiał kompilację widgetsetów przy użyciu narzędzia Google Web Toolkit. 
+\item Dodatkowo uważamy że przy większych serwisach framework Vaadin mógłby się okazać za słabo wydajnym narzędziem
+\end{itemize}

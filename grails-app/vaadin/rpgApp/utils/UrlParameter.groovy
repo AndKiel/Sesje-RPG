@@ -58,7 +58,7 @@ public class UrlParameter implements URIHandler, ParameterHandler {
 			if(encodedPassword == null) {
 				app.getMainWindow().showNotification("Invalid activation link", Notification.TYPE_WARNING_MESSAGE)
 			} else {
-				if(code != encodedPassword || userService.getState(email) == true) {
+				if(code != encodedPassword || userService.isActive(email) == true) {
 					app.getMainWindow().showNotification("Invalid activation link", Notification.TYPE_WARNING_MESSAGE)
 				} else {
 					userService.activateAccount(email)

@@ -132,6 +132,11 @@ class UserService {
 	void activateAccount(String login) {
 		setState(login, true)
 	}
+	
+	boolean isActive(String login) {
+		User u = User.get(login)
+		return u.getState()
+	}
 
 	String getEncodedPassword(String login) {
 		User u = User.get(login)

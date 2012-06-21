@@ -124,6 +124,9 @@ class Content extends Panel implements TabSheet.SelectedTabChangeListener {
 			if((tab.getCaption()).equals("Start Page")) {
 				startPage.refreshContent()
 			}
+			if((tab.getCaption()).equals("About")) {
+				about.refreshAbout()
+			}
 			if((tab.getCaption()).equals("FAQ")) {
 				faq.refreshFaq()
 			}

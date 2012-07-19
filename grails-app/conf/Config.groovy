@@ -100,7 +100,6 @@ grails.plugins.springsecurity.authority.className = 'rpgApp.persistance.Role'
 grails.plugins.springsecurity.userLookup.usernamePropertyName = 'login'
 grails.plugins.springsecurity.userLookup.passwordPropertyName = 'passMd5'
 grails.plugins.springsecurity.userLookup.enabledPropertyName = 'state'
-
 grails.plugins.springsecurity.userLookup.accountExpiredPropertyName = null
 grails.plugins.springsecurity.userLookup.accountLockedPropertyName = null
 grails.plugins.springsecurity.userLookup.passwordExpiredPropertyName = null

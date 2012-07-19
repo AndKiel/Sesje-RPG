@@ -2,15 +2,15 @@ package rpgApp.persistance
 
 class Role {
 
-	String authority
+    String authority
 
-	static mapping = {
-		cache true
-		version false
-		table 'roles'
-	}
+    static mapping = {
+        cache true
+        version false
+        table 'roles'
+    }
 
-	static constraints = {
-		authority blank: false, unique: true
-	}
+    static constraints = {
+        authority blank: false, unique: true
+    }
 }
